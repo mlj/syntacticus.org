@@ -1,0 +1,42 @@
+@charset "utf-8"
+
+@import url('https://fonts.googleapis.com/css?family=Inconsolata|Merriweather|Open+Sans');
+
+@import "~bulma/sass/utilities/initial-variables"
+
+$primary: #A88ABF
+$text: $black
+$text-light: $black
+$text-strong: $black
+$family-sans-serif: 'Inconsolata', monospace
+$family-serif: 'Merriweather', serif
+$title-weight: $weight-light
+
+@import "~bulma/sass/utilities/_all"
+@import "~bulma/sass/base/_all"
+@import "~bulma/sass/elements/_all"
+@import "~bulma/sass/components/_all"
+@import "~bulma/sass/grid/_all"
+@import "~bulma/sass/layout/_all"
+
+// $fa-font-path: '~font-awesome/fonts/'
+// @import '~font-awesome/scss/font-awesome'
+
+@import '~nprogress/nprogress'
+
+#nprogress
+  $color: $primary
+  .bar
+    background: $color
+  .peg
+    box-shadow: 0 0 10px $color, 0 0 5px $color
+  .spinner-icon
+    border-top-color: $color
+    border-left-color: $color
+
+h1, h2, h3, h4, h5
+  font-family: 'Merriweather', serif
+
+.font-cyrcillic, :lang(orv), :lang(chu), :lang(grc)
+  font-family: 'Open Sans', sans-serif
+//  font-family: 'Noto Sans', sans-serifs

@@ -1,0 +1,597 @@
+{
+  "chu": {
+    "axes": {
+      "number": [
+        { "pattern": { "number": "s"}, "text": "Singular" },
+        { "pattern": { "number": "d"}, "text": "Dual" },
+        { "pattern": { "number": "p"}, "text": "Plural" }
+      ],
+
+      "case": [
+        { "pattern": { "case": "n" }, "text": "Nom." },
+        { "pattern": { "case": "a" }, "text": "Acc." },
+        { "pattern": { "case": "g" }, "text": "Gen." },
+        { "pattern": { "case": "l" }, "text": "Loc." },
+        { "pattern": { "case": "d" }, "text": "Dat." },
+        { "pattern": { "case": "i" }, "text": "Ins." }
+      ],
+
+      "person+number": [
+        { "pattern": { "person": "1", "number": "s" }, "text": "1st p. sg."  },
+        { "pattern": { "person": "2", "number": "s" }, "text": "2nd p. sg." },
+        { "pattern": { "person": "3", "number": "s" }, "text": "3rd p. sg."  },
+        { "pattern": { "person": "1", "number": "d" }, "text": "1st p. du."  },
+        { "pattern": { "person": "2", "number": "d" }, "text": "2nd p. du." },
+        { "pattern": { "person": "3", "number": "d" }, "text": "3rd p. du."  },
+        { "pattern": { "person": "1", "number": "p" }, "text": "1st p. pl."  },
+        { "pattern": { "person": "2", "number": "p" }, "text": "2nd p. pl." },
+        { "pattern": { "person": "3", "number": "p" }, "text": "3rd p. pl."  }
+      ],
+
+      "tense": [
+        { "pattern": { "tense": "p"}, "text": "Present" },
+        { "pattern": { "tense": "i"}, "text": "Imperfect" },
+        { "pattern": { "tense": "a"}, "text": "Aorist" }
+      ],
+
+      "degree+uninflected": [
+        { "pattern": { "degree": "p" }, "text": "Positive" },
+        { "pattern": { "degree": "c" }, "text": "Comparative" },
+        { "pattern": { "degree": "s" }, "text": "Superlative" },
+        { "pattern": { "inflection": "n" }, "text": "Uninflected" }
+      ],
+
+      "singleton": [
+        { "pattern": {}, "text": "" }
+      ]
+    },
+
+    "templates": {
+      "nominal": {
+        "axis1": "number",
+        "axis2": "case"
+      },
+
+      "gradable": {
+        "axis1": "singleton",
+        "axis2": "degree+uninflected"
+      },
+
+      "finite": {
+        "axis1": "tense",
+        "axis2": "person+number"
+      }
+    },
+
+    "parts_of_speech": {
+      "V-": [
+        {
+          "template": "finite"
+        }
+      ],
+
+      "A-": [
+        {
+          "title": "Masculine short form",
+          "pattern": { "gender": "m", "strength": "s" },
+          "template": "nominal"
+        },
+        {
+          "title": "Feminine short form",
+          "pattern": { "gender": "f", "strength": "s" },
+          "template": "nominal"
+        },
+        {
+          "title": "Neuter short form",
+          "pattern": { "gender": "n", "strength": "s" },
+          "template": "nominal"
+        },
+        {
+          "title": "Masculine long form",
+          "pattern": { "gender": "m", "strength": "w" },
+          "template": "nominal"
+        },
+        {
+          "title": "Feminine long form",
+          "pattern": { "gender": "f", "strength": "w" },
+          "template": "nominal"
+        },
+        {
+          "title": "Neuter long form",
+          "pattern": { "gender": "n", "strength": "w" },
+          "template": "nominal"
+        }
+      ],
+
+      "Ne": [
+        {
+          "template": "nominal"
+        }
+      ],
+
+      "Nb": [
+        {
+          "template": "nominal"
+        }
+      ],
+
+      "Df": [
+        {
+          "template": "gradable"
+        }
+      ]
+    }
+  },
+
+  "got": {
+    "axes": {
+      "number": [
+        { "pattern": { "number": "s" }, "text": "Singular" },
+        { "pattern": { "number": "p" }, "text": "Plural" }
+      ],
+
+      "number-dua": [
+        { "pattern": { "number": "s" }, "text": "Singular" },
+        { "pattern": { "number": "d" }, "text": "Dual" },
+        { "pattern": { "number": "p" }, "text": "Plural" }
+      ],
+
+      "gender+number": [
+        { "pattern": { "gender": "m", "number": "s" }, "text": "M. sg." },
+        { "pattern": { "gender": "f", "number": "s" }, "text": "F. sg." },
+        { "pattern": { "gender": "n", "number": "s" }, "text": "N. sg." },
+
+        { "pattern": { "gender": "m", "number": "p" }, "text": "M. pl." },
+        { "pattern": { "gender": "f", "number": "p" }, "text": "F. pl." },
+        { "pattern": { "gender": "n", "number": "p" }, "text": "N. pl." }
+      ],
+
+      "case": [
+        { "pattern": { "case": "n" }, "text": "Nom." },
+        { "pattern": { "case": "a" }, "text": "Acc." },
+        { "pattern": { "case": "d" }, "text": "Dat." },
+        { "pattern": { "case": "g" }, "text": "Gen." },
+        { "pattern": { "case": "v" }, "text": "Voc." }
+      ],
+
+      "mood": [
+        { "pattern": { "mood": "i" }, "text": "Indicative" },
+        { "pattern": { "mood": "o" }, "text": "Optative" },
+        { "pattern": { "mood": "m" }, "text": "Imperative" }
+      ],
+
+      "person+number": [
+        { "pattern": { "person": "1", "number": "s" }, "text": "1st p. sg." },
+        { "pattern": { "person": "2", "number": "s" }, "text": "2nd p. sg." },
+        { "pattern": { "person": "3", "number": "s" }, "text": "3rd p. sg." },
+
+        { "pattern": { "person": "1", "number": "d" }, "text": "1st p. du." },
+        { "pattern": { "person": "2", "number": "d" }, "text": "2nd p. du." },
+        { "pattern": { "person": "3", "number": "d" }, "text": "3rd p. du." },
+
+        { "pattern": { "person": "1", "number": "p" }, "text": "1st p. pl." },
+        { "pattern": { "person": "2", "number": "p" }, "text": "2nd p. pl." },
+        { "pattern": { "person": "3", "number": "p" }, "text": "3rd p. pl." }
+      ],
+
+      "voice": [
+        { "pattern": { "voice": "a" }, "text": "Active" },
+        { "pattern": { "voice": "p" }, "text": "Passive" }
+      ],
+
+      "singleton": [
+        { "pattern": {}, "text": "" }
+      ]
+    },
+
+    "templates": {
+      "nominal": {
+        "axis1": "number",
+        "axis2": "case"
+      },
+
+      "adjectival": {
+        "axis1": "gender+number",
+        "axis2": "case"
+      },
+
+      "finite": {
+        "axis1": "mood",
+        "axis2": "person+number"
+      },
+
+      "infinitival": {
+        "axis1": "voice",
+        "axis2": "singleton"
+      }
+    },
+
+    "parts_of_speech": {
+      "V-": [
+        {
+          "title": "Present active",
+          "pattern": { "tense": "p", "voice": "a" },
+          "template": "finite"
+        },
+
+        {
+          "title": "Preterite active",
+          "pattern": { "tense": "u", "voice": "a" },
+          "template": "finite"
+        },
+
+        {
+          "title": "Present passive",
+          "pattern": { "tense": "p", "voice": "p" },
+          "template": "finite"
+        },
+
+        {
+          "title": "Preterite passive",
+          "pattern": { "tense": "u", "voice": "p" },
+          "template": "finite"
+        },
+
+        {
+          "title": "Present particle weak",
+          "pattern": { "tense": "p", "mood": "p", "strength": "w" },
+          "template": "adjectival"
+        },
+
+        {
+          "title": "Present particle strong",
+          "pattern": { "tense": "p", "mood": "p", "strength": "s" },
+          "template": "adjectival"
+        },
+
+        {
+          "title": "Perfect particle weak",
+          "pattern": { "tense": "r", "mood": "p", "strength": "w" },
+          "template": "adjectival"
+        },
+
+        {
+          "title": "Perfect particle strong",
+          "pattern": { "tense": "r", "mood": "p", "strength": "s" },
+          "template": "adjectival"
+        },
+
+        {
+          "title": "Infinitive",
+          "pattern": { "mood": "n" },
+          "template": "infinitival"
+        }
+      ],
+
+      "Nb": [
+        {
+          "template": "nominal"
+        }
+      ],
+
+      "A-": [
+        {
+          "title": "Weak",
+          "pattern": { "strength": "w" },
+          "template": "adjectival"
+        },
+        {
+          "title": "Strong",
+          "pattern": { "strength": "s" },
+          "template": "adjectival"
+        }
+      ],
+
+      "Ma": [
+        {
+          "template": "adjectival"
+        }
+      ],
+
+      "Pd": [
+        {
+          "template": "adjectival"
+        }
+      ],
+
+      "Pr": [
+        {
+          "template": "adjectival"
+        }
+      ],
+
+      "Ps": [
+        {
+          "template": "adjectival"
+        }
+      ],
+
+      "Px": [
+        {
+          "template": "adjectival"
+        }
+      ]
+    }
+  },
+
+  "lat": {
+    "axes": {
+      "number": [
+        { "pattern": { "number": "s" }, "text": "Singular" },
+        { "pattern": { "number": "p" }, "text": "Plural" }
+      ],
+
+      "gender": [
+        { "pattern": { "gender": "m" }, "text": "M." },
+        { "pattern": { "gender": "f" }, "text": "F." },
+        { "pattern": { "gender": "n" }, "text": "N." }
+      ],
+
+      "gender+number": [
+        { "pattern": { "gender": "m", "number": "s" }, "text": "M. sg." },
+        { "pattern": { "gender": "f", "number": "s" }, "text": "F. sg." },
+        { "pattern": { "gender": "n", "number": "s" }, "text": "N. sg." },
+
+        { "pattern": { "gender": "m", "number": "p" }, "text": "M. pl." },
+        { "pattern": { "gender": "f", "number": "p" }, "text": "F. pl." },
+        { "pattern": { "gender": "n", "number": "p" }, "text": "N. pl." }
+      ],
+
+      "case": [
+        { "pattern": { "case": "n" }, "text": "Nom." },
+        { "pattern": { "case": "a" }, "text": "Acc." },
+        { "pattern": { "case": "g" }, "text": "Gen." },
+        { "pattern": { "case": "d" }, "text": "Dat." },
+        { "pattern": { "case": "b" }, "text": "Abl." }
+      ],
+
+      "case-nominative": [
+        { "pattern": { "case": "a" }, "text": "Acc." },
+        { "pattern": { "case": "g" }, "text": "Gen." },
+        { "pattern": { "case": "d" }, "text": "Dat." },
+        { "pattern": { "case": "b" }, "text": "Abl." }
+      ],
+
+      "mood": [
+        { "pattern": { "mood": "i" }, "text": "Indicative" },
+        { "pattern": { "mood": "s" }, "text": "Subjunctive" },
+        { "pattern": { "mood": "m" }, "text": "Imperative" }
+      ],
+
+      "person+number": [
+        { "pattern": { "person": "1", "number": "s" }, "text": "1st p. sg."  },
+        { "pattern": { "person": "2", "number": "s" }, "text": "2nd p. sg." },
+        { "pattern": { "person": "3", "number": "s" }, "text": "3rd p. sg."  },
+        { "pattern": { "person": "1", "number": "p" }, "text": "1st p. pl."  },
+        { "pattern": { "person": "2", "number": "p" }, "text": "2nd p. pl." },
+        { "pattern": { "person": "3", "number": "p" }, "text": "3rd p. pl."  }
+      ],
+
+      "degree+uninflected": [
+        { "pattern": { "degree": "p" }, "text": "Positive" },
+        { "pattern": { "degree": "c" }, "text": "Comparative" },
+        { "pattern": { "degree": "s" }, "text": "Superlative" },
+        { "pattern": { "inflection": "n" }, "text": "Uninflected" }
+      ],
+
+      "voice": [
+        { "pattern": { "voice": "a" }, "text": "Active" },
+        { "pattern": { "voice": "p" }, "text": "Passive" }
+      ],
+
+      "infectum": [
+        { "pattern": { "tense": "p"}, "text": "Present" },
+        { "pattern": { "tense": "i"}, "text": "Imperfect" },
+        { "pattern": { "tense": "f"}, "text": "Future" }
+      ],
+
+      "singleton": [
+        { "pattern": {}, "text": "" }
+      ]
+    },
+
+    "templates": {
+      "nominal": {
+        "axis1": "number",
+        "axis2": "case"
+      },
+
+      "gerundial": {
+        "axis1": "singleton",
+        "axis2": "case-nominative"
+      },
+
+      "adjectival": {
+        "axis1": "gender+number",
+        "axis2": "case"
+      },
+
+      "gradable": {
+        "axis1": "singleton",
+        "axis2": "degree+uninflected"
+      },
+
+      "finite": {
+        "axis1": "mood",
+        "axis2": "person+number"
+      },
+
+      "infinitival": {
+        "axis1": "voice",
+        "axis2": "infectum"
+      }
+    },
+
+    "parts_of_speech": {
+      "V-": [
+        {
+          "title": "Present active",
+          "pattern": { "tense": "p", "voice": "a" },
+          "template": "finite"
+        },
+
+        {
+          "title": "Imperfect active",
+          "pattern": { "tense": "i", "voice": "a" },
+          "template": "finite"
+        },
+
+        {
+          "title": "Future active",
+          "pattern": { "tense": "f", "voice": "a" },
+          "template": "finite"
+        },
+
+        {
+          "title": "Perfect active",
+          "pattern": { "tense": "r", "voice": "a" },
+          "template": "finite"
+        },
+
+        {
+          "title": "Pluperfect active",
+          "pattern": { "tense": "l", "voice": "a" },
+          "template": "finite"
+        },
+
+        {
+          "title": "Future perfect active",
+          "pattern": { "tense": "t", "voice": "a" },
+          "template": "finite"
+        },
+
+        {
+          "title": "Present passive",
+          "pattern": { "tense": "p", "voice": "p" },
+          "template": "finite"
+        },
+
+        {
+          "title": "Imperfect passive",
+          "pattern": { "tense": "i", "voice": "p" },
+          "template": "finite"
+        },
+
+        {
+          "title": "Future passive",
+          "pattern": { "tense": "f", "voice": "p" },
+          "template": "finite"
+        },
+
+        {
+          "title": "Present particle",
+          "pattern": { "tense": "p", "mood": "p" },
+          "template": "adjectival"
+        },
+
+        {
+          "title": "Perfect particle",
+          "pattern": { "tense": "r", "mood": "p" },
+          "template": "adjectival"
+        },
+
+        {
+          "title": "Infinitive",
+          "pattern": { "mood": "n" },
+          "template": "infinitival"
+        },
+
+        {
+          "title": "Supine",
+          "pattern": { "mood": "u" },
+          "template": "gerundial"
+        },
+
+        {
+          "title": "Gerund",
+          "pattern": { "mood": "d" },
+          "template": "gerundial"
+        },
+
+        {
+          "title": "Gerundive",
+          "pattern": { "mood": "g" },
+          "template": "adjectival"
+        }
+      ],
+
+      "A-": [
+        {
+          "title": "Masculine",
+          "pattern": { "gender": "m" },
+          "template": "nominal"
+        },
+        {
+          "title": "Feminine",
+          "pattern": { "gender": "f" },
+          "template": "nominal"
+        },
+        {
+          "title": "Neuter",
+          "pattern": { "gender": "n" },
+          "template": "nominal"
+        }
+      ],
+
+      "Ne": [
+        {
+          "template": "nominal"
+        }
+      ],
+
+      "Nb": [
+        {
+          "template": "nominal"
+        }
+      ],
+
+      "Pp": [
+        {
+          "template": "adjectival"
+        }
+      ],
+
+      "Pd": [
+        {
+          "template": "adjectival"
+        }
+      ],
+
+      "Pk": [
+        {
+          "template": "adjectival"
+        }
+      ],
+
+      "Pr": [
+        {
+          "template": "adjectival"
+        }
+      ],
+
+      "Ps": [
+        {
+          "template": "adjectival"
+        }
+      ],
+
+      "Px": [
+        {
+          "template": "adjectival"
+        }
+      ],
+
+      "Ma": [
+        {
+          "template": "adjectival"
+        }
+      ],
+
+      "Df": [
+        {
+          "template": "gradable"
+        }
+      ]
+    }
+  }
+}
