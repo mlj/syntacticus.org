@@ -9,9 +9,7 @@
 
             <p>
               <strong>Sentence #{{ sentenceID }}</strong>
-              (<router-link v-if="sentence.previous_gid" :to="{ name: 'sentence', params: { gid: sentence.previous_gid }}">Previous sentence</router-link>
-              |
-              <router-link v-if="sentence.next_gid" :to="{ name: 'sentence', params: { gid: sentence.next_gid }}">Next sentence</router-link>)
+              (<router-link v-if="hasPrevious" :to="{ name: 'sentence', params: { gid: sentence.previous_gid }}">Previous sentence</router-link><span v-if="hasPrevious && hasNext"> | </span><router-link v-if="hasNext" :to="{ name: 'sentence', params: { gid: sentence.next_gid }}">Next sentence</router-link>)
             </p>
           </div>
 
@@ -228,6 +226,10 @@ export default {
     },
 
     sentenceID () { return this.gid.split(':')[3]; },
+
+    hasPrevious() { return this.sentence.previous_gid !== null },
+
+    hasNext() { return this.sentence.next_gid !== null },
   },
 
   mounted() {
