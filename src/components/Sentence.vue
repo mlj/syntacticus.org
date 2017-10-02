@@ -99,8 +99,8 @@
                   <span class="annotation" v-if="showLemmas">
                     <em :lang="sentence.language">
                       <router-link
-                        :to="{ name: 'lemma', params: { gid: [dictionaryGID, token.lemma, token.part_of_speech].join(':') }}">
-                      {{ token.lemma }}
+                        :to="{ name: 'lemma', params: { gid: buildLemmaGID(dictionaryGID, token) }}">
+                      {{ token.lemma }}<span v-if="token.variant">#{{ token.variant }}</span>
                       </router-link>
                     </em>
                   </span>
@@ -168,7 +168,11 @@ import CurvedGraph from './graphs/CurvedGraph'
 import schema from '../data/schema.json'
 import Modal from './Modal';
 import api from '../api';
-import { permanentURLs, treebankFromGID } from '../shared';
+import {
+  permanentURLs,
+  treebankFromGID,
+  makeLemmaGID
+} from '../shared';
 
 export default {
   components: {
@@ -241,6 +245,10 @@ export default {
   },
 
   methods: {
+    buildLemmaGID(dictionaryGID, token) {
+      return makeLemmaGID(dictionaryGID, token.lemma, token.part_of_speech, token.variant);
+    },
+
     switchToGraph() {
       this.showInterlinear = false;
       this.showGraph = true;

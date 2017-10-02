@@ -6,7 +6,7 @@
           <g @mouseover="selected = n.id" @mouseout="selected = -1" class="token">
             <text class="word" :x="wordWidth * n.id" :y="treeHeight - wordHeight" :class="{ root: n.id == 0 }">{{ n.word }}</text>
             <text class="tag" :x="wordWidth * n.id" :y="treeHeight">{{ n.tag | partOfSpeech }}</text>
-            <text class="lemma" :x="wordWidth * n.id" :y="treeHeight + 16">{{ n.lemma }}</text>
+            <text class="lemma" :x="wordWidth * n.id" :y="treeHeight + 16">{{ n.lemmaForm }}</text>
           </g>
           <g v-if="n.id" class="edge">
             <text class="edge-dependency" :x="n.mid" :y="n.arrow - 7">{{ n.dependency }}</text>
@@ -122,7 +122,7 @@ export default {
           data.push({
             id: indexes[t.id],
             word: t.form || 'EMPTY',
-            lemma: t.lemma,
+            lemmaForm: t.variant ? [t.lemma, t.variant].join('#') : t.lemma,
             tag: t.part_of_speech || t.empty_token_sort + '-',
             parent: indexes[t.head_id],
             dependency: t.relation,

@@ -71,8 +71,11 @@ const api = {
     return syntacticusBase.get(`dictionaries/${gid}/lemmas`, { params: params });
   },
 
-  getLemma(dictionaryGID, lemma, partOfSpeech) {
-    return syntacticusBase.get(`dictionaries/${dictionaryGID}/lemmas/${lemma}:${partOfSpeech}`);
+  getLemma(dictionaryGID, lemma, partOfSpeech, variant) {
+    if (variant === undefined || variant === null || variant === '')
+      return syntacticusBase.get(`dictionaries/${dictionaryGID}/lemmas/${lemma}:${partOfSpeech}`);
+    else
+      return syntacticusBase.get(`dictionaries/${dictionaryGID}/lemmas/${lemma}:${partOfSpeech}:${variant}`);
   },
 
   getSentence(sentence) {

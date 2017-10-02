@@ -25,11 +25,22 @@ export const permanentURLs = {
   dictionary: (gid) => `http://syntacticus.org/dictionary/${gid}`,
 };
 
+export function makeDictionaryGID(treebank, version, language) {
+  return [treebank, version, language].join(':');
+}
+
+export function makeLemmaGID(dictionaryGID, lemma, partOfSpeech, variant) {
+  if (variant === undefined || variant === null || variant === '')
+    return [dictionaryGID, lemma, partOfSpeech].join(':')
+  else
+    return [dictionaryGID, lemma, partOfSpeech, variant].join(':')
+}
+
 export function splitLemmaGID(lemmaGID) {
-  let [treebank, version, language, lemma, partOfSpeech] = lemmaGID.split(':');
+  let [treebank, version, language, lemma, partOfSpeech, variant] = lemmaGID.split(':');
   let dictionaryGID = [treebank, version, language].join(':');
 
-  return { treebank, version, language, dictionaryGID, lemmaGID, lemma, partOfSpeech };
+  return { treebank, version, language, dictionaryGID, lemmaGID, lemma, partOfSpeech, variant };
 }
 
 export function splitDictionaryGID(dictionaryGID) {

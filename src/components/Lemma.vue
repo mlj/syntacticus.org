@@ -3,7 +3,9 @@
     <div class="container">
       <div class="columns">
         <div class="column">
-          <h1 class="title is-2" :lang="language">{{ lemma }}</h1>
+          <h1 class="title is-2" :lang="language">
+            {{ lemma }}<span v-if="variant">#{{ variant }}</span>
+          </h1>
           <h2 class="subtitle is-4"> {{ language | language }}</h2>
           <p>
             <strong>{{ partOfSpeech | partOfSpeech }}</strong>
@@ -197,6 +199,8 @@ export default {
 
     lemma() { return this.splitGID.lemma; },
 
+    variant() { return this.splitGID.variant; },
+
     partOfSpeech() { return this.splitGID.partOfSpeech; },
 
     hasHomographs() { return this.homographs.length > 0; },
@@ -255,7 +259,7 @@ export default {
     closeModalBasic () { this.showModal = false; },
 
     fetchEntries() {
-      return api.getLemma(this.splitGID.dictionaryGID, this.lemma, this.partOfSpeech).then((response) => {
+      return api.getLemma(this.splitGID.dictionaryGID, this.lemma, this.partOfSpeech, this.variant).then((response) => {
         // FIXME: verify that language, lemma, pos are identical
         this.distribution = response.data.distribution || []
         this.glosses = response.data.glosses || {}

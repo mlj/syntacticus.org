@@ -73,7 +73,7 @@
             <tbody>
               <tr v-for="lemma in dictionary">
                 <td>
-                  <router-link :to="{ name: 'lemma', params: { gid: [gid, lemma.lemma, lemma.part_of_speech].join(':') }}"><span :lang="language">{{ lemma.lemma }}</span> ({{ lemma.part_of_speech | partOfSpeech }})</router-link>
+                  <router-link :to="{ name: 'lemma', params: { gid: buildLemmaGID(lemma) }}"><span :lang="language">{{ lemma.lemma }}</span><span v-if="lemma.variant">#{{ lemma.variant}}</span> ({{ lemma.part_of_speech | partOfSpeech }})</router-link>
 
                   <template v-if="language === 'orv'">
                     <template v-if="rusGlossesEnabled">
@@ -110,7 +110,12 @@ import Switches from './Switches';
 import Pagination from './Pagination';
 import api from '../api';
 import schema from '../data/schema.json';
-import { splitDictionaryGID, permanentURLs, treebankFromGID } from '../shared';
+import {
+  makeLemmaGID,
+  splitDictionaryGID,
+  permanentURLs,
+  treebankFromGID
+} from '../shared';
 
 export default {
   components: {
@@ -243,6 +248,10 @@ export default {
     onFormFilterFind(n) {
       // FIXME: make this async search for candidate forms
       this.formOptions = [n]
+    },
+
+    buildLemmaGID(lemma) {
+      return makeLemmaGID(this.gid, lemma.lemma, lemma.part_of_speech, lemma.variant);
     },
 
     partOfSpeechLabel({ tag, label }) {
