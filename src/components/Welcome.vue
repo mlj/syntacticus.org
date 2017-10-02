@@ -99,9 +99,10 @@
                 <router-link to='/source/34'>Herodotus' <em>Histories</em></router-link>.
                 It also contains a substantial collection of texts in old Slavonic languages.
               </h2>
-              <!-- p>
-                <router-link to='/about' class="button is-primary"><span>Learn more</span></router-link>
-              </p -->
+              <p>
+                <router-link :to="{ name: 'source', params: { gid: 'proiel:20170214:caes-gal' }}" class="button is-primary"><span>Explore</span></router-link>
+              </p>
+              </p>
             </div>
           </div>
         </div>
@@ -119,9 +120,9 @@
               <h2 class="subtitle">
                 Syntacticus includes the New Testament in Ancient Greek and its translations into Latin, Gothic, Old Church Slavonic and Classical Armenian. Because these texts are translations you can browse them side-by-side and see how each word has been translated.
               </h2>
-              <!-- p>
-                <router-link to='/about' class="button is-primary is-outlined"><span>Learn more</span></router-link>
-              </p -->
+              <p>
+                <router-link :to="{ name: 'aligned_source', params: { gid: 'proiel:20170214:latin-nt' }}" class="button is-primary is-outlined"><span>Explore</span></router-link>
+              </p>
             </div>
             <div class="column is-half is-offset-1">
               <div class="image is-2by1">
