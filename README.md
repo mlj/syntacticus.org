@@ -1,5 +1,7 @@
 # Syntacticus
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/mlj/syntacticus.org.svg)](https://greenkeeper.io/)
+
 This is the code for [Syntacticus](http://syntacticus.org), an end-user frontend for the [PROIEL Treebank](https://proiel.github.io/), [ISWOC Treebank](https://iswoc.github.io/) and [TOROT Treebank](https://torottreebank.github.io/), which are treebanks of ancient Indo-European languages.
 
 Syntacticus is a single-page application and relies on a backend to serve the actual language data.
