@@ -30,7 +30,7 @@
                 </a>
               </p>
               <p>
-                <h3 class="subtitle is-4">Rigourous</h3>
+                <h3 class="subtitle is-4">Rigorous</h3>
                 Every sentence has been annotated by hand and verified by trained linguists. The annotation schema is inspired by Lexical Functional Grammar and is the same for all the languages.
               </p>
               <!-- a href="/about#annotation-system" class="button is-primary"><span>Read more</span></a -->
