@@ -15,8 +15,7 @@
             <br>
             <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> license
             <br>
-            <a class="button is-warning is-small" @click="openModal">Details...</a>
-            <modal :visible="showModal" @close="closeModal">
+            <metadata-modal>
               <p slot="header">
                 <strong>{{ title }}</strong> <small>({{ language | language }}, {{ tokenCount }} tokens, {{ sentenceCount }} sentences)</small>
               </p>
@@ -33,7 +32,7 @@
                 If you want to link to this text you should use the permanent link <a :href="permanentURL">{{ permanentURL }}</a>.
               </p>
               </p>
-            </modal>
+            </metadata-modal>
           </div>
         </div>
 
@@ -82,13 +81,13 @@
 </template>
 
 <script>
-import Modal from './Modal';
+import MetadataModal from './MetadataModal';
 import api from '../api';
 import { permanentURLs, treebankFromGID } from '../shared';
 
 export default {
   components: {
-    Modal,
+    MetadataModal,
   },
 
   data() {
@@ -104,7 +103,6 @@ export default {
         chunks: [],
       },
       busy: false,
-      showModal: false,
     }
   },
 
@@ -129,10 +127,6 @@ export default {
   },
 
   methods: {
-    openModal () { this.showModal = true; },
-
-    closeModal () { this.showModal = false; },
-
     fetchEntries() {
       let page = +this.$route.query.page || 1
 

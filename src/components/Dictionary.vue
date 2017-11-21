@@ -11,8 +11,7 @@
           <br>
           <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> license
           <br>
-          <a class="button is-warning is-small" @click="openModal">Details...</a>
-          <modal :visible="showModal" @close="closeModal">
+          <metadata-modal>
             <p slot="header">
               <strong>{{ language | language }} dictionary</strong>
             </p>
@@ -28,7 +27,7 @@
             <p>
               If you want to link to this text you should use the permanent link <a :href="permanentURL">{{ permanentURL }}</a>.
             </p>
-          </modal>
+          </metadata-modal>
         </div>
       </div>
 
@@ -107,7 +106,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import Multiselect from 'vue-multiselect';
-import Modal from './Modal';
+import MetadataModal from './MetadataModal';
 import Switches from './Switches';
 import Pagination from './Pagination';
 import api from '../api';
@@ -124,7 +123,7 @@ export default {
     Pagination,
     Multiselect,
     Switches,
-    Modal,
+    MetadataModal,
   },
 
   props: ['gid'],
@@ -138,8 +137,6 @@ export default {
       total: 0,
       dictionary: [],
       pageSize: 50,
-
-      showModal: false,
 
       formOptions: [],
     }
@@ -222,10 +219,6 @@ export default {
   },
 
   methods: {
-    openModal () { this.showModal = true; },
-
-    closeModal () { this.showModal = false; },
-
     fetchEntries() {
       let dictionaryParams = {
         part_of_speech: this.$route.query.pos,

@@ -16,8 +16,7 @@
           <br>
           <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> license
           <br>
-          <a class="button is-warning is-small" @click="openModal">Details...</a>
-          <modal :visible="showModal" @close="closeModal">
+          <metadata-modal>
             <p slot="header">
               <strong>{{ title }}</strong> <small>({{ language | language }}, {{ tokenCount }} tokens, {{ sentenceCount }} sentences)</small>
             </p>
@@ -41,7 +40,7 @@
               editorial details or <a :href="metadata.readerURL">browse</a>
               the Perseus project's current version.
             </p>
-          </modal>
+          </metadata-modal>
         </div>
       </div>
 
@@ -80,13 +79,13 @@
 </template>
 
 <script>
-import Modal from './Modal';
+import MetadataModal from './MetadataModal';
 import api from '../api';
 import { eText, permanentURLs, treebankFromGID } from '../shared';
 
 export default {
   components: {
-    Modal,
+    MetadataModal,
   },
 
   data() {
@@ -101,7 +100,6 @@ export default {
       loadedChunks: [],
       alignment: {},
       busy: false,
-      showModal: false,
     }
   },
 
@@ -128,10 +126,6 @@ export default {
   },
 
   methods: {
-    openModal () { this.showModal = true; },
-
-    closeModal () { this.showModal = false; },
-
     fetchEntries() {
       this.busy = true;
 

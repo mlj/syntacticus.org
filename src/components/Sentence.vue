@@ -20,8 +20,7 @@
             <br>
             {{ sentence.citation }}
             <br>
-            <a class="button is-warning is-small" @click="openModal">Details...</a>
-            <modal :visible="showModal" @close="closeModal">
+            <metadata-modal>
               <p slot="header">
                 <strong>{{ sentence.source.title }}</strong> <small>({{ sentence.language | language }})</small>
               </p>
@@ -37,8 +36,7 @@
               <p>
                 If you want to link to this sentence you should use the permanent link <a :href="permanentURL">{{ permanentURL }}</a>.
               </p>
-              </p>
-            </modal>
+            </metadata-modal>
           </div>
         </div>
 
@@ -166,7 +164,7 @@ text
 import Switches from './Switches';
 import CurvedGraph from './graphs/CurvedGraph'
 import schema from '../data/schema.json'
-import Modal from './Modal';
+import MetadataModal from './MetadataModal';
 import api from '../api';
 import {
   permanentURLs,
@@ -178,7 +176,7 @@ export default {
   components: {
     CurvedGraph,
     Switches,
-    Modal,
+    MetadataModal,
   },
 
   data () {
@@ -197,8 +195,6 @@ export default {
       },
 
       language: 'lat',
-
-      showModal: false,
     }
   },
 
@@ -277,14 +273,6 @@ export default {
       this.showLemmas = true;
       this.showPartsOfSpeech = true;
       this.switchToInterlinear();
-    },
-
-    openModal() {
-      this.showModal = true;
-    },
-
-    closeModal() {
-      this.showModal = false;
     },
 
     fetchEntries() {

@@ -54,29 +54,32 @@
       </div>
     </div>
 
-    <modal :visible="showModal" @close="closeModal">
-      <p slot="header">Keyboard shortcuts</p>
-      <table class="table">
-        <thead>
-          <tr><th>Keyboard shortcut</th><th>Description</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>S</td><td>Focus search box</td></tr>
-          <tr><td>H</td><td>This help table</td></tr>
-        </tbody>
-      </table>
-    </modal>
+    <b-modal :active.sync="showModal">
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Keyboard shortcuts</p>
+        </header>
+        <section class="modal-card-body">
+          <table class="table is-fullwidth">
+            <thead>
+              <tr><th>Keyboard shortcut</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="is-key">S</td><td>Focus search box</td></tr>
+              <tr><td class="is-key">H</td><td>This help table</td></tr>
+            </tbody>
+          </table>
+        </section>
+        <footer class="modal-card-foot">
+          <p>Press <span class="is-key">Escape</span> or click the close button to return to Syntacticus</p>
+        </footer>
+      </div>
+    </b-modal>
   </section>
 </template>
 
 <script>
-import Modal from './Modal';
-
 export default {
-  components: {
-    Modal,
-  },
-
   data() {
     return {
       navToggled: false,
@@ -109,8 +112,6 @@ export default {
     },
 
     openModal() { this.showModal = true; },
-
-    closeModal() { this.showModal = false; },
   }
 }
 </script>

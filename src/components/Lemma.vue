@@ -46,8 +46,7 @@
           <br>
           <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> license
           <br>
-          <a class="button is-warning is-small" @click="openModal">Details...</a>
-          <modal :visible="showModal" @close="closeModal">
+          <metadata-modal>
             <p slot="header">
               <strong>{{ lemma }}</strong> ({{ partOfSpeech | partOfSpeech }}, {{ language | language }})
             </p>
@@ -63,7 +62,7 @@
             <p>
               If you want to link to this text you should use the permanent link <a :href="permanentURL">{{ permanentURL }}</a>.
             </p>
-          </modal>
+          </metadata-modal>
         </div>
       </div>
     </div><!-- del -->
@@ -153,7 +152,7 @@
 
 <script>
 import Multiselect from 'vue-multiselect';
-import Modal from './Modal';
+import MetadataModal from './MetadataModal';
 import api from '../api';
 import Timeline from './Timeline';
 import Paradigm from './Paradigm';
@@ -169,7 +168,7 @@ export default {
     Paradigm,
     Valency,
     Timeline,
-    Modal,
+    MetadataModal,
     Multiselect,
   },
 
@@ -180,7 +179,6 @@ export default {
       homographs: [],
       paradigm: {},
       valency: [],
-      showModal: false,
       timelineType: 'Timeline',
       // timelineVariable: 'by composition',
     }
@@ -256,10 +254,6 @@ export default {
   },
 
   methods: {
-    openModal () { this.showModal = true; },
-
-    closeModal () { this.showModal = false; },
-
     fetchEntries() {
       return api.getLemma(this.splitGID.dictionaryGID, this.lemma, this.partOfSpeech, this.variant).then((response) => {
         // FIXME: verify that language, lemma, pos are identical
