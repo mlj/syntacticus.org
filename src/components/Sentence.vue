@@ -14,11 +14,11 @@
           </div>
 
           <div class="column is-narrow has-text-right">
-            {{ sentence.citation }}
-            <br>
             <a :href="treebank.mainURL">{{ treebank.name }}</a> version {{ treebank.version }}
             <br>
             <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> license
+            <br>
+            {{ sentence.citation }}
             <br>
             <a class="button is-warning is-small" @click="openModal">Details...</a>
             <modal :visible="showModal" @close="closeModal">
