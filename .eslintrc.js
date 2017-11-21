@@ -69,5 +69,6 @@ module.exports = {
     'object-property-newline': 0,
     'no-mixed-operators': 0,
     'no-loop-func': 0,
+    'no-underscore-dangle': 0,
   }
 }

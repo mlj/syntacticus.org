@@ -1,7 +1,7 @@
 import Vue from 'vue'
-import Notification from 'vue-bulma-notification'
 import axios from 'axios'
 import Raven from 'raven-js';
+import Notification from '../components/Notification'
 
 Vue.prototype.$axios = axios
 
@@ -20,11 +20,6 @@ const openErrorMessage = (title, msg) => {
     propsData: {
       title: title,
       message: msg,
-      type: 'danger',
-      showCloseButton: true,
-      direction: '',
-      duration: 0,
-      container: '.notifications',
     }
   })
 }
