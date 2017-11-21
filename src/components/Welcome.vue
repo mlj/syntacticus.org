@@ -1,5 +1,15 @@
 <template>
   <div>
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Organization",
+      "url": "http://syntacticus.org",
+      "name": "Syntacticus",
+      "logo": "http://syntacticus.org/static/logo-large.png"
+    }
+    </script>
+
     <section class="hero is-light">
       <div class="hero-body">
         <div class="content has-text-centered">
