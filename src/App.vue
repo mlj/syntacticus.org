@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <app-header></app-header>
-    <!-- level-bar></level-bar -->
     <router-view></router-view>
     <app-footer></app-footer>
   </div>
@@ -12,7 +11,7 @@ import AppHeader from '@/components/AppHeader'
 import AppFooter from '@/components/AppFooter'
 
 export default {
-  nake: 'app',
+  name: 'app',
 
   components: {
     AppHeader,
