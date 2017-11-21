@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
 import Raven from 'raven-js';
-import Notification from '../components/Notification'
 
 Vue.prototype.$axios = axios
 
@@ -10,17 +9,12 @@ export const SYNTACTICUS_API_BASE = 'http://foni.uio.no:9293/'
 
 const syntacticusBase = axios.create({ baseURL: `${SYNTACTICUS_API_BASE}/` })
 
-// Based on https://github.com/fundon/vue-admin/blob/master/src/components/pages/Components/Message.vue
-const MessageComponent = Vue.extend(Notification)
-
-const openErrorMessage = (title, msg) => {
-  return new MessageComponent({
-    el: document.createElement('div'),
-
-    propsData: {
-      title: title,
-      message: msg,
-    }
+const openErrorMessage = (msg) => {
+  Vue.prototype.$toast.open({
+    duration: 5000,
+    message: msg,
+    position: 'is-top',
+    type: 'is-danger'
   })
 }
 
@@ -28,14 +22,14 @@ const api = {
   handleError(error) {
     if (error.response) {
       if (error.response.status === 404) {
-        openErrorMessage('Page not found', "Oops, we can't find that page! Did you follow an old link?");
+        openErrorMessage("Oops, we can't find that page! Did you follow an old link?");
       } else if (error.response.status === 429) {
-        openErrorMessage('Too many requests', "Whoa there, slow down! If you need access to the raw data you can download it from GitHub.");
+        openErrorMessage("Whoa there, slow down! If you need access to the raw data you can download it from GitHub.");
       } else {
-        openErrorMessage('Unable to load data', "Oops, we couldn't load the data you were looking for! We may have some problems with our server...");
+        openErrorMessage("Oops, we couldn't load the data you were looking for! We may have some problems with our server...");
       }
     } else {
-      openErrorMessage('Unable to load data', "Oops, we couldn't load the data you were looking for! We may have some problems with our server...");
+      openErrorMessage("Oops, we couldn't load the data you were looking for! We may have some problems with our server...");
     }
 
     Raven.captureException(error);
