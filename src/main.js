@@ -7,6 +7,7 @@ import VueGoodWizard from 'vue-good-wizard';
 import { formatNumber } from 'accounting';
 import VueInfiniteScroll from 'vue-infinite-scroll';
 import VueShortkey from 'vue-shortkey';
+import Buefy from 'buefy';
 
 import Raven from 'raven-js';
 import RavenVue from 'raven-js/plugins/vue';
@@ -64,6 +65,7 @@ Vue.use(NProgress, {
 Vue.use(VueGoodWizard);
 Vue.use(VueInfiniteScroll);
 Vue.use(VueShortkey);
+Vue.use(Buefy);
 
 const nprogress = new NProgress() // { parent: '.nprogress-container' })
 
