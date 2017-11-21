@@ -24,7 +24,6 @@
     "raven-js": "^3.17.0",
     "vue": "^2.4.1",
     "vue-bulma-message": "^1.1.1",
-    "vue-bulma-modal": "^1.0.1",
     "vue-bulma-notification": "^1.1.1",
     "vue-good-wizard": "^1.1.2",
     "vue-infinite-scroll": "^2.0.1",

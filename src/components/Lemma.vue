@@ -46,11 +46,13 @@
           <br>
           <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> license
           <br>
-          <a class="button is-warning is-small" @click="openModalBasic">Details...</a>
-          <modal :visible="showModal" @close="closeModalBasic">
-            <p>
+          <a class="button is-warning is-small" @click="openModal">Details...</a>
+          <modal :visible="showModal" @close="closeModal">
+            <p slot="header">
               <strong>{{ lemma }}</strong> ({{ partOfSpeech | partOfSpeech }}, {{ language | language }})
-              <br>
+            </p>
+
+            <p>
               This lemma is from the {{ language | language }} dictionary generated from the <a :href="treebank.mainURL">{{ treebank.name }}</a> version <a :href="treebank.releaseURL">{{ treebank.version }}</a>.
             </p>
 
@@ -254,9 +256,9 @@ export default {
   },
 
   methods: {
-    openModalBasic () { this.showModal = true; },
+    openModal () { this.showModal = true; },
 
-    closeModalBasic () { this.showModal = false; },
+    closeModal () { this.showModal = false; },
 
     fetchEntries() {
       return api.getLemma(this.splitGID.dictionaryGID, this.lemma, this.partOfSpeech, this.variant).then((response) => {

@@ -1,32 +1,51 @@
 <template>
-  <modal :visible="visible" @close="close">
-    <div class="box">
-      <article class="media">
-        <div class="media-content">
-          <div class="content">
-            <slot></slot>
-          </div>
-        </div>
-      </article>
+  <div class="modal animated is-active" v-if="show">
+    <div class="modal-background" @click="close">
     </div>
-  </modal>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">
+          <slot name="header"></slot>
+        </p>
+        <button class="delete" @click="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <slot></slot>
+      </section>
+      <footer class="modal-card-foot">
+        <slot name="footer"></slot>
+      </footer>
+    </div>
+  </div>
 </template>
 
 <script>
-import { Modal } from 'vue-bulma-modal'
-
 export default {
-  components: {
-    Modal
-  },
-
   props: {
     visible: Boolean
+  },
+
+  data () {
+    return {
+      show: this.visible
+    }
+  },
+
+  mounted () {
+    // TODO: is this really necessary?
+    document.body.appendChild(this.$el)
   },
 
   methods: {
     close () {
       this.$emit('close')
+      this.show = false
+    }
+  },
+
+  watch: {
+    visible (v) {
+      this.show = v
     }
   }
 }

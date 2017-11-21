@@ -1,5 +1,5 @@
 <template>
-  <section class="hero is-medium"> <!-- v-shortkey.once="['h']" @shortkey="openModalBasic()" -->
+  <section class="hero is-medium"> <!-- v-shortkey.once="['h']" @shortkey="openModal()" -->
     <div class="hero-head">
       <div class="container">
         <nav class="nav">
@@ -53,7 +53,8 @@
       </div>
     </div>
 
-    <modal :visible="showModal" @close="closeModalBasic">
+    <modal :visible="showModal" @close="closeModal">
+      <p slot="header">Keyboard shortcuts</p>
       <table class="table">
         <thead>
           <tr><th>Keyboard shortcut</th><th>Description</th></tr>
@@ -106,9 +107,9 @@ export default {
       });
     },
 
-    openModalBasic() { this.showModal = true; },
+    openModal() { this.showModal = true; },
 
-    closeModalBasic() { this.showModal = false; },
+    closeModal() { this.showModal = false; },
   }
 }
 </script>
