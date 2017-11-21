@@ -193,7 +193,7 @@ export default {
 
     dictionaryGID() { return this.splitGID.dictionaryGID; },
 
-    treebank() { return this.splitGID.treebank; },
+    treebank() { return treebankFromGID(this.gid); },
 
     language() { return this.splitGID.language; },
 
