@@ -5201,10 +5201,6 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
-vue-bulma-message@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/vue-bulma-message/-/vue-bulma-message-1.1.1.tgz#a3c23e706deced511321f11862b7124741d8ef0d"
-
 vue-bulma-notification@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/vue-bulma-notification/-/vue-bulma-notification-1.1.1.tgz#e559763065d53c2755cee73906b4e7010c137512"
