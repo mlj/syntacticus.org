@@ -161,7 +161,6 @@ text
 </style>
 
 <script>
-import Switches from './Switches';
 import CurvedGraph from './graphs/CurvedGraph'
 import schema from '../data/schema.json'
 import MetadataModal from './MetadataModal';
@@ -175,7 +174,6 @@ import {
 export default {
   components: {
     CurvedGraph,
-    Switches,
     MetadataModal,
   },
 

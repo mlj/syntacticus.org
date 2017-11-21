@@ -35,7 +35,7 @@
         <div class="level-left">
           <span v-if="language === 'orv'">
             English translations
-            <switches v-model="rusGlossesEnabled"></switches>
+            <b-switch v-model="rusGlossesEnabled" size="is-small"></b-switch>
             Russian translations
           </span>
         </div>
@@ -107,7 +107,6 @@
 import { mapGetters } from 'vuex';
 import Multiselect from 'vue-multiselect';
 import MetadataModal from './MetadataModal';
-import Switches from './Switches';
 import Pagination from './Pagination';
 import api from '../api';
 import schema from '../data/schema.json';
@@ -122,7 +121,6 @@ export default {
   components: {
     Pagination,
     Multiselect,
-    Switches,
     MetadataModal,
   },
 
