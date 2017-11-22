@@ -40,61 +40,19 @@
           </div>
         </div>
 
-        <div class="tabs is-centered">
-          <ul>
-            <li :class="{ 'is-active': showInterlinear && !showPunctuation }"><a @click.prevent="switchToSimpleInterlinear">Lemmas &amp; parts of speech</a></li>
-            <li :class="{ 'is-active': showInterlinear && showPunctuation }"><a @click.prevent="switchToDetailedInterlinear">Morphology &amp; punctuation</a></li>
-            <li :class="{ 'is-active': showGraph }"><a @click.prevent="switchToGraph">Syntax</a></li>
-          </ul>
-        </div>
-
-        <!-- div class="columns">
-          <div class="column is-narrow">
-            <nav class="panel">
-              <p class="panel-tabs">
-                <a @click.prevent="switchToInterlinear" :class="{ 'is-active': showInterlinear }">Text</a>
-                <a @click.prevent="switchToGraph" :class="{ 'is-active': showGraph }">Graph</a>
-              </p>
-              <span class="panel-block">
-                <switches v-model="showPartsOfSpeech"></switches>
-                &nbsp;Parts of speech
-              </span>
-              <span class="panel-block">
-                <switches v-model="showLemmas"></switches>
-                &nbsp;Lemmas
-              </span>
-              <span class="panel-block">
-                <switches v-model="showMorphology"></switches>
-                &nbsp;Morphology
-              </span>
-              <span class="panel-block">
-                <switches v-model="showPunctuation"></switches>
-                &nbsp;Punctuation
-              </span>
-            </nav>
-          </div>
-
-          <div class="column" -->
-            <div class="graph" v-if="showGraph">
-              <curved-graph :tokens="sentence.tokens"></curved-graph>
-              <!-- object :data="svgURL" type="image/svg+xml"></object -->
-            </div>
-
-            <div class="interlinear" v-if="showInterlinear">
+        <b-tabs position="is-centered">
+          <b-tab-item label="Lemmas &amp; parts of speech">
+            <div class="interlinear">
               <template v-for="token in selectedTokens">
                 <div class="intlin">
                   <span class="form"> </span>
                   <span class="annotation"></span>
                 </div>
 
-                <div class="intlin" v-if="showPunctuation && token.presentation_before">
-                  <span class="form" :lang="sentence.language">{{ token.presentation_before }}</span>
-                </div>
-
                 <div class="intlin">
                   <span class="form" :lang="sentence.language">{{ token.form }}</span>
-                  <span class="annotation" v-if="showPartsOfSpeech">{{ token.part_of_speech | partOfSpeech }}</span>
-                  <span class="annotation" v-if="showLemmas">
+                  <span class="annotation">{{ token.part_of_speech | partOfSpeech }}</span>
+                  <span class="annotation">
                     <em :lang="sentence.language">
                       <router-link
                         :to="{ name: 'lemma', params: { gid: buildLemmaGID(dictionaryGID, token) }}">
@@ -102,17 +60,49 @@
                       </router-link>
                     </em>
                   </span>
-                  <span class="annotation msd" v-if="showMorphology">{{ token.morphology | morphology1 }}&nbsp;</span>
-                  <span class="annotation msd" v-if="showMorphology">{{ token.morphology | morphology2 }}&nbsp;</span>
+                </div>
+              </template>
+            </div>
+          </b-tab-item>
+
+          <b-tab-item label="Morphology &amp; punctuation">
+            <div class="interlinear">
+              <template v-for="token in selectedTokens">
+                <div class="intlin">
+                  <span class="form"> </span>
+                  <span class="annotation"></span>
                 </div>
 
-                <div class="intlin" v-if="showPunctuation && token.presentation_after">
+                <div class="intlin" v-if="token.presentation_before">
+                  <span class="form" :lang="sentence.language">{{ token.presentation_before }}</span>
+                </div>
+
+                <div class="intlin">
+                  <span class="form" :lang="sentence.language">{{ token.form }}</span>
+                  <span class="annotation">{{ token.part_of_speech | partOfSpeech }}</span>
+                  <span class="annotation">
+                    <em :lang="sentence.language">
+                      <router-link
+                        :to="{ name: 'lemma', params: { gid: buildLemmaGID(dictionaryGID, token) }}">
+                      {{ token.lemma }}<span v-if="token.variant">#{{ token.variant }}</span>
+                      </router-link>
+                    </em>
+                  </span>
+                  <span class="annotation msd">{{ token.morphology | morphology1 }}&nbsp;</span>
+                  <span class="annotation msd">{{ token.morphology | morphology2 }}&nbsp;</span>
+                </div>
+
+                <div class="intlin" v-if="token.presentation_after">
                   <span class="form" :lang="sentence.language">{{ token.presentation_after }}</span>
                 </div>
               </template>
-            <!-- /div>
-          </div -->
-        </div>
+            </div>
+          </b-tab-item>
+
+          <b-tab-item label="Syntax">
+            <curved-graph :tokens="sentence.tokens"></curved-graph>
+          </b-tab-item>
+        </b-tabs>
       </div>
     </section>
   </article>
@@ -179,14 +169,6 @@ export default {
 
   data () {
     return {
-      showPunctuation: false,
-      showPartsOfSpeech: true,
-      showLemmas: true,
-      showMorphology: false,
-
-      showInterlinear: true,
-      showGraph: false,
-
       sentence: {
         tokens: [],
         source: {},
@@ -204,10 +186,6 @@ export default {
     treebank() { return treebankFromGID(this.gid); },
 
     dictionaryGID() { return [this.treebank.id, this.treebank.version, this.sentence.language].join(':'); },
-
-    // svgURL() {
-    //   return this.$http.options.root + '/graphs/' + this.$route.params.sentence
-    // },
 
     allTokens() {
       return this.sentence.tokens
@@ -245,32 +223,6 @@ export default {
   methods: {
     buildLemmaGID(dictionaryGID, token) {
       return makeLemmaGID(dictionaryGID, token.lemma, token.part_of_speech, token.variant);
-    },
-
-    switchToGraph() {
-      this.showInterlinear = false;
-      this.showGraph = true;
-    },
-
-    switchToInterlinear() {
-      this.showInterlinear = true;
-      this.showGraph = false;
-    },
-
-    switchToSimpleInterlinear() {
-      this.showMorphology = false;      
-      this.showPunctuation = false;
-      this.showLemmas = true;
-      this.showPartsOfSpeech = true;
-      this.switchToInterlinear();
-    },
-
-    switchToDetailedInterlinear() {
-      this.showMorphology = true;      
-      this.showPunctuation = true;
-      this.showLemmas = true;
-      this.showPartsOfSpeech = true;
-      this.switchToInterlinear();
     },
 
     fetchEntries() {
