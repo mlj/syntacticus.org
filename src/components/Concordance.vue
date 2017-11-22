@@ -11,18 +11,26 @@
 
     <div><br></div>
 
-    <table class="table">
-      <tbody>
-        <template v-for="token in tokens">
-          <router-link tag="tr" :to="{ name: 'sentence', params: { gid: token.sentence }}">
-            <td width="10%" class="is-hidden-mobile">{{ token.citation }}</td>
-            <td class="has-text-right" width="35%" :lang="token.language">{{ token.abbrev_text_before }}</td>
-            <td class="highlight has-text-centered" :lang="token.language">{{ token.form }}</td>
-            <td class="has-text-left" width="45%" :lang="token.language">{{ token.abbrev_text_after }}</td>
-          </router-link>
-        </template>
-      </tbody>
-    </table>
+    <b-table
+      :data="tokens"
+      :loading="loading"
+      class="concordance"
+      >
+      <template slot-scope="props">
+        <b-table-column field="citation" width="10%">
+          <router-link :to="{ name: 'sentence', params: { gid: props.row.sentence }}">{{ props.row.citation }}</router-link>
+        </b-table-column>
+        <b-table-column field="before" class="has-text-right" width="35%" :lang="props.row.language">
+          {{ props.row.abbrev_text_before }}
+        </b-table-column>
+        <b-table-column field="form" class="is-primary has-text-centered" :lang="props.row.language">
+          {{ props.row.form }}
+        </b-table-column>
+        <b-table-column field="after" class="has-text-left" width="45%" :lang="props.row.language">
+          {{ props.row.abbrev_text_after }}
+        </b-table-column>
+      </template>
+    </b-table>
 
     <div><br></div>
 
@@ -46,6 +54,7 @@ export default {
       total: 0,
       tokens: [],
       pageSize: 50,
+      loading: false,
     }
   },
 
@@ -77,6 +86,7 @@ export default {
 
   methods: {
     fetchEntries() {
+      this.loading = true;
       let newQuery = {};
       for (var i in this.query) {
         newQuery[i] = this.query[i];
@@ -87,8 +97,16 @@ export default {
       return api.getTokens(newQuery).then((response) => {
         this.tokens = response.data.data;
         this.total = response.data.total;
-      }).catch(error => api.handleError(error));
+        this.loading = false;
+      }).catch((error) => {
+        this.loading = false;
+        api.handleError(error);
+      });
     },
   },
 }
 </script>
+
+<style>
+.concordance thead { display: none; }
+</style>

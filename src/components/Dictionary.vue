@@ -70,27 +70,28 @@
           <pagination :total-pages="totalPages" :current-page.sync="page">
           </pagination>
 
-          <table class="table is-fullwidth">
-            <tbody>
-              <tr v-for="lemma in dictionary">
-                <td>
-                  <router-link :to="{ name: 'lemma', params: { gid: buildLemmaGID(lemma) }}"><span :lang="language">{{ lemma.lemma }}</span><span v-if="lemma.variant">#{{ lemma.variant}}</span> ({{ lemma.part_of_speech | partOfSpeech }})</router-link>
+          <b-table
+            :data="dictionary"
+            :loading="loading"
+            >
+            <template slot-scope="props">
+              <b-table-column field="lemma" label="Lemma">
+                <router-link :to="{ name: 'lemma', params: { gid: buildLemmaGID(props.row) }}"><span :lang="language">{{ props.row.lemma }}</span><span v-if="props.row.variant">#{{ props.row.variant}}</span> ({{ props.row.part_of_speech | partOfSpeech }})</router-link>
 
-                  <template v-if="language === 'orv'">
-                    <template v-if="rusGlossesEnabled">
-                      {{ lemma.glosses.rus | printGloss }}
-                    </template>
-                    <template v-else>
-                      {{ lemma.glosses.eng | printGloss }}
-                    </template>
+                <template v-if="language === 'orv'">
+                  <template v-if="rusGlossesEnabled">
+                    {{ props.row.glosses.rus | printGloss }}
                   </template>
                   <template v-else>
-                    {{ lemma.glosses.eng | printGloss }}
+                    {{ props.row.glosses.eng | printGloss }}
                   </template>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                </template>
+                <template v-else>
+                  {{ props.row.glosses.eng | printGloss }}
+                </template>
+              </b-table-column>
+            </template>
+          </b-table>
 
           <pagination :total-pages="totalPages" :current-page.sync="page">
           </pagination>
@@ -128,6 +129,8 @@ export default {
 
   data() {
     return {
+      loading: false,
+
       formPattern: this.$route.query.lemma,
       pos: null,
 
@@ -218,6 +221,8 @@ export default {
 
   methods: {
     fetchEntries() {
+      this.loading = true;
+
       let dictionaryParams = {
         part_of_speech: this.$route.query.pos,
         lemma: this.$route.query.lemma,
@@ -233,9 +238,13 @@ export default {
       }
 
       return api.getDictionary(this.gid, dictionaryParams).then((response) => {
-        this.dictionary = response.data.data
-        this.total = response.data.total
-      }).catch((error) => api.handleError(error))
+        this.dictionary = response.data.data;
+        this.total = response.data.total;
+        this.loading = false;
+      }).catch((error) => {
+        this.loading = false;
+        api.handleError(error);
+      });
     },
 
     onFormFilterFind(n) {
