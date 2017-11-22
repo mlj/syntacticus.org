@@ -29,7 +29,7 @@
               <div class="navbar-item">
                 <div class="field has-addons">
                   <p class="control">
-                    <input @keyup.enter="search" v-model="query" class="input" type="text" placeholder="" v-shortkey.avoid v-shortkey.focus="['s']">
+                    <input @keyup.enter="search" v-model="query" class="input" type="text" placeholder="" v-shortkey.focus="['s']">
                   </p>
                   <p class="control">
                     <button @click.prevent="search" class="button">Search</button>
