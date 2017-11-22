@@ -4,21 +4,16 @@ import Router from 'vue-router';
 import Welcome from '@/components/Welcome';
 import Browse from '@/components/Browse';
 import About from '@/components/About';
-//import Dictionary from '@/components/Dictionary';
-//import Lemma from '@/components/Lemma';
-//import Sentence from '@/components/Sentence';
-//import AlignedSource from '@/components/AlignedSource';
-import Source from '@/components/Source';
-//import Tokens from '@/components/Tokens';
-import Search from '@/components/Search';
-import BugReport from '@/components/BugReport';
 import NotFound from '@/components/NotFound';
 
+const Source = () => import('@/components/Source');
 const Dictionary = () => import('@/components/Dictionary.vue');
 const Lemma = () => import('@/components/Lemma.vue');
 const Sentence = () => import('@/components/Sentence.vue');
 const AlignedSource = () => import('@/components/AlignedSource.vue');
 const Tokens = () => import('@/components/Tokens.vue');
+const Search = () => import('@/components/Search');
+const BugReport = () => import('@/components/BugReport');
 
 Vue.use(Router)
 
@@ -104,4 +99,4 @@ export default new Router({
       component: NotFound
     }
   ]
-})
+});
