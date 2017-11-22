@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import Welcome from '@/components/Welcome';
-import Access from '@/components/Access';
 import Browse from '@/components/Browse';
 import About from '@/components/About';
 //import Dictionary from '@/components/Dictionary';
@@ -49,6 +48,13 @@ export default new Router({
     },
 
     {
+      path: '/dictionary/:gid',
+      name: 'dictionary',
+      component: Dictionary,
+      props: true,
+    },
+
+    {
       path: '/source/:gid',
       name: 'source',
       component: Source,
@@ -83,31 +89,14 @@ export default new Router({
     },
 
     {
-      path: '/access',
-      component: Access,
-      children: [
+      path: '/bugs',
+      component: BugReport,
+    },
 
-
-        {
-          path: '/bugs',
-          component: BugReport,
-        },
-
-        {
-          path: '/dictionary/:gid',
-          name: 'dictionary',
-          component: Dictionary,
-          props: (route) => ({
-            gid: route.params.gid,
-          }),
-        },
-
-        {
-          path: '/search',
-          name: 'search',
-          component: Search,
-        },
-      ],
+    {
+      path: '/search',
+      name: 'search',
+      component: Search,
     },
 
     {
