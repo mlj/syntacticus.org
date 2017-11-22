@@ -64,6 +64,12 @@ Vue.use(NProgress, {
 });
 Vue.use(VueGoodWizard);
 Vue.use(VueInfiniteScroll);
+
+// FIXME: This doesn't seem to work. We're using v-shortkey.avoid on
+// all relevant elements instead for now.
+// Avoid triggering keyboard shortcuts, which are enabled in AppHeader's
+// outermost section element, in input and textarea fields.
+//Vue.use(VueShortkey, { prevent: ['input', 'textarea'] })
 Vue.use(VueShortkey);
 Vue.use(Buefy);
 

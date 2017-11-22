@@ -40,7 +40,7 @@
           </span>
         </div>
         <div class="level-right">
-          <input class="input" v-model="formPattern" placeholder="Form">
+          <input class="input" v-model="formPattern" v-shortkey.avoid placeholder="Form">
           <!-- multiselect
             v-model="formPattern"
             :multiple="false"

@@ -18,7 +18,7 @@
             </div>
           </nav -->
 
-          <!-- input type="text" v-model="form">
+          <!-- input type="text" v-model="form" v-shortkey.avoid>
           <p class="control">
             <button @click.prevent="search" class="button">Search</button>
           </p -->

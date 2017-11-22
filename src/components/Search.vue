@@ -33,12 +33,12 @@
 
       <label class="label">Form</label>
       <p class="control">
-        <input class="input" type="text" v-model="query.form">
+        <input class="input" type="text" v-shortkey.avoid v-model="query.form">
       </p>
 
       <label class="label">Lemma</label>
       <p class="control">
-        <input class="input" type="text" v-model="query.lemma">
+        <input class="input" type="text" v-shortkey.avoid v-model="query.lemma">
       </p>
 
       <h4 class="subtitle is-7">Morphology</h4>
