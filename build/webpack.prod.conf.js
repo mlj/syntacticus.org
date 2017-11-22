@@ -120,6 +120,10 @@ const webpackConfig = merge(baseWebpackConfig, {
       {
         from: path.resolve(__dirname, '../CNAME'),
         to: '.'
+      },
+      {
+        from: path.resolve(__dirname, '../robots.txt'),
+        to: '.'
       }
     ])
   ]
