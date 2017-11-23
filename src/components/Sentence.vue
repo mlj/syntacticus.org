@@ -201,9 +201,9 @@ export default {
 
     sentenceID () { return this.gid.split(':')[3]; },
 
-    hasPrevious() { return this.sentence.previous_gid !== null },
+    hasPrevious() { return !!this.sentence.previous_gid; },
 
-    hasNext() { return this.sentence.next_gid !== null },
+    hasNext() { return !!this.sentence.next_gid; },
   },
 
   mounted() {
