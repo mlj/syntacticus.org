@@ -131,13 +131,45 @@
       <h2 class="subtitle">Raw data and developer resources</h2>
 
       <div class="columns is-multiline">
-        <div class="column">
+        <div class="column is-half">
           <div class="content">
             <p>
-              Raw data can be downloaded from the pages of the constituent treebanks. We also provide a toolchain and libraries for reading and manipulate raw treebank data. Some of this is documented in our <a href="https://proiel.github.io/handbook/">handbook</a>, and the code is found in out GitHub repositories
+              Raw data can be downloaded from the pages of the constituent treebanks, and some of the data has also been converted to <a href="http://universaldependencies.org/">Universal Dependencies 2.0</a>. We also provide a toolchain and libraries for reading and manipulate raw treebank data. Some of this is documented in our <a href="https://proiel.github.io/handbook/">handbook</a>, and the code is found in out GitHub repositories
               <a href="https://github.com/proiel">https://github.com/proiel</a> and
-              <a href="https://github.com/mlj">https://github.com/mlj</a>.
+              <a href="https://github.com/mlj">https://github.com/mlj</a>. (If you're curious the code for the Syntacticus website is also <a href="https://github.com/mlj/syntacticus.org">available</a>.)
             </p>
+          </div>
+        </div>
+
+        <div class="column is-half has-text-centered">
+          <div class="content">
+            <table class="table is-narrow">
+              <tbody>
+                <tr>
+                  <td>PROIEL</td>
+                  <td>
+                    <span class="icon"><i class="fa fa-github"></i></span><a href="https://github.com/proiel/proiel-treebank/">Raw data</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>TOROT</td>
+                  <td><span class="icon"><i class="fa fa-github"></i></span><a href="https://github.com/torottreebank/">Raw data</a></td>
+                </tr>
+                <tr>
+                  <td>ISWOC</td>
+                  <td><span class="icon"><i class="fa fa-github"></i></span><a href="https://github.com/iswoc/iswoc-treebank/">Raw data</a></td>
+                </tr>
+                <tr>
+                  <td>PROIEL, UD 2.0</td>
+                  <td>
+                    <a href="http://universaldependencies.org/treebanks/la_proiel/index.html">Latin</a>,
+                    <a href="http://universaldependencies.org/treebanks/grc_proiel/index.html">Ancient Greek</a>,
+                    <a href="http://universaldependencies.org/treebanks/cu/index.html">Old Church Slavonic</a>,
+                    <a href="http://universaldependencies.org/treebanks/got/index.html">Gothic</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
