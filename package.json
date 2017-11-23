@@ -28,7 +28,7 @@
     "vue-infinite-scroll": "^2.0.2",
     "vue-multiselect": "^2.0.6",
     "vue-nprogress": "^0.1.5",
-    "vue-router": "^2.7.0",
+    "vue-router": "^3.0.1",
     "vue-shortkey": "^3.0.2",
     "vue-ua": "^1.4.0",
     "vuex": "^2.3.1"
