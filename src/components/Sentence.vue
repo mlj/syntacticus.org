@@ -169,6 +169,8 @@ export default {
 
   data () {
     return {
+      busy: false,
+
       sentence: {
         tokens: [],
         source: {},
@@ -206,10 +208,6 @@ export default {
     hasNext() { return !!this.sentence.next_gid; },
   },
 
-  mounted() {
-    // addSvg()
-  },
-
   created() {
     this.fetchEntries()
   },
@@ -226,15 +224,15 @@ export default {
     },
 
     fetchEntries() {
+      this.busy = true;
+
       return api.getSentence(this.gid).then((response) => {
-        this.sentence = response.data || {}
-        // this.$nextTick(() => {
-        //  this.drawGraph()
-        // })
+        this.sentence = response.data || {};
+        this.busy = false;
       }).catch(error => {
-        api.handleAPIError(error)
-        // abort()
-      })
+        api.handleAPIError(error);
+        this.busy = false;
+      });
     }
   }
 }

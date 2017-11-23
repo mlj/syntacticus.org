@@ -139,8 +139,11 @@ export default {
         this.chunks = response.data.chunks;
         this.alignment = response.data.alignment || {};
 
-        return this.loadChunk();        
-      }).catch((error) => api.handleError(error))
+        this.loadChunk();
+      }).catch((error) => {
+        api.handleError(error);
+        this.busy = false;
+      });
     },
 
     loadChunk() {
@@ -151,10 +154,12 @@ export default {
         return api.getChunk(chunkId).then((response) => {
           this.loadedChunks.push(response.data);
           this.busy = false;
-        }).catch((error) => api.handleError(error));
+        }).catch((error) => {
+          api.handleError(error)
+          this.busy = false;
+        });
       } else {
         this.busy = false;
-        return null;
       }
     },
   }
