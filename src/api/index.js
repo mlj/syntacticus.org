@@ -20,20 +20,24 @@ const openErrorMessage = (msg) => {
 
 const api = {
   handleError(error) {
-    if (error.response) {
-      if (error.response.status === 404) {
-        openErrorMessage("Oops, we can't find that page! Did you follow an old link?");
-      } else if (error.response.status === 429) {
-        openErrorMessage("Whoa there, slow down! If you need access to the raw data you can download it from GitHub.");
-      } else {
-        openErrorMessage("Oops, we couldn't load the data you were looking for! We may have some problems with our server...");
-      }
-    } else {
-      openErrorMessage("Oops, we couldn't load the data you were looking for! We may have some problems with our server...");
-    }
+    let status = error.response ? error.response.status : null;
 
-    Raven.captureException(error);
-    console.error(error.message);
+    switch (status) {
+      case 404:
+        openErrorMessage("Oops, we can't find that page! Did you follow an old link?");
+        break;
+
+      case 429:
+        openErrorMessage("Whoa there, slow down! If you need access to the raw data you can download it from GitHub.");
+        break;
+
+      default:
+        openErrorMessage("Oops, we couldn't load the data you were looking for! We may have some problems with our server...");
+
+        Raven.captureException(error);
+        console.error(error.message);
+        break;
+    }
   },
 
   getDictionaries() {
