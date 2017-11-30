@@ -6,7 +6,12 @@
       "@type": "Organization",
       "url": "http://syntacticus.org",
       "name": "Syntacticus",
-      "logo": "http://syntacticus.org/static/logo-large.png"
+      "logo": "http://syntacticus.org/static/logo-large.png",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "http://syntacticus.org/tokens?form={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
     }
     </script>
 
