@@ -167,7 +167,9 @@ export default {
 
 <style lang="scss">
 .citation {
-  color: blue;
+  font-weight: bold;
+  font-family: "Inconsolata", Andale Mono, Monaco, Monospace;
+  color: black;
 }
 
 //ul.index
