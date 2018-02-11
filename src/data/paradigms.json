@@ -233,25 +233,25 @@
         },
 
         {
-          "title": "Present particle weak",
+          "title": "Present participle weak",
           "pattern": { "tense": "p", "mood": "p", "strength": "w" },
           "template": "adjectival"
         },
 
         {
-          "title": "Present particle strong",
+          "title": "Present participle strong",
           "pattern": { "tense": "p", "mood": "p", "strength": "s" },
           "template": "adjectival"
         },
 
         {
-          "title": "Perfect particle weak",
+          "title": "Perfect participle weak",
           "pattern": { "tense": "r", "mood": "p", "strength": "w" },
           "template": "adjectival"
         },
 
         {
-          "title": "Perfect particle strong",
+          "title": "Perfect participle strong",
           "pattern": { "tense": "r", "mood": "p", "strength": "s" },
           "template": "adjectival"
         },
@@ -479,13 +479,13 @@
         },
 
         {
-          "title": "Present particle",
+          "title": "Present participle",
           "pattern": { "tense": "p", "mood": "p" },
           "template": "adjectival"
         },
 
         {
-          "title": "Perfect particle",
+          "title": "Perfect participle",
           "pattern": { "tense": "r", "mood": "p" },
           "template": "adjectival"
         },
