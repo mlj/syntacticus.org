@@ -239,7 +239,7 @@ export default {
     hasValency() { return this.valency && this.valency.length > 0; },
 
     hasParadigm() {
-      return this.paradigm && _.keys(this.paradigm).length > 0 && (this.language === 'lat' || this.language === 'orv' || this.language === 'chu' || this.language === 'got');
+      return this.paradigm && _.keys(this.paradigm).length > 0 && (this.language === 'lat' || this.language === 'orv' || this.language === 'chu' || this.language === 'got' || this.language == 'grc');
     },
   },
 
