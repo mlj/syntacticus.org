@@ -1,29 +1,30 @@
 <template>
-  <div class="tree">
-    <svg :width="svgWidth" :height="svgHeight">
-      <g transform="translate(20, 10)">
-        <g v-for="n in nodes" :class="{ selected1: n.parent == selected, selected2: n.id == selected }">
-          <g @mouseover="selected = n.id" @mouseout="selected = -1" class="token">
-            <text class="word" :x="wordWidth * n.id" :y="treeHeight - wordHeight" :class="{ root: n.id == 0 }">{{ n.word }}</text>
-            <text class="tag" :x="wordWidth * n.id" :y="treeHeight">{{ n.tag | partOfSpeech }}</text>
-            <text class="lemma" :x="wordWidth * n.id" :y="treeHeight + 16">{{ n.lemmaForm }}</text>
-          </g>
-          <g v-if="n.id" class="edge">
-            <text class="edge-dependency" :x="n.mid" :y="n.arrow - 7">{{ n.dependency }}</text>
-            <path class="edge-line" :d="edgePath(n)" />
-            <path class="edge-arrow" :d="arrowPath" :transform="arrowTransform(n)" />
-          </g>
-        </g>
+  <vis-base class="curved-graph">
+    <g v-for="n in nodes" :class="{ selected1: n.parent == selected, selected2: n.id == selected }">
+      <g @mouseover="selected = n.id" @mouseout="selected = -1" class="token">
+        <text class="word" :x="wordWidth * n.id" :y="treeHeight - wordHeight" :class="{ root: n.id == 0 }">{{ n.word }}</text>
+        <text class="tag" :x="wordWidth * n.id" :y="treeHeight">{{ n.tag | partOfSpeech }}</text>
+        <text class="lemma" :x="wordWidth * n.id" :y="treeHeight + 16">{{ n.lemmaForm }}</text>
       </g>
-    </svg>
-  </div>
+      <g v-if="n.id" class="edge">
+        <text class="edge-dependency" :x="n.mid" :y="n.arrow - 7">{{ n.dependency }}</text>
+        <path class="edge-line" :d="edgePath(n)" />
+        <path class="edge-arrow" :d="arrowPath" :transform="arrowTransform(n)" />
+      </g>
+    </g>
+  </vis-base>
 </template>
 
 <script>
 import { symbol, symbolTriangle } from 'd3-shape'
+import VisBase from './BaseGraph.vue';
 import _ from '../../mylodash';
 
 export default {
+  components: {
+    VisBase
+  },
+
   data () {
     return {
       selected: -1
@@ -35,7 +36,7 @@ export default {
   computed: {
     arrowPath: function() { return symbol().type(symbolTriangle).size(5)(); },
 
-    data: function() { return this.computeEdgeLevels(this.parseConll(this.tokens)); },
+    data: function() { return this.computeEdgeLevels(this.parse(this.tokens)); },
 
     wordWidth: function() { return 110; },
 
@@ -44,10 +45,6 @@ export default {
     treeWidth: function() { return this.wordWidth * this.data.length - this.wordWidth / 3; },
 
     treeHeight: function() { return this.levelHeight(_.max(_.map(this.data, function(edge) { return edge.level }))) + 2 * this.wordHeight; },
-
-    svgWidth: function() { return this.treeWidth + 2 * this.wordWidth / 3; },
-
-    svgHeight: function() { return this.treeHeight + this.wordHeight / 2 + 20; },
 
     nodes: function() {
       var that = this;
@@ -98,7 +95,7 @@ export default {
       return data;
     },
 
-    parseConll: function(tokens) {
+    parse: function(tokens) {
       let data = [];
 
       data.push({
@@ -137,11 +134,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.tree
-  text-align: center
-  overflow-y: hidden
-  overflow-x: auto
-
 .word
   fill: #555
   text-anchor: middle

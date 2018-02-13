@@ -99,8 +99,12 @@
             </div>
           </b-tab-item>
 
-          <b-tab-item label="Syntax">
+          <!-- b-tab-item label="Syntax">
             <curved-graph :tokens="sentence.tokens"></curved-graph>
+          </b-tab-item -->
+
+          <b-tab-item label="Syntax">
+            <svg-graph :gid="gid"></svg-graph>
           </b-tab-item>
         </b-tabs>
       </div>
@@ -152,6 +156,8 @@ text
 
 <script>
 import CurvedGraph from './graphs/CurvedGraph'
+import SvgGraph from './graphs/SvgGraph';
+
 import schema from '../data/schema.json'
 import MetadataModal from './MetadataModal';
 import api from '../api';
@@ -164,6 +170,7 @@ import {
 export default {
   components: {
     CurvedGraph,
+    SvgGraph,
     MetadataModal,
   },
 

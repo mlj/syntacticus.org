@@ -79,6 +79,10 @@ const api = {
     return syntacticusBase.get('tokens', { params: params });
   },
 
+  getGraph(gid) {
+    return syntacticusBase.get(`graphs/${gid}`);
+  },
+
   pushNewQuery(context, query) {
     // Not quite sure why we need to do this but without it, the route is not updated. See https://forum.vuejs.org/t/vue-2-router-push-query-not-work/1202/4
     let o = {};
