@@ -83,7 +83,7 @@ export default {
   },
 
   mounted() {
-    this.zoomThing(0.75);
+    this.zoomThing(0.6);
 
 // FIXME: This doesn't work
 //    const _zoom = zoom()

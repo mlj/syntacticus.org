@@ -106,6 +106,10 @@
           <b-tab-item label="Syntax">
             <svg-graph :gid="gid"></svg-graph>
           </b-tab-item>
+
+          <b-tab-item label="Alignment" v-if="alignment">
+            <svg-graph :gid="gid" :alignment="true"></svg-graph>
+          </b-tab-item>
         </b-tabs>
       </div>
     </section>
@@ -190,6 +194,11 @@ export default {
   props: ['gid'],
 
   computed: {
+    alignment() {
+      // FIXME
+      return this.sentence.language === 'got' || this.sentence.language === 'xcl' || this.gid.match(/(marianus|latin-nt)/);
+    },
+
     permanentURL() { return permanentURLs.sentence(this.gid); },
 
     treebank() { return treebankFromGID(this.gid); },

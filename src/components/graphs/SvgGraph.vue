@@ -1,19 +1,26 @@
 <template>
   <div>
-    <b-dropdown v-model="params">
+    <b-dropdown v-model="direction">
+      <button class="button is-primary" type="button" slot="trigger">
+        <span>Direction</span>
+        <b-icon icon="menu-down"></b-icon>
+      </button>
+
+      <b-dropdown-item value="TD">Top-down</b-dropdown-item>
+      <b-dropdown-item value="LR">Left-right</b-dropdown-item>
+    </b-dropdown>
+
+    <b-dropdown v-model="layout" v-if="!alignment">
       <button class="button is-primary" type="button" slot="trigger">
         <span>Layouts</span>
         <b-icon icon="menu-down"></b-icon>
       </button>
 
-      <b-dropdown-item value="modern:LR">Modern left-right</b-dropdown-item>
-      <b-dropdown-item value="modern:TD">Modern top-down</b-dropdown-item>
-      <b-dropdown-item value="classic:LR">Classic left-right</b-dropdown-item>
-      <b-dropdown-item value="classic:TD">Classic top-down</b-dropdown-item>
-      <b-dropdown-item value="packed:LR">Packed left-right</b-dropdown-item>
-      <b-dropdown-item value="packed:TD">Packed top-down</b-dropdown-item>
-      <!-- b-dropdown-item value="linearized:LR">Linearized left-right</b-dropdown-item>
-      <b-dropdown-item value="linearized:TD">Linearized top-down</b-dropdown-item -->
+      <span>
+        <b-dropdown-item value="modern">Modern</b-dropdown-item>
+        <b-dropdown-item value="classic">Classic</b-dropdown-item>
+        <b-dropdown-item value="packed">Packed</b-dropdown-item>
+      </span>
     </b-dropdown>
 
     <vis-base>
@@ -33,13 +40,15 @@ export default {
 
   props: [
     'gid',
+    'alignment',
   ],
 
   data() {
     return {
       svg: '',
       busy: false,
-      params: 'modern:TD',
+      layout: 'modern',
+      direction: 'LR',
     }
   },
 
@@ -52,16 +61,26 @@ export default {
       this.fetch();
     },
 
-    params (to, from) {
+    direction (to, from) {
       this.fetch();
-    }
+    },
+
+    layout (to, from) {
+      this.fetch();
+    },
   },
 
   methods: {
+    fetchAPI() {
+      if (this.alignment)
+        return api.getAlignedGraph(this.gid, { layout: 'aligned-modern', direction: this.direction });
+      else
+        return api.getGraph(this.gid, { layout: this.layout, direction: this.direction });
+    },
+
     fetch() {
       if (this.gid) {
-        let p = this.params.split(':');
-        return api.getGraph(this.gid, { layout: p[0], direction: p[1] }).then((response) => {
+        return this.fetchAPI().then((response) => {
           this.svg = response.data || '';
           this.busy = false;
         }).catch(error => {

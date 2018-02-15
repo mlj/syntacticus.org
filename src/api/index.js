@@ -83,6 +83,10 @@ const api = {
     return syntacticusBase.get(`graphs/${gid}`, { params: params });
   },
 
+  getAlignedGraph(gid, params) {
+    return syntacticusBase.get(`aligned_graphs/${gid}`, { params: params });
+  },
+
   pushNewQuery(context, query) {
     // Not quite sure why we need to do this but without it, the route is not updated. See https://forum.vuejs.org/t/vue-2-router-push-query-not-work/1202/4
     let o = {};
