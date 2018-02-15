@@ -22,7 +22,7 @@
             <br>
             <metadata-modal>
               <p slot="header">
-                <strong>{{ sentence.source.title }}</strong> <small>({{ sentence.language | language }})</small>
+                <strong>{{ sentence.source.title }}</strong> <small>({{ sentence.language }})</small>
               </p>
 
               <p>
@@ -186,8 +186,6 @@ export default {
         tokens: [],
         source: {},
       },
-
-      language: 'lat',
     }
   },
 
