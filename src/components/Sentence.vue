@@ -237,7 +237,7 @@ export default {
         this.sentence = response.data || {};
         this.busy = false;
       }).catch(error => {
-        api.handleAPIError(error);
+        api.handleError(error);
         this.busy = false;
       });
     }
