@@ -79,8 +79,8 @@ const api = {
     return syntacticusBase.get('tokens', { params: params });
   },
 
-  getGraph(gid) {
-    return syntacticusBase.get(`graphs/${gid}`);
+  getGraph(gid, params) {
+    return syntacticusBase.get(`graphs/${gid}`, { params: params });
   },
 
   pushNewQuery(context, query) {
