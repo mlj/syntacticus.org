@@ -1,43 +1,44 @@
 <template>
   <div>
-    <b-dropdown v-model="direction">
-      <button class="button is-primary" type="button" slot="trigger">
-        <span>Direction</span>
-        <b-icon icon="menu-down"></b-icon>
-      </button>
+    <nav class="level">
+      <div class="level-left">
+        <div class="level-item">
+          <b-dropdown v-model="direction">
+            <button class="button is-primary" type="button" slot="trigger">
+              <span>Direction</span>
+              <b-icon icon="menu-down"></b-icon>
+            </button>
 
-      <b-dropdown-item value="TD">Top-down</b-dropdown-item>
-      <b-dropdown-item value="LR">Left-right</b-dropdown-item>
-    </b-dropdown>
+            <b-dropdown-item value="TD">Top-down</b-dropdown-item>
+            <b-dropdown-item value="LR">Left-right</b-dropdown-item>
+          </b-dropdown>
+        </div>
+        <div class="level-item">
+          <b-dropdown v-model="layout" v-if="!alignment">
+            <button class="button is-primary" type="button" slot="trigger">
+              <span>Layouts</span>
+              <b-icon icon="menu-down"></b-icon>
+            </button>
 
-    <b-dropdown v-model="layout" v-if="!alignment">
-      <button class="button is-primary" type="button" slot="trigger">
-        <span>Layouts</span>
-        <b-icon icon="menu-down"></b-icon>
-      </button>
+            <span>
+              <b-dropdown-item value="modern">Modern</b-dropdown-item>
+              <b-dropdown-item value="classic">Classic</b-dropdown-item>
+              <b-dropdown-item value="packed">Packed</b-dropdown-item>
+            </span>
+          </b-dropdown>
+        </div>
+      </div>
+    </nav>
 
-      <span>
-        <b-dropdown-item value="modern">Modern</b-dropdown-item>
-        <b-dropdown-item value="classic">Classic</b-dropdown-item>
-        <b-dropdown-item value="packed">Packed</b-dropdown-item>
-      </span>
-    </b-dropdown>
-
-    <vis-base>
-      <g v-html="svg"></g>
-    </vis-base>
+    <div v-html="svg" class="svg-container has-text-centered">
+    </div>
   </div>
 </template>
 
 <script>
-import VisBase from './BaseGraph.vue';
 import api from '../../api';
 
 export default {
-  components: {
-    VisBase
-  },
-
   props: [
     'gid',
     'alignment',
@@ -81,7 +82,8 @@ export default {
     fetch() {
       if (this.gid) {
         return this.fetchAPI().then((response) => {
-          this.svg = response.data || '';
+          let data = response.data || '';
+          this.svg = data;
           this.busy = false;
         }).catch(error => {
           api.handleError(error);
@@ -90,7 +92,14 @@ export default {
       } else {
         this.svg = '';
       }
-    }
+    },
   }
 }
 </script>
+
+<style>
+.svg-container {
+  border: 1px solid #e0e0e0;
+  overflow: scroll;
+}
+</style>
