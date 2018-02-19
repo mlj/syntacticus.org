@@ -160,6 +160,10 @@
                   <td><span class="icon"><i class="fa fa-github"></i></span><a href="https://github.com/iswoc/iswoc-treebank/">Raw data</a></td>
                 </tr>
                 <tr>
+                  <td>Dictionaries</td>
+                  <td><span class="icon"><i class="fa fa-github"></i></span><a href="https://github.com/proiel/syntacticus-dictionaries/">Raw data</a></td>
+                </tr>
+                <tr>
                   <td>PROIEL, UD 2.0</td>
                   <td>
                     <a href="http://universaldependencies.org/treebanks/la_proiel/index.html">Latin</a>,
