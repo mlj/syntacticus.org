@@ -28,6 +28,11 @@
           </b-dropdown>
         </div>
       </div>
+      <div class="level-right">
+        <div class="level-item" v-if="responseURL!==null">
+          <a class="button" :href="responseURL">Download graph</a>
+        </div>
+      </div>
     </nav>
 
     <div v-html="svg" class="svg-container has-text-centered">
@@ -50,6 +55,7 @@ export default {
       busy: false,
       layout: 'modern',
       direction: 'LR',
+      responseURL: null,
     }
   },
 
@@ -82,14 +88,21 @@ export default {
     fetch() {
       if (this.gid) {
         return this.fetchAPI().then((response) => {
+          // Grab response URL for direct downloads
+          this.responseURL = response.request.responseURL;
+
           let data = response.data || '';
           this.svg = data;
           this.busy = false;
         }).catch(error => {
           api.handleError(error);
+
+          this.responseURL = null;
+          this.svg = '';
           this.busy = false;
         });
       } else {
+        this.responseURL = null;
         this.svg = '';
       }
     },
