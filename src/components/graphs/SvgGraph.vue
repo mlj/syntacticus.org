@@ -30,6 +30,9 @@
       </div>
       <div class="level-right">
         <div class="level-item" v-if="responseURL!==null">
+          <a class="button" @click="fullscreen">Fullscreen view</a>
+        </div>
+        <div class="level-item" v-if="responseURL!==null">
           <a class="button" :href="responseURL">Download graph</a>
         </div>
       </div>
@@ -105,6 +108,11 @@ export default {
         this.responseURL = null;
         this.svg = '';
       }
+    },
+
+    fullscreen() {
+      let win = window.open('', "Syntacticus", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes");
+      win.document.body.innerHTML = `<body>${this.svg}</body>`;
     },
   }
 }
