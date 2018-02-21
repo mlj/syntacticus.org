@@ -131,18 +131,18 @@
       <table class="table is-fullwidth" v-else>
         <thead>
           <tr>
-            <td>Text</td>
-            <td>Absolute frequency</td>
-            <td>Composition year</td>
-            <td>Manuscript year</td>
+            <th>Text</th>
+            <th>Absolute frequency</th>
+            <th>Composition year</th>
+            <th>Manuscript year</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="d in distribution">
             <td><tt>{{ d.id }}</tt></td>
             <td>{{ d.n }}</td>
-            <td>{{ d.chronology.text }}</td>
-            <td>{{ d.chronology.ms }}</td>
+            <td>{{ yearToText(d.chronology.text) }}</td>
+            <td>{{ yearToText(d.chronology.ms) }}</td>
           </tr>
         </tbody>
       </table>
@@ -254,6 +254,10 @@ export default {
   },
 
   methods: {
+    yearToText(v) {
+      return v ? (v < 0 ? `${v} BC` : `AD ${v}`) : '';
+    },
+
     fetchEntries() {
       return api.getLemma(this.splitGID.dictionaryGID, this.lemma, this.partOfSpeech, this.variant).then((response) => {
         // FIXME: verify that language, lemma, pos are identical
