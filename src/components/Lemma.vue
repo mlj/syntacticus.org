@@ -6,39 +6,45 @@
           <h1 class="title is-2" :lang="language">
             {{ lemma }}<span v-if="variant">#{{ variant }}</span>
           </h1>
-          <h2 class="subtitle is-4"> {{ language | language }}</h2>
-          <p>
-            <strong>{{ partOfSpeech | partOfSpeech }}</strong>
+          <article class="media">
+            <div class="media-content">
+              <p>
+                <strong :lang="language">{{ lemma }}</strong>
 
-            <small v-if="frequency > 1">
-              (occurs {{ frequency }} times in the corpus)
-            </small>
-            <small v-else-if="frequency == 1">
-              (occurs once in the corpus)
-            </small>
-            <small v-else>
-              (does not occur in the corpus)
-            </small>
-          </p>
+                <small>
+                  {{ language | language }}, {{ partOfSpeech | partOfSpeech }}
+                </small>
 
-          <p v-if="hasGlosses">
-            <span v-if="glosses.eng" lang="en">
-              <br>English: {{ glosses.eng }}
-            </span>
-            <span v-if="glosses.rus" lang="ru">
-              <br>Russian: {{ glosses.rus }}
-            </span>
-          </p>
+                <small v-if="frequency > 1">
+                  (occurs {{ frequency }} times in the corpus)
+                </small>
+                <small v-else-if="frequency == 1">
+                  (occurs once in the corpus)
+                </small>
+                <small v-else>
+                  (does not occur in the corpus)
+                </small>
+              </p>
 
-          <p v-if="hasHomographs">
-            See also
-            <span v-for="homograph in parsedHomographs">
-              <router-link :to="{ name: 'lemma', params: { gid: [dictionaryGID, homograph.lemma, homograph.partOfSpeech].join(':') }}">
-                <span :lang="language">{{ homograph.lemma }}</span>
-                ({{ homograph.partOfSpeech | partOfSpeech }})
-              </router-link>
-            </span>
-          </p>
+              <p v-if="hasGlosses">
+                <span v-if="glosses.eng" lang="en">
+                  English: {{ glosses.eng }}<br>
+                </span>
+                <span v-if="glosses.rus" lang="ru">
+                  Russian: {{ glosses.rus }}<br>
+                </span>
+              </p>
+
+              <p v-if="hasHomographs">
+                <span class="icon"><i class="fa fa-plus-square"></i></span> See also
+                <span v-for="(homograph, i) in parsedHomographs">
+                  <router-link :to="{ name: 'lemma', params: { gid: [dictionaryGID, homograph.lemma, homograph.partOfSpeech].join(':') }}">
+                    <span :lang="language">{{ homograph.lemma }}</span>
+                    ({{ homograph.partOfSpeech | partOfSpeech }})</router-link><span v-if="i + 2 < parsedHomographs.length">, </span><span v-if="i + 2 === parsedHomographs.length"> and </span>
+                </span>
+              </p>
+            </div>
+          </article>
         </div>
 
         <div class="column is-narrow has-text-right">
