@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <div v-for="p in expandedParadigm">
-      <h3 class="subtitle is-7"><em>{{ p.title }}</em></h3>
+  <section>
+    <article class="notification" v-for="p in expandedParadigm" v-if="hasForms(p)">
+      <h3 class="subtitle">{{ p.title }}</h3>
 
-      <table class="table is-bordered" v-if="hasForms(p)">
+      <table class="table is-bordered">
         <thead>
           <tr>
             <th :width="columnWidth(p.levels1)"></th>
@@ -22,10 +22,12 @@
           </tr>
         </tbody>
       </table>
+    </article>
 
-      <span v-else>No attestations</span>
+    <div class="notification">
+      No attestations were found for {{ unattestedLevelsAsText }}
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

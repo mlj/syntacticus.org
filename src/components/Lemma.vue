@@ -67,86 +67,68 @@
       </div>
     </div><!-- del -->
 
-    <div class="container" v-if="hasParadigm">
-      <h3 class="subtitle">Paradigm</h3>
-
-      <p>
-        <small>This table shows the distribution of this lemma by inflectional form. Note that the same form may be found in multiple cells if the exact form cannot be determined or the annotator flagged the analysis as uncertain.</small>
-      </p>
-
-      <paradigm :lemma="lemma" :partOfSpeech="partOfSpeech" :language="language" :forms="paradigm"></paradigm>
-    </div>
-
-    <div class="container" v-if="hasValency">
-      <h3 class="subtitle">Valency</h3>
-
-      <p>
-        <small>The valency table shows the frequency the lemma grouped by argument structure. The table has been generated from the annotation in the treebank and therefore uses the same classification system for arguments. Click on the frequency numbers to see those occurrences in context.</small>
-      </p>
-
-      <valency :valency="valency"></valency>
-    </div>
-
-    <div class="container">
-      <nav class="level">
-        <div class="level-left">
-        </div>
-        <div class="level-right">
-          <multiselect
-            v-model="timelineType"
-            :options="['Timeline', 'Table']"
-            :multiple="false"
-            :show-labels="false"
-            :searchable="false"
-            :allow-empty="false">
-          </multiselect>
-
-          <!-- multiselect
-            v-model="timelineVariable"
-            :options="['by composition', 'by manuscript']"
-            :multiple="false"
-            :show-labels="false"
-            :searchable="false"
-            :allow-empty="false">
-          </multiselect -->
-        </div>
-      </nav>
-
-      <div class="tile is-ancestor" v-if="timelineType === 'Timeline'">
-        <div class="tile is-parent">
-          <article class="tile is-child">
-            <h3 class="subtitle">Chronology by composition</h3>
-            <timeline :events="timelineText"></timeline>
-          </article>
+    <b-tabs position="is-centered">
+      <b-tab-item label="Paradigm" v-if="hasParadigm">
+        <div class="notification">
+          <small>The tables show the distribution of this lemma by inflectional form. Note that the same form may be found in multiple cells if the exact form cannot be determined or the annotator flagged the analysis as uncertain.</small>
         </div>
 
-        <div class="tile is-parent">
-          <article class="tile is-child">
-            <h3 class="subtitle">Chronology by manuscript</h3>
-            <timeline :events="timelineMs"></timeline>
-          </article>
-        </div>
-      </div>
+        <paradigm :lemma="lemma" :partOfSpeech="partOfSpeech" :language="language" :forms="paradigm"></paradigm>
+      </b-tab-item>
 
-      <table class="table is-fullwidth" v-else>
-        <thead>
-          <tr>
-            <th>Text</th>
-            <th>Absolute frequency</th>
-            <th>Composition year</th>
-            <th>Manuscript year</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="d in distribution">
-            <td><tt>{{ d.id }}</tt></td>
-            <td>{{ d.n }}</td>
-            <td>{{ yearToText(d.chronology.text) }}</td>
-            <td>{{ yearToText(d.chronology.ms) }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      <b-tab-item label="Valency">
+        <div class="notification">
+          <small>The valency table shows the frequency the lemma grouped by argument structure. The table has been generated from the annotation in the treebank and therefore uses the same classification system for arguments. Click on the frequency numbers to see those occurrences in context.</small>
+        </div>
+
+        <valency :valency="valency"></valency>
+      </b-tab-item>
+
+      <b-tab-item label="Chronology">
+        <div class="notification">
+          <small>This shows the chronological distribution of attestations of the lemma in the treebank.</small>
+        </div>
+
+        <div class="container">
+          <div class="tile is-ancestor">
+            <div class="tile is-parent">
+              <table class="table is-child">
+                <thead>
+                  <tr>
+                    <th>Text</th>
+                    <th>Absolute frequency</th>
+                    <th>Composition year</th>
+                    <th>Manuscript year</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="d in distribution">
+                    <td><tt>{{ d.id }}</tt></td>
+                    <td>{{ d.n }}</td>
+                    <td>{{ yearToText(d.chronology.text) }}</td>
+                    <td>{{ yearToText(d.chronology.ms) }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="tile is-parent">
+              <article class="tile is-child">
+                <h3 class="subtitle">By composition</h3>
+                <timeline :events="timelineText"></timeline>
+              </article>
+            </div>
+
+            <div class="tile is-parent">
+              <article class="tile is-child">
+                <h3 class="subtitle">By manuscript</h3>
+                <timeline :events="timelineMs"></timeline>
+              </article>
+            </div>
+          </div>
+        </div>
+      </b-tab-item>
+    </b-tabs>
   </section>
 </template>
 
@@ -179,8 +161,6 @@ export default {
       homographs: [],
       paradigm: {},
       valency: [],
-      timelineType: 'Timeline',
-      // timelineVariable: 'by composition',
     }
   },
 

@@ -18,12 +18,12 @@ export default {
 
     width: {
       type: Number,
-      default: 300
+      default: 250
     },
 
     height: {
       type: Number,
-      default: 600
+      default: 350
     }
   },
 
