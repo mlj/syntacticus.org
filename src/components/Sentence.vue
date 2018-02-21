@@ -52,7 +52,6 @@
 
                 <div class="intlin">
                   <span class="form" :lang="sentence.language">{{ token.form }}</span>
-                  <span class="annotation">{{ token.part_of_speech | partOfSpeech }}</span>
                   <span class="annotation">
                     <em :lang="sentence.language">
                       <router-link
@@ -61,6 +60,7 @@
                       </router-link>
                     </em>
                   </span>
+                  <span class="annotation"><span class="tag">{{ token.part_of_speech | partOfSpeech }}</span></span>
                 </div>
               </template>
             </div>
@@ -80,7 +80,6 @@
 
                 <div class="intlin">
                   <span class="form" :lang="sentence.language">{{ token.form }}</span>
-                  <span class="annotation">{{ token.part_of_speech | partOfSpeech }}</span>
                   <span class="annotation">
                     <em :lang="sentence.language">
                       <router-link
@@ -89,6 +88,7 @@
                       </router-link>
                     </em>
                   </span>
+                  <span class="annotation"><span class="tag">{{ token.part_of_speech | partOfSpeech }}</span></span>
                   <span class="annotation msd">{{ token.morphology | morphology1 }}&nbsp;</span>
                   <span class="annotation msd">{{ token.morphology | morphology2 }}&nbsp;</span>
                 </div>
