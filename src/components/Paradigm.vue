@@ -3,7 +3,7 @@
     <div v-for="p in expandedParadigm">
       <h3 class="subtitle is-7"><em>{{ p.title }}</em></h3>
 
-      <table class="table is-bordered">
+      <table class="table is-bordered" v-if="hasForms(p)">
         <thead>
           <tr>
             <th :width="columnWidth(p.levels1)"></th>
@@ -22,6 +22,8 @@
           </tr>
         </tbody>
       </table>
+
+      <span v-else>No attestations</span>
     </div>
   </div>
 </template>
@@ -49,6 +51,33 @@ export default {
   props: ['lemma', 'language', 'partOfSpeech', 'forms'],
 
   computed: {
+    // Partitions the levels of the paradigm into attested and unattested
+    partitionLevels() {
+      let attested = []
+      let unattested = [];
+
+      for (let p of this.expandedParadigm) {
+        if (this.hasForms(p))
+          attested.push(p);
+        else
+          unattested.push(p);
+      }
+
+      return [attested, unattested];
+    },
+
+    attestedLevels() {
+      return this.partitionLevels[0];
+    },
+
+    unattestedLevels() {
+      return this.partitionLevels[1];
+    },
+
+    unattestedLevelsAsText() {
+      return this.unattestedLevels.map(p => p.title.toLowerCase()).join(', ').replace(/, ([^,]+)$/, ' or $1')
+    },
+
     doCaseFlattening() {
       //if (this.lemma.length > 0 && this.lemma[0] === this.lemma[0].toLowerCase())
       //  return true;
@@ -138,7 +167,20 @@ export default {
       }
 
       return matches.sort((a, b) => b.n - a.n)
-    }
+    },
+
+    hasForms(p) {
+      for (let l2 of p.levels2) {
+        for (let l12 of p.levels1) {
+          for (let form of this.getForms(l12.pattern, l2.pattern, p.pattern)) {
+            if (form.n > 0)
+              return true; // short-circuit
+          }
+        }
+      }
+
+      return false;
+    },
   }
 }
 </script>
