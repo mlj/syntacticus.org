@@ -24,7 +24,7 @@
       </table>
     </article>
 
-    <div class="notification">
+    <div class="notification" v-if="unattestedLevelsAsText !== ''">
       No attestations were found for {{ unattestedLevelsAsText }}
     </div>
   </section>
@@ -77,7 +77,7 @@ export default {
     },
 
     unattestedLevelsAsText() {
-      return this.unattestedLevels.map(p => p.title.toLowerCase()).join(', ').replace(/, ([^,]+)$/, ' or $1')
+      return this.unattestedLevels.filter(p => p.title).map(p => p.title.toLowerCase()).join(', ').replace(/, ([^,]+)$/, ' or $1')
     },
 
     doCaseFlattening() {
@@ -139,12 +139,13 @@ export default {
     },
 
     mergePatterns(pattern1, pattern2, pattern3) {
-      return Object.assign(pattern1 || {}, pattern2 || {}, pattern3 || {})
+      let n = {};
+      return Object.assign(n, pattern1 || {}, pattern2 || {}, pattern3 || {});
     },
 
     makeRegex(pattern) {
-      const t = features.map(feature => pattern[feature] || '.').join('')
-      return new RegExp('^' + t + '$')
+      const t = features.map(feature => pattern[feature] || '.').join('');
+      return new RegExp('^' + t + '$');
     },
 
     // Picks out the intersection between the set of forms and the patterns. Orders

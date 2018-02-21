@@ -387,6 +387,10 @@
 
       "singleton": [
         { "pattern": {}, "text": "" }
+      ],
+
+      "uninflected": [
+        { "pattern": { "inflection": "n" }, "text": "Uninflected" }
       ]
     },
 
@@ -419,6 +423,11 @@
       "infinitival": {
         "axis1": "voice",
         "axis2": "infectum"
+      },
+
+      "uninflected": {
+        "axis1": "singleton",
+        "axis2": "uninflected"
       }
     },
 
@@ -657,6 +666,10 @@
         { "pattern": { "inflection": "n" }, "text": "Uninflected" }
       ],
 
+      "uninflected": [
+        { "pattern": { "inflection": "n" }, "text": "Uninflected" }
+      ],
+
       "voice": [
         { "pattern": { "voice": "a" }, "text": "Active" },
         { "pattern": { "voice": "p" }, "text": "Passive" }
@@ -709,6 +722,11 @@
       "infinitival": {
         "axis1": "voice",
         "axis2": "infinitival-tenses"
+      },
+
+      "uninflected": {
+        "axis1": "singleton",
+        "axis2": "uninflected"
       }
     },
 
