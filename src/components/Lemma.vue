@@ -103,17 +103,17 @@
                 <thead>
                   <tr>
                     <th>Text</th>
-                    <th>Absolute frequency</th>
                     <th>Composition year</th>
                     <th>Manuscript year</th>
+                    <th>Absolute frequency</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="d in distribution">
                     <td><tt>{{ d.id }}</tt></td>
-                    <td>{{ d.n }}</td>
                     <td>{{ yearToText(d.chronology.text) }}</td>
                     <td>{{ yearToText(d.chronology.ms) }}</td>
+                    <td>{{ d.n }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -276,7 +276,7 @@ export default {
 
   methods: {
     yearToText(v) {
-      return v ? (v < 0 ? `${v} BC` : `AD ${v}`) : '';
+      return v ? (v < 0 ? `${v} BC` : v) : '';
     },
 
     fetchEntries() {
