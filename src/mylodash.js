@@ -7,6 +7,7 @@ import map from 'lodash/map';
 import mapValues from 'lodash/mapValues';
 import max from 'lodash/max';
 import reduce from 'lodash/reduce';
+import some from 'lodash/some';
 import sortBy from 'lodash/sortBy';
 import sortedUniq from 'lodash/sortedUniq';
 import sumBy from 'lodash/sumBy';
@@ -21,6 +22,7 @@ export default {
   mapValues,
   max,
   reduce,
+  some,
   sortBy,
   sortedUniq,
   sumBy,

@@ -57,7 +57,13 @@ export default {
     },
 
     data() {
-      return _.sortBy(this.events.filter(d => d.year > 0), d => d.year);
+      return _.sortBy(this.events.filter(d => (d.year !== undefined && d.year !== null)), d => d.year).map(d => {
+          return {
+            year: (d.year < 0 ? `${-d.year} BC` : d.year),
+            n: d.n,
+            id: d.id,
+          }
+      });
     }
   },
 

@@ -134,14 +134,14 @@
             </div -->
 
             <div class="tile is-parent is-vertical">
-              <article class="tile is-child">
+              <article class="tile is-child" v-if="hasTimelineComposition">
                 <h3 class="subtitle">Absolute frequency by composition</h3>
-                <chart-timeline :events="chartTimelineText"></chart-timeline>
+                <chart-timeline :events="chartTimelineComposition"></chart-timeline>
               </article>
 
-              <article class="tile is-child">
+              <article class="tile is-child" v-if="hasTimelineManuscript">
                 <h3 class="subtitle">Absolute frequency by manuscript</h3>
-                <chart-timeline :events="chartTimelineComposition"></chart-timeline>
+                <chart-timeline :events="chartTimelineManuscript"></chart-timeline>
               </article>
             </div>
           </div>
@@ -213,7 +213,15 @@ export default {
       })
     },
 
-    chartTimelineText() {
+    hasTimelineComposition() {
+      return _.some(this.distribution, d => (d.chronology.text !== undefined && d.chronology.text !== null));
+    },
+
+    hasTimelineManuscript() {
+      return _.some(this.distribution, d => (d.chronology.ms !== undefined && d.chronology.ms !== null));
+    },
+
+    chartTimelineComposition() {
       return this.distribution.map(d => {
         return {
           id: d.id,
@@ -223,7 +231,7 @@ export default {
       })
     },
 
-    chartTimelineComposition() {
+    chartTimelineManuscript() {
       return this.distribution.map(d => {
         return {
           id: d.id,
@@ -276,7 +284,7 @@ export default {
 
   methods: {
     yearToText(v) {
-      return v ? (v < 0 ? `${v} BC` : v) : '';
+      return v ? (v < 0 ? `${-v} BC` : v) : '';
     },
 
     fetchEntries() {
