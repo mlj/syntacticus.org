@@ -76,7 +76,7 @@
         <paradigm :lemma="lemma" :partOfSpeech="partOfSpeech" :language="language" :forms="paradigm"></paradigm>
       </b-tab-item>
 
-      <b-tab-item label="Valency">
+      <b-tab-item label="Valency" v-if="hasValency">
         <div class="notification">
           <small>The valency table shows the frequency the lemma grouped by argument structure. The table has been generated from the annotation in the treebank and therefore uses the same classification system for arguments. Click on the frequency numbers to see those occurrences in context.</small>
         </div>
@@ -216,7 +216,7 @@ export default {
 
     hasGlosses() { return this.glosses.eng !== undefined || this.glosses.rus !== undefined; },
 
-    hasValency() { return this.valency && this.valency.length > 0; },
+    hasValency() { return !!(this.valency && this.valency.length > 0); },
 
     hasParadigm() {
       return this.paradigm && _.keys(this.paradigm).length > 0 && (this.language === 'lat' || this.language === 'orv' || this.language === 'chu' || this.language === 'got' || this.language == 'grc');
