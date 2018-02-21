@@ -119,17 +119,29 @@
               </table>
             </div>
 
-            <div class="tile is-parent">
+            <!-- div class="tile is-parent">
               <article class="tile is-child">
                 <h3 class="subtitle">By composition</h3>
-                <timeline :events="timelineText"></timeline>
+                <vertical-timeline :events="timelineText"></chart-timeline>
               </article>
             </div>
 
             <div class="tile is-parent">
               <article class="tile is-child">
                 <h3 class="subtitle">By manuscript</h3>
-                <timeline :events="timelineMs"></timeline>
+                <vertical-timeline :events="timelineMs"></vertical-timeline>
+              </article>
+            </div -->
+
+            <div class="tile is-parent is-vertical">
+              <article class="tile is-child">
+                <h3 class="subtitle">Absolute frequency by composition</h3>
+                <chart-timeline :events="chartTimelineText"></chart-timeline>
+              </article>
+
+              <article class="tile is-child">
+                <h3 class="subtitle">Absolute frequency by manuscript</h3>
+                <chart-timeline :events="chartTimelineComposition"></chart-timeline>
               </article>
             </div>
           </div>
@@ -143,7 +155,8 @@
 import Multiselect from 'vue-multiselect';
 import MetadataModal from './MetadataModal';
 import api from '../api';
-import Timeline from './Timeline';
+//import VerticalTimeline from './timelines/VerticalTimeline';
+import ChartTimeline from './timelines/ChartTimeline';
 import Paradigm from './Paradigm';
 import Valency from './Valency';
 import schema from '../data/schema.json';
@@ -156,7 +169,8 @@ export default {
   components: {
     Paradigm,
     Valency,
-    Timeline,
+    //VerticalTimeline,
+    ChartTimeline,
     MetadataModal,
     Multiselect,
   },
@@ -199,25 +213,45 @@ export default {
       })
     },
 
-    timelineText() {
+    chartTimelineText() {
       return this.distribution.map(d => {
-        let year = d.chronology.text
         return {
-          label: year + ': ' + d.id + ' (' + d.n + ')',
-          date: year
+          id: d.id,
+          n: d.n,
+          year: d.chronology.text,
         }
       })
     },
 
-    timelineMs() {
+    chartTimelineComposition() {
       return this.distribution.map(d => {
-        let year = d.chronology.ms
         return {
-          label: year + ': ' + d.id + ' (' + d.n + ')',
-          date: year
+          id: d.id,
+          n: d.n,
+          year: d.chronology.ms,
         }
       })
     },
+
+    //timelineText() {
+    //  return this.distribution.map(d => {
+    //    let year = d.chronology.text
+    //    return {
+    //      label: year + ': ' + d.id + ' (' + d.n + ')',
+    //      date: year
+    //    }
+    //  })
+    //},
+
+    //timelineMs() {
+    //  return this.distribution.map(d => {
+    //    let year = d.chronology.ms
+    //    return {
+    //      label: year + ': ' + d.id + ' (' + d.n + ')',
+    //      date: year
+    //    }
+    //  })
+    //},
 
     frequency() { return this.distribution.map(e => e.n).reduce((a, e) => a + e, 0) },
 
