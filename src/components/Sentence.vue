@@ -23,7 +23,7 @@
             <br>
             <metadata-modal>
               <p slot="header">
-                <strong>{{ sentence.source.title }}</strong> <small>({{ sentence.language }})</small>
+                <strong>{{ sentence.source.title }}</strong> <small>({{ sentence.language | language }})</small>
               </p>
 
               <p>
