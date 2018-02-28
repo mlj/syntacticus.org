@@ -24,9 +24,9 @@
               It is licensed to you under the <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> license. If you use data from it in academic work, please use the recommended <a :href="treebank.citationURL">citation form</a>.
             </p>
 
-            <p>
+            <!--p>
               If you want to link to this text you should use the permanent link <a :href="permanentURL">{{ permanentURL }}</a>.
-            </p>
+            </p-->
           </metadata-modal>
         </div>
       </div>
