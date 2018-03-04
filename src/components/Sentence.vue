@@ -169,7 +169,8 @@ import api from '../api';
 import {
   permanentURLs,
   treebankFromGID,
-  makeLemmaGID
+  makeLemmaGID,
+  makeDictionaryGID
 } from '../shared';
 
 export default {
@@ -202,7 +203,8 @@ export default {
 
     treebank() { return treebankFromGID(this.gid); },
 
-    dictionaryGID() { return [this.treebank.id, this.treebank.version, this.sentence.language].join(':'); },
+    // FIXME
+    dictionaryGID() { return makeDictionaryGID('syntacticus', '20180303', this.sentence.language); },
 
     allTokens() {
       return this.sentence.tokens

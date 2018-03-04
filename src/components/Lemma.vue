@@ -66,9 +66,9 @@
               It is licensed to you under the <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> license. If you use data from it in academic work, please use the recommended <a :href="treebank.citationURL">citation form</a>.
             </p>
 
-            <!-- p>
+            <p>
               If you want to link to this text you should use the permanent link <a :href="permanentURL">{{ permanentURL }}</a>.
-            </p -->
+            </p>
           </metadata-modal>
         </div>
       </div>
@@ -111,8 +111,8 @@
                 <tbody>
                   <tr v-for="d in distribution">
                     <td><tt>{{ d.id }}</tt></td>
-                    <td>{{ yearToText(d.chronology.text) }}</td>
-                    <td>{{ yearToText(d.chronology.ms) }}</td>
+                    <td>{{ yearToText(d.chronology.t) }}</td>
+                    <td>{{ yearToText(d.chronology.m) }}</td>
                     <td>{{ d.n }}</td>
                   </tr>
                 </tbody>
@@ -209,16 +209,16 @@ export default {
     // FIXME: do this server side?
     parsedHomographs() {
       return this.homographs.map(h => {
-        return { lemma: h.split(',')[0], partOfSpeech: h.split(',')[1] }
+        return { lemma: h[0], partOfSpeech: h[1] }
       })
     },
 
     hasTimelineComposition() {
-      return _.some(this.distribution, d => (d.chronology.text !== undefined && d.chronology.text !== null));
+      return _.some(this.distribution, d => (d.chronology.t !== undefined && d.chronology.t !== null));
     },
 
     hasTimelineManuscript() {
-      return _.some(this.distribution, d => (d.chronology.ms !== undefined && d.chronology.ms !== null));
+      return _.some(this.distribution, d => (d.chronology.m !== undefined && d.chronology.m !== null));
     },
 
     chartTimelineComposition() {
@@ -226,7 +226,7 @@ export default {
         return {
           id: d.id,
           n: d.n,
-          year: d.chronology.text,
+          year: d.chronology.t,
         }
       })
     },
@@ -236,14 +236,14 @@ export default {
         return {
           id: d.id,
           n: d.n,
-          year: d.chronology.ms,
+          year: d.chronology.m,
         }
       })
     },
 
     //timelineText() {
     //  return this.distribution.map(d => {
-    //    let year = d.chronology.text
+    //    let year = d.chronology.t
     //    return {
     //      label: year + ': ' + d.id + ' (' + d.n + ')',
     //      date: year
@@ -253,7 +253,7 @@ export default {
 
     //timelineMs() {
     //  return this.distribution.map(d => {
-    //    let year = d.chronology.ms
+    //    let year = d.chronology.m
     //    return {
     //      label: year + ': ' + d.id + ' (' + d.n + ')',
     //      date: year
@@ -261,7 +261,9 @@ export default {
     //  })
     //},
 
-    frequency() { return this.distribution.map(e => e.n).reduce((a, e) => a + e, 0) },
+    frequency() {
+      return _.map(this.distribution).reduce((a, e) => a + e, 0)
+    },
 
     hasGlosses() { return this.glosses.eng !== undefined || this.glosses.rus !== undefined; },
 

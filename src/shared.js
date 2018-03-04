@@ -4,18 +4,21 @@ const TREEBANK_NAMES = {
   proiel: 'The PROIEL Treebank',
   iswoc: 'The ISWOC Treebank',
   torot: 'The TOROT Treebank',
+  syntacticus: 'Syntacticus Dictionaries',
 };
 
 const TREEBANK_MAIN_URLS = {
   proiel: 'https://proiel.github.io/',
   iswoc: 'https://iswoc.github.io/',
   torot: 'https://torottreebank.github.io/',
+  syntacticus: 'http://syntacticus.org',
 };
 
 const TREEBANK_RELEASE_URLS = {
   proiel: 'https://github.com/proiel/proiel-treebank/releases/tag/',
   iswoc: 'https://github.com/iswoc/iswoc-treebank/releases/tag/',
   torot: 'https://github.com/torottreebank/treebank-releases/releases/tag/',
+  syntacticus: 'https://github.com/proiel/syntacticus-dictionaries/releases/tag/',
 };
 
 export const permanentURLs = {
@@ -26,7 +29,8 @@ export const permanentURLs = {
 };
 
 export function makeDictionaryGID(treebank, version, language) {
-  return [treebank, version, language].join(':');
+  // FIXME
+  return ['syntacticus', '20180303', language].join(':');
 }
 
 export function makeLemmaGID(dictionaryGID, lemma, partOfSpeech, variant) {
