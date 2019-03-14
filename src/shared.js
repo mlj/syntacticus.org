@@ -28,8 +28,7 @@ export const permanentURLs = {
   dictionary: (gid) => `http://syntacticus.org/dictionary/${gid}`,
 };
 
-export function makeDictionaryGID(treebank, version, language) {
-  // FIXME
+export function makeDictionaryGID(language) {
   return ['syntacticus', '20180920', language].join(':');
 }
 
