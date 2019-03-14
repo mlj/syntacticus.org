@@ -30,7 +30,7 @@ export const permanentURLs = {
 
 export function makeDictionaryGID(treebank, version, language) {
   // FIXME
-  return ['syntacticus', '20180303', language].join(':');
+  return ['syntacticus', '20180920', language].join(':');
 }
 
 export function makeLemmaGID(dictionaryGID, lemma, partOfSpeech, variant) {

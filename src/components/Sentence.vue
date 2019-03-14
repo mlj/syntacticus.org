@@ -204,7 +204,7 @@ export default {
     treebank() { return treebankFromGID(this.gid); },
 
     // FIXME
-    dictionaryGID() { return makeDictionaryGID('syntacticus', '20180919', this.sentence.language); },
+    dictionaryGID() { return makeDictionaryGID('syntacticus', '20180920', this.sentence.language); },
 
     allTokens() {
       return this.sentence.tokens
