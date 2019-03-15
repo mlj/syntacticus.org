@@ -5,9 +5,11 @@ import Raven from 'raven-js';
 Vue.prototype.$axios = axios
 
 export const SYNTACTICUS_API_BASE = 'http://foni.uio.no:9293/'
-//export const SYNTACTICUS_API_BASE = 'http://shuttle:3000/'
+export const STATIC_FILE_BASE = '/static/'
 
 const syntacticusBase = axios.create({ baseURL: `${SYNTACTICUS_API_BASE}/` })
+
+const staticBase = axios.create({ baseURL: `${STATIC_FILE_BASE}/` })
 
 const openErrorMessage = (msg) => {
   Vue.prototype.$toast.open({
@@ -41,15 +43,15 @@ const api = {
   },
 
   getDictionaries() {
-    return syntacticusBase.get('dictionaries');
+    return staticBase.get('dictionaries.json');
   },
 
   getSources() {
-    return syntacticusBase.get('sources');
+    return staticBase.get('sources.json');
   },
 
   getSource(gid) {
-    return syntacticusBase.get(`sources/${gid}`);
+    return staticBase.get(`sources/${gid}.json`);
   },
 
   getChunk(id) {
