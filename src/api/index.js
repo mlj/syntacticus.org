@@ -55,7 +55,7 @@ const api = {
   },
 
   getChunk(id) {
-    return syntacticusBase.get(`chunks/${id}`);
+    return staticBase.get(`chunks/${id}.json`);
   },
 
   getAlignedChunk(id) {
