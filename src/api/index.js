@@ -5,7 +5,7 @@ import Raven from 'raven-js';
 Vue.prototype.$axios = axios
 
 export const SYNTACTICUS_API_BASE = 'http://foni.uio.no:9293/'
-export const STATIC_FILE_BASE = '/static/'
+export const STATIC_FILE_BASE = '/static/data/'
 
 const syntacticusBase = axios.create({ baseURL: `${SYNTACTICUS_API_BASE}/` })
 
