@@ -49,7 +49,7 @@
         <div v-infinite-scroll="loadChunk" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
           <span v-for="chunk in loadedChunks">
             <span v-for="sentence in chunk">
-              <router-link :to="{ name: 'sentence', params: { gid: sentence[0] } }">
+              <router-link :to="{ name: 'sentence', params: { gid: makeSentenceLink(sentence[0]) } }">
                 <span :lang="language" v-html="sentence[1]"></span>
               </router-link>
             </span>
@@ -127,6 +127,10 @@ export default {
   },
 
   methods: {
+    makeSentenceLink(id_part) {
+      return `${this.gid}:${id_part}`;
+    },
+
     fetchEntries() {
       this.busy = true;
 
