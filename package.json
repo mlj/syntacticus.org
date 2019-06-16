@@ -15,7 +15,7 @@
   "dependencies": {
     "accounting": "^0.4.1",
     "axios": "^0.19.0",
-    "buefy": "^0.6.2",
+    "buefy": "^0.6.7",
     "d3-array": "^1.2.1",
     "d3-axis": "1.0.8",
     "d3-scale": "^1.0.7",
