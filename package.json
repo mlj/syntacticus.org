@@ -26,7 +26,7 @@
     "font-awesome": "^4.7.0",
     "lodash": "4.17.11",
     "raven-js": "^3.20.1",
-    "vue": "^2.5.9",
+    "vue": "^2.6.10",
     "vue-infinite-scroll": "^2.0.2",
     "vue-multiselect": "^2.0.6",
     "vue-nprogress": "^0.1.5",
