@@ -31,13 +31,15 @@
               <thead>
                 <tr>
                   <th>Language</th>
-                  <th>Size</th>
+                  <th>Size (tokens)</th>
+                  <th>Size (sentences)</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(tokenCount, language) in statsByLanguage">
+                <tr v-for="(stats, language) in statsByLanguage">
                   <td>{{ language | language }}</td>
-                  <td>{{ tokenCount | number }} tokens</td>
+                  <td>{{ stats.tokenCount | number }}</td>
+                  <td>{{ stats.sentenceCount | number }}</td>
                 </tr>
               </tbody>
             </table>
@@ -233,10 +235,12 @@ export default {
       let s = {}
 
       for (let t of this.sources) {
-        if (!(t.language in s))
-          s[t.language] = 0
+        if (!(t.language in s)) {
+          s[t.language] = { tokenCount: 0, sentenceCount: 0}
+        }
 
-        s[t.language] += t.token_count
+        s[t.language].tokenCount += t.token_count
+        s[t.language].sentenceCount += t.sentence_count
       }
 
       return s
