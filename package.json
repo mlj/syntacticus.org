@@ -1,16 +1,16 @@
 {
   "name": "syntacticus.org",
   "version": "1.0.0",
+  "private": true,
   "description": "The syntacticus.org web site",
   "author": "Marius L. Jøhndal <mariuslj@ifi.uio.no>",
-  "private": true,
   "scripts": {
+    "build": "node build/build.js",
+    "lint": "eslint --ext .js,.vue src",
+    "deploy": "cp dist/index.html dist/200.html && surge dist",
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "dev-all": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --host 0.0.0.0",
     "start": "npm run dev",
-    "lint": "eslint --ext .js,.vue src",
-    "build": "node build/build.js",
-    "deploy": "cp dist/index.html dist/200.html && surge dist",
     "stats": "du dist/static/css/*.css dist/static/js/*.js dist/index.html | cut -f1 | awk '{s+=$1} END {print s}'"
   },
   "dependencies": {
@@ -78,13 +78,13 @@
     "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.1.0"
   },
-  "engines": {
-    "node": ">= 6.0.0",
-    "npm": ">= 3.0.0"
-  },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  }
 }
