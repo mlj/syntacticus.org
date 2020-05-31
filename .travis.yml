@@ -1,15 +1,12 @@
 language: node_js
+os: linux
+dist: xenial
 node_js:
-  - "node"
-script:
-  - npm run build
-notifications:
-  webhooks:
-    urls:
-      - https://webhooks.gitter.im/e/959b6c4ba0ff71ae8b43
-    on_success: change
-    on_failure: always
-    on_start: never
-cache:
-  directories:
-    - "node_modules"
+  - node
+stages:
+  - build
+jobs:
+  include:
+    - stage: build
+      script:
+        - npm run build
