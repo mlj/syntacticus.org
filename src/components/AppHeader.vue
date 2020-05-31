@@ -24,7 +24,7 @@
             <div class="navbar-end">
               <!-- a class="navbar-item" href="http://johndal.com/blog/syntacticus">News</a -->
               <router-link to="/browse" class="navbar-item">Browse</router-link>
-              <router-link to="/about" class="navbar-item">About</router-link>
+              <a class="navbar-item" href="http://dev.syntacticus.org">About</a>
 
               <div class="navbar-item">
                 <div class="field has-addons">

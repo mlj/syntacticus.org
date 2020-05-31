@@ -3,7 +3,6 @@ import Router from 'vue-router';
 
 import Welcome from '@/components/Welcome';
 import Browse from '@/components/Browse';
-import About from '@/components/About';
 import NotFound from '@/components/NotFound';
 
 const Source = () => import('@/components/Source');
@@ -28,12 +27,6 @@ export default new Router({
       path: '/',
       name: 'welcome',
       component: Welcome,
-    },
-
-    {
-      path: '/about',
-      name: 'about',
-      component: About,
     },
 
     {
