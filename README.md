@@ -8,7 +8,7 @@ Syntacticus is a single-page application and relies on a backend to serve the ac
 
 ``` bash
 # install dependencies
-yarn install
+npm install
 
 # serve with hot reload at localhost:8080
 npm run dev
