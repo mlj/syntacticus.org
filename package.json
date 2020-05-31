@@ -6,10 +6,9 @@
   "author": "Marius L. Jøhndal <mariuslj@ifi.uio.no>",
   "scripts": {
     "build": "node build/build.js",
+    "serve": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "lint": "eslint --ext .js,.vue src",
     "deploy": "cp dist/index.html dist/200.html && surge dist",
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "dev-all": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --host 0.0.0.0",
     "start": "npm run dev",
     "stats": "du dist/static/css/*.css dist/static/js/*.js dist/index.html | cut -f1 | awk '{s+=$1} END {print s}'"
   },
