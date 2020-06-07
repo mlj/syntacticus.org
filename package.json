@@ -5,10 +5,10 @@
   "description": "The syntacticus.org web site",
   "author": "Marius L. Jøhndal <mariuslj@ifi.uio.no>",
   "scripts": {
-    "build": "node build/build.js",
+    "build": "node build/build.js && cp dist/index.html dist/200.html",
     "serve": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "lint": "eslint --ext .js,.vue src",
-    "deploy": "cp dist/index.html dist/200.html && surge dist",
+    "deploy": "surge dist",
     "start": "npm run dev",
     "stats": "du dist/static/css/*.css dist/static/js/*.js dist/index.html | cut -f1 | awk '{s+=$1} END {print s}'"
   },
