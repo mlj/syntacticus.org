@@ -3,10 +3,24 @@ os: linux
 dist: xenial
 node_js:
   - node
+install:
+  - npm ci
 stages:
   - build
+  - lint
+  - deploy
 jobs:
   include:
     - stage: build
       script:
         - npm run build
+    - stage: lint
+      script:
+        - npm run lint
+    - stage: deploy
+      deploy:
+        provider: surge
+        skip_cleanup: true
+        project: dist
+        on:
+          branch: master
