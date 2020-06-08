@@ -6,7 +6,7 @@
       "@type": "Organization",
       "url": "http://syntacticus.org",
       "name": "Syntacticus",
-      "logo": "http://syntacticus.org/static/logo-large.png",
+      "logo": "http://syntacticus.org/logo-large.png",
       "potentialAction": {
         "@type": "SearchAction",
         "target": "http://syntacticus.org/tokens?form={search_term_string}",
@@ -38,7 +38,7 @@
             <div class="content">
               <p>
                 <a href="http://www.bl.uk/catalogues/illuminatedmanuscripts/ILLUMIN.ASP?Size=mid&IllID=8641">
-                  <img src="/static/plough.jpg"
+                  <img src="../assets/plough.jpg"
                      class="is-square"
                      style="border: 1px solid black"
                      alt="Detail of a miniature with a man holding a hammer or mallet, Burney 272 f. 18, The British Library (Public Domain)">
@@ -55,7 +55,7 @@
             <div class="content">
               <p>
                 <a href="http://www.bl.uk/catalogues/illuminatedmanuscripts/ILLUMIN.ASP?Size=mid&IllID=8643">
-                  <img src="/static/beehive.jpg"
+                  <img src="../assets/beehive.jpg"
                      class="is-square"
                      style="border: 1px solid black"
                      alt="Detail of a miniature of a beehive, Burney 272 f. 43v, The British Library (Public Domain)">
@@ -72,7 +72,7 @@
             <div class="content">
               <p>
                 <a href="http://www.bl.uk/catalogues/illuminatedmanuscripts/ILLUMIN.ASP?Size=mid&IllID=8642">
-                  <img src="/static/grapes.jpg"
+                  <img src="../assets/grapes.jpg"
                      class="is-square"
                      style="border: 1px solid black"
                      alt="Detail of a miniature with a man picking grapes, Burney 272 f. 26, The British Library (Public Domain)">
@@ -101,7 +101,7 @@
           <div class="columns">
             <div class="column is-half">
               <div class="image is-2by1">
-                <a href="https://commons.wikimedia.org/wiki/File:Terence_Andria_1.1_Vat3868f4v.jpg"><img src="/static/ms-vaticana.png"></a>
+                <a href="https://commons.wikimedia.org/wiki/File:Terence_Andria_1.1_Vat3868f4v.jpg"><img src="../assets/ms-vaticana.png"></a>
               </div>
             </div>
             <div class="column is-one-third is-offset-1">
@@ -141,7 +141,7 @@
             </div>
             <div class="column is-half is-offset-1">
               <div class="image is-2by1">
-                <a href="https://commons.wikimedia.org/wiki/File:Wulfila_bibel.jpg"><img src="/static/ms-wulfila.png"></a>
+                <a href="https://commons.wikimedia.org/wiki/File:Wulfila_bibel.jpg"><img src="../assets/ms-wulfila.png"></a>
               </div>
             </div>
           </div>
