@@ -92,7 +92,7 @@
         </div>
         <div class="columns is-multiline">
           <div class="column has-text-centered">
-          <a href="/about#annotation-system" class="button is-primary"><span>Learn more</span></a>
+          <a href="http://dev.syntacticus.org/" class="button is-primary"><span>Learn more</span></a>
           </div>
         </div>
       </div>
