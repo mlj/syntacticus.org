@@ -163,7 +163,6 @@ text
 import CurvedGraph from './graphs/CurvedGraph'
 import SvgGraph from './graphs/SvgGraph';
 
-import schema from '../data/schema.json'
 import MetadataModal from './MetadataModal';
 import api from '../api';
 import {
@@ -175,7 +174,7 @@ import {
 
 export default {
   components: {
-    CurvedGraph,
+    // CurvedGraph,
     SvgGraph,
     MetadataModal,
   },

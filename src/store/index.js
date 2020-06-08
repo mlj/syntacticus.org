@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import axios from 'axios';
 import _ from '../mylodash';
 import api from '../api';
 import staticSchema from '../data/schema.json';

@@ -152,14 +152,12 @@
 </template>
 
 <script>
-import Multiselect from 'vue-multiselect';
 import MetadataModal from './MetadataModal';
 import api from '../api';
 //import VerticalTimeline from './timelines/VerticalTimeline';
 import ChartTimeline from './timelines/ChartTimeline';
 import Paradigm from './Paradigm';
 import Valency from './Valency';
-import schema from '../data/schema.json';
 import _ from '../mylodash';
 import { permanentURLs, treebankFromGID, splitLemmaGID } from '../shared';
 
@@ -172,7 +170,6 @@ export default {
     //VerticalTimeline,
     ChartTimeline,
     MetadataModal,
-    Multiselect,
   },
 
   data() {

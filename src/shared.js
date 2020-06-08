@@ -74,7 +74,7 @@ const ETEXT_CTS = {
 };
 
 export function eText(textGID) {
-  let [treebank, version, textID] = textGID.split(':');
+  let [/* treebank */, /* version */, textID] = textGID.split(':');
   let cts = ETEXT_CTS[textID];
 
   if (cts) {

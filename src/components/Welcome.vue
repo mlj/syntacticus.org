@@ -44,8 +44,9 @@
                      alt="Detail of a miniature with a man holding a hammer or mallet, Burney 272 f. 18, The British Library (Public Domain)">
                 </a>
               </p>
+
+              <h3 class="subtitle is-4">Rigorous</h3>
               <p>
-                <h3 class="subtitle is-4">Rigorous</h3>
                 Every sentence has been annotated by hand and verified by trained linguists. The annotation schema is inspired by Lexical Functional Grammar and is the same for all the languages.
               </p>
               <!-- a href="/about#annotation-system" class="button is-primary"><span>Read more</span></a -->
@@ -61,8 +62,9 @@
                      alt="Detail of a miniature of a beehive, Burney 272 f. 43v, The British Library (Public Domain)">
                 </a>
               </p>
+
+              <h3 class="subtitle is-4">Comprehensive</h3>
               <p>
-                <h3 class="subtitle is-4">Comprehensive</h3>
                 Syntacticus contains one million words from early Indo-European languages with complete morphological and syntactic analysis, and it is still growing.
               </p>
               <!-- router-link to="/about#contents" class="button is-primary"><span>Contents of the treebank</span></router-link -->
@@ -78,8 +80,9 @@
                      alt="Detail of a miniature with a man picking grapes, Burney 272 f. 26, The British Library (Public Domain)">
                 </a>
               </p>
+
+              <h3 class="subtitle is-4">Open Source</h3>
               <p>
-                <h3 class="subtitle is-4">Open Source</h3>
                 Syntacticus is open source, free and developer-friendly. Do you want to analyse the raw data yourself? No problem, get it from our repositories.
               </p>
               <!-- a href="" class="button is-primary"><span>Go to our data pages</span></a>
@@ -116,7 +119,6 @@
               </h2>
               <p>
                 <router-link :to="{ name: 'source', params: { gid: 'proiel:20170214:caes-gal' }}" class="button is-primary"><span>Explore</span></router-link>
-              </p>
               </p>
             </div>
           </div>

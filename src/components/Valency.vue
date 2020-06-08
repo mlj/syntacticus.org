@@ -1,4 +1,5 @@
 <template>
+  <div>
     <section>
       <table class="table is-fullwidth">
         <thead>

@@ -46,13 +46,13 @@ Vue.filter('capitalize', v => {
 Vue.filter('partOfSpeech', v => schema.part_of_speech[v] || '')
 
 Vue.filter('morphology1', f => {
-  let [p, n, t, m, v, g, c, d, s, i] = f.split('')
+  let [p, n, /* t */, /* m */, /* v */, g, c, /* d */, /* s */, /* i */] = f.split('')
 
   return _.compact([schema.person[p], schema.case[c], schema.number[n], schema.gender[g]]).join(' ')
 })
 
 Vue.filter('morphology2', f => {
-  let [p, n, t, m, v, g, c, d, s, i] = f.split('')
+  let [/* p */, /* n */, t, m, v, /* g /*, /* c */, d, s, /* i */] = f.split('')
 
   return _.compact([schema.tense[t], schema.mood[m], schema.voice[v], schema.degree[d], schema.strength[s]]).join(' ')
 })

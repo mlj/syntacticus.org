@@ -31,7 +31,6 @@
               <p>
                 If you want to link to this text you should use the permanent link <a :href="permanentURL">{{ permanentURL }}</a>.
               </p>
-              </p>
             </metadata-modal>
           </div>
         </div>
@@ -56,7 +55,6 @@
                     </span>
                   </div>
                 </div>
-                </router-link>
               </span>
             </span>
           </div>

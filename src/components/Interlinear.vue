@@ -12,7 +12,7 @@
           <span v-if="showLemmata" :lang="language" class="annotation">
             <em><router-link to="{ name: 'lemma', params: { language: language, lemma: token.lemma, part_of_speech: token.part_of_speech }}">{{ token.lemma }}</router-link></em>
           </span>
-          <span v-if="showGlosses" class="annotation">{{ token.glosses.eng | printGloss }}</em></span>
+          <span v-if="showGlosses" class="annotation">{{ token.glosses.eng | printGloss }}</span>
         </div>
 
         <div class="intlin">
