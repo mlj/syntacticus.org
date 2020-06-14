@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import { ToastProgrammatic as Toast } from 'buefy'
 import axios from 'axios'
 import * as Sentry from '@sentry/browser';
 
@@ -12,7 +13,7 @@ const syntacticusBase = axios.create({ baseURL: `${SYNTACTICUS_API_BASE}/` })
 const staticBase = axios.create({ baseURL: `${STATIC_FILE_BASE}/` })
 
 const openErrorMessage = (msg) => {
-  Vue.prototype.$toast.open({
+  Toast.open({
     duration: 5000,
     message: msg,
     position: 'is-top',
