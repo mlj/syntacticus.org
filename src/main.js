@@ -2,7 +2,6 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import Analytics from 'vue-ua';
-import NProgress from 'vue-nprogress';
 //import VueGoodWizard from 'vue-good-wizard';
 import { formatNumber } from 'accounting';
 import VueInfiniteScroll from 'vue-infinite-scroll';
@@ -52,11 +51,6 @@ Vue.filter('morphology2', f => {
   return _.compact([schema.tense[t], schema.mood[m], schema.voice[v], schema.degree[d], schema.strength[s]]).join(' ')
 })
 
-Vue.use(NProgress, {
-  latencyThreshold: 0,
-  router: true,
-  http: true,
-});
 //Vue.use(VueGoodWizard);
 Vue.use(VueInfiniteScroll);
 
@@ -65,8 +59,6 @@ Vue.use(VueInfiniteScroll);
 Vue.use(VueShortkey, { prevent: ['input', 'textarea'] });
 
 Vue.use(Buefy);
-
-const nprogress = new NProgress() // { parent: '.nprogress-container' })
 
 if (!Vue.config.devtools) {
   // FIXME: How on earth does one reliably test if this is production or not?!?
@@ -83,7 +75,6 @@ if (!Vue.config.devtools) {
 
 /* eslint-disable no-new */
 new Vue({
-  nprogress,
   el: '#app',
   router,
   store,
