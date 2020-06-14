@@ -2,7 +2,7 @@
   <nav class="pagination is-centered">
     <ul class="pagination-list">
       <li>
-        <a :disabled="isFirst" class="button" @click='onPrevious'>Previous</a>
+        <a :disabled="isFirst" class="button" @click='onPrevious' v-shortkey.once="['j']" @shortkey='onPrevious'>Previous</a>
       </li>
       <li>&nbsp;</li>
       <li>
@@ -10,7 +10,7 @@
       </li>
       <li>&nbsp;</li>
       <li>
-        <a :disabled="isLast" class="button" @click='onNext'>Next page</a>
+        <a :disabled="isLast" class="button" @click='onNext' v-shortkey.once="['k']" @shortkey='onNext'>Next page</a>
       </li>
     </ul>
   </nav>

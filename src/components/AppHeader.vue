@@ -29,7 +29,7 @@
               <div class="navbar-item">
                 <div class="field has-addons">
                   <p class="control">
-                    <input @keyup.enter="search" v-model="query" class="input" type="text" placeholder="" v-shortkey.focus="['s']">
+                    <input @keyup.enter="search" v-model="query" class="input" type="text" placeholder="Press / to focus" v-shortkey.focus="['/']">
                   </p>
                   <p class="control">
                     <button @click.prevent="search" class="button">Search</button>
@@ -65,8 +65,10 @@
               <tr><th>Keyboard shortcut</th><th>Description</th></tr>
             </thead>
             <tbody>
-              <tr><td class="is-key">S</td><td>Focus search box</td></tr>
-              <tr><td class="is-key">H</td><td>This help table</td></tr>
+              <tr><td class="is-key">/</td><td>Focus search box</td></tr>
+              <tr><td class="is-key">J</td><td>Previous page</td></tr>
+              <tr><td class="is-key">K</td><td>Next page</td></tr>
+              <tr><td class="is-key">?</td><td>This help table</td></tr>
             </tbody>
           </table>
         </section>
