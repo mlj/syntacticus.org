@@ -1,8 +1,5 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import Analytics from 'vue-ua';
-//import VueGoodWizard from 'vue-good-wizard';
 import { formatNumber } from 'accounting';
 import VueInfiniteScroll from 'vue-infinite-scroll';
 import VueShortkey from 'vue-shortkey';
@@ -51,7 +48,6 @@ Vue.filter('morphology2', f => {
   return _.compact([schema.tense[t], schema.mood[m], schema.voice[v], schema.degree[d], schema.strength[s]]).join(' ')
 })
 
-//Vue.use(VueGoodWizard);
 Vue.use(VueInfiniteScroll);
 
 // Avoid triggering keyboard shortcuts, which are enabled in AppHeader's

@@ -12,7 +12,6 @@ const Sentence = () => import('@/components/Sentence.vue');
 const AlignedSource = () => import('@/components/AlignedSource.vue');
 const Tokens = () => import('@/components/Tokens.vue');
 const Search = () => import('@/components/Search');
-const BugReport = () => import('@/components/BugReport');
 
 Vue.use(Router)
 
@@ -74,11 +73,6 @@ export default new Router({
       name: 'lemma',
       component: Lemma,
       props: true
-    },
-
-    {
-      path: '/bugs',
-      component: BugReport,
     },
 
     {

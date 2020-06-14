@@ -18,7 +18,6 @@
     <section class="hero is-light">
       <div class="hero-body">
         <div class="content has-text-centered">
-          <!-- img src="../assets/logo.svg" width="64" -->
           <h1 class="title is-2">Syntacticus</h1>
           <p></p>
           <p></p>
@@ -49,7 +48,6 @@
               <p>
                 Every sentence has been annotated by hand and verified by trained linguists. The annotation schema is inspired by Lexical Functional Grammar and is the same for all the languages.
               </p>
-              <!-- a href="/about#annotation-system" class="button is-primary"><span>Read more</span></a -->
             </div>
           </div>
           <div class="column is-one-third has-text-centered">
@@ -67,7 +65,6 @@
               <p>
                 Syntacticus contains one million words from early Indo-European languages with complete morphological and syntactic analysis, and it is still growing.
               </p>
-              <!-- router-link to="/about#contents" class="button is-primary"><span>Contents of the treebank</span></router-link -->
             </div>
           </div>
           <div class="column is-one-third has-text-centered">
@@ -85,8 +82,6 @@
               <p>
                 Syntacticus is open source, free and developer-friendly. Do you want to analyse the raw data yourself? No problem, get it from our repositories.
               </p>
-              <!-- a href="" class="button is-primary"><span>Go to our data pages</span></a>
-              <router-link to='/about#developer-resources' class="button is-primary"><span>Developer resources</span></router-link -->
             </div>
           </div>
         </div>

@@ -5,24 +5,6 @@
         <div class="column">
           <h1 class="title is-2">Search treebank</h1>
 
-          <!-- nav class="level">
-            <div class="level-left">
-            </div>
-            <div class="level-right">
-              <p class="level-item">
-              </p>
-              <p class="level-item"><strong>All</strong></p>
-              <p class="level-item"><a>Published</a></p>
-              <p class="level-item"><a>Drafts</a></p>
-              <p class="level-item"><a>Deleted</a></p>
-            </div>
-          </nav -->
-
-          <!-- input type="text" v-model="form">
-          <p class="control">
-            <button @click.prevent="search" class="button">Search</button>
-          </p -->
-
           <nav class="level">
             <div class="level-left">
             </div>
