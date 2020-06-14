@@ -9,8 +9,8 @@ import VueInfiniteScroll from 'vue-infinite-scroll';
 import VueShortkey from 'vue-shortkey';
 import Buefy from 'buefy';
 
-import Raven from 'raven-js';
-import RavenVue from 'raven-js/plugins/vue';
+import * as Sentry from '@sentry/browser';
+import { Vue as VueIntegration } from '@sentry/integrations';
 
 import App from './App';
 import router from './router';
@@ -22,15 +22,10 @@ import schema from './data/schema.json';
 Vue.config.productionTip = false;
 Vue.config.performance = true;
 
-if (!Vue.config.devtools) {
-  // FIXME: How on earth does one reliably test if this is production or not?!?
-  Raven
-    .config('https://6845b69e675f492783530c2fe04de556@sentry.io/193600')
-    .addPlugin(RavenVue, Vue)
-    .install();
-} else {
-  console.log("Not enabling Sentry");
-}
+Sentry.init({
+  dsn: 'https://6845b69e675f492783530c2fe04de556@o88873.ingest.sentry.io/193600',
+  integrations: [new VueIntegration({Vue, attachProps: true})],
+});
 
 Vue.filter('number', v => formatNumber(v));
 

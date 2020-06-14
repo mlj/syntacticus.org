@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
-import Raven from 'raven-js';
+import * as Sentry from '@sentry/browser';
 
 Vue.prototype.$axios = axios
 
@@ -22,6 +22,8 @@ const openErrorMessage = (msg) => {
 
 const api = {
   handleError(error) {
+    console.error('Handling API error: ' + error.message);
+
     let status = error.response ? error.response.status : null;
 
     switch (status) {
@@ -36,8 +38,7 @@ const api = {
       default:
         openErrorMessage("Oops, we couldn't load the data you were looking for! We may have some problems with our server...");
 
-        Raven.captureException(error);
-        console.error(error.message);
+        Sentry.captureException(error);
         break;
     }
   },

@@ -13,6 +13,8 @@
     "stats": "du dist/static/css/*.css dist/static/js/*.js dist/index.html | cut -f1 | awk '{s+=$1} END {print s}'"
   },
   "dependencies": {
+    "@sentry/browser": "5.17.0",
+    "@sentry/integrations": "5.17.0",
     "accounting": "0.4.1",
     "axios": "0.19.2",
     "buefy": "0.8.20",
@@ -25,7 +27,6 @@
     "d3-zoom": "1.7.4",
     "font-awesome": "4.7.0",
     "lodash": "4.17.15",
-    "raven-js": "3.20.1",
     "vue": "2.6.11",
     "vue-infinite-scroll": "2.0.2",
     "vue-multiselect": "2.0.6",
