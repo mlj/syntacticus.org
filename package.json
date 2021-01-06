@@ -16,7 +16,7 @@
     "@sentry/browser": "5.17.0",
     "@sentry/integrations": "5.17.0",
     "accounting": "0.4.1",
-    "axios": "0.19.2",
+    "axios": "0.21.1",
     "buefy": "0.8.20",
     "core-js": "^3.6.5",
     "d3-array": "1.2.4",
