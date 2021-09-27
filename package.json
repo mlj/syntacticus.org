@@ -5,9 +5,9 @@
   "description": "The syntacticus.org web site",
   "author": "Marius L. Jøhndal <mariuslj@ifi.uio.no>",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build && cp dist/index.html dist/200.html",
-    "lint": "vue-cli-service lint",
+    "serve": "./node_modules/.bin/vue-cli-service serve",
+    "build": "./node_modules/.bin/vue-cli-service build && cp dist/index.html dist/200.html",
+    "lint":  "./node_modules/.bin/vue-cli-service lint",
     "deploy": "surge dist",
     "start": "npm run dev",
     "stats": "du dist/static/css/*.css dist/static/js/*.js dist/index.html | cut -f1 | awk '{s+=$1} END {print s}'"
