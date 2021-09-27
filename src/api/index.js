@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import { ToastProgrammatic as Toast } from 'buefy'
 import axios from 'axios'
-import * as Sentry from '@sentry/browser';
+import * as Sentry from "@sentry/vue";
 
 Vue.prototype.$axios = axios
 

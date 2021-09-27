@@ -13,8 +13,8 @@
     "stats": "du dist/static/css/*.css dist/static/js/*.js dist/index.html | cut -f1 | awk '{s+=$1} END {print s}'"
   },
   "dependencies": {
-    "@sentry/browser": "5.17.0",
-    "@sentry/integrations": "5.17.0",
+    "@sentry/tracing": "6.13.2",
+    "@sentry/vue": "6.13.2",
     "accounting": "0.4.1",
     "axios": "0.19.2",
     "buefy": "0.8.20",
