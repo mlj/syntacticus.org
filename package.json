@@ -7,7 +7,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build && cp dist/index.html dist/200.html",
-    "lint":  "vue-cli-service lint",
+    "lint": "vue-cli-service lint",
     "deploy": "surge dist",
     "start": "npm run dev",
     "stats": "du dist/static/css/*.css dist/static/js/*.js dist/index.html | cut -f1 | awk '{s+=$1} END {print s}'",
@@ -37,12 +37,12 @@
     "vuex": "2.3.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.4.0",
-    "@vue/cli-plugin-eslint": "4.4.4",
-    "@vue/cli-plugin-router": "4.4.4",
-    "@vue/cli-plugin-unit-jest": "4.4.4",
-    "@vue/cli-plugin-vuex": "4.4.4",
-    "@vue/cli-service": "~4.5.0",
+    "@vue/cli-plugin-babel": "4.5.15",
+    "@vue/cli-plugin-eslint": "4.5.15",
+    "@vue/cli-plugin-router": "4.5.15",
+    "@vue/cli-plugin-unit-jest": "4.5.15",
+    "@vue/cli-plugin-vuex": "4.5.15",
+    "@vue/cli-service": "4.5.15",
     "@vue/test-utils": "^1.0.3",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
@@ -75,7 +75,6 @@
       "you-dont-need-lodash-underscore/some": 0,
       "you-dont-need-lodash-underscore/map": 0,
       "you-dont-need-lodash-underscore/reduce": 0,
-      "you-dont-need-lodash-underscore/map": 0,
       "you-dont-need-lodash-underscore/each": 0,
       "you-dont-need-lodash-underscore/filter": 0
     },
@@ -97,11 +96,11 @@
     "not ie <= 8",
     "not dead"
   ],
+  "jest": {
+    "preset": "@vue/cli-plugin-unit-jest"
+  },
   "engines": {
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
-  },
-  "jest": {
-    "preset": "@vue/cli-plugin-unit-jest"
   }
 }

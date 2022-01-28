@@ -29,3 +29,10 @@ The front-page miniatures are from the manuscript [Burney 272](http://www.bl.uk/
 The two large manuscript details are from the [Codex Argenteus](https://commons.wikimedia.org/wiki/File:Wulfila_bibel.jpg) (Wikimedia, Public Domain) and from [Codex Vaticanus Latinus 3868](https://commons.wikimedia.org/wiki/File:Terence_Andria_1.1_Vat3868f4v.jpg) (Wikimedia, Public Domain).
 
 The flat view of dependency graphs is derived from work by [http://www.sobhe.ir/dependency-parse-tree/](http://www.sobhe.ir/dependency-parse-tree/).
+
+## Updating VueJs
+
+```bash
+npm install -g @vue/cli
+vue upgrade
+```
