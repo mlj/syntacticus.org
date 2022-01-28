@@ -10,7 +10,8 @@
     "lint":  "vue-cli-service lint",
     "deploy": "surge dist",
     "start": "npm run dev",
-    "stats": "du dist/static/css/*.css dist/static/js/*.js dist/index.html | cut -f1 | awk '{s+=$1} END {print s}'"
+    "stats": "du dist/static/css/*.css dist/static/js/*.js dist/index.html | cut -f1 | awk '{s+=$1} END {print s}'",
+    "test": "vue-cli-service test:unit"
   },
   "dependencies": {
     "@sentry/tracing": "6.13.2",
@@ -39,8 +40,10 @@
     "@vue/cli-plugin-babel": "~4.4.0",
     "@vue/cli-plugin-eslint": "4.4.4",
     "@vue/cli-plugin-router": "4.4.4",
+    "@vue/cli-plugin-unit-jest": "4.4.4",
     "@vue/cli-plugin-vuex": "4.4.4",
     "@vue/cli-service": "~4.5.0",
+    "@vue/test-utils": "^1.0.3",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
@@ -66,7 +69,18 @@
       "vue/require-v-for-key": 0,
       "vue/no-use-v-if-with-v-for": 0,
       "vue/valid-v-for": 0
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "**/__tests__/*.{j,t}s?(x)",
+          "**/tests/unit/**/*.spec.{j,t}s?(x)"
+        ],
+        "env": {
+          "jest": true
+        }
+      }
+    ]
   },
   "browserslist": [
     "> 1%",
@@ -77,5 +91,8 @@
   "engines": {
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
+  },
+  "jest": {
+    "preset": "@vue/cli-plugin-unit-jest"
   }
 }
