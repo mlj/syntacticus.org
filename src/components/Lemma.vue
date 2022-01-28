@@ -259,7 +259,7 @@ export default {
     //},
 
     frequency() {
-      return _.map(this.distribution).reduce((a, e) => a + e, 0)
+      return _.map(this.distribution).reduce((a, e) => a + e.n, 0)
     },
 
     hasGlosses() { return this.glosses.eng !== undefined || this.glosses.rus !== undefined; },
