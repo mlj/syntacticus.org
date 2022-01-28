@@ -160,6 +160,7 @@ import Paradigm from './Paradigm';
 import Valency from './Valency';
 import _ from '../mylodash';
 import { permanentURLs, treebankFromGID, splitLemmaGID } from '../shared';
+import { totalDistributionFrequency, hasSomeCompositionDate, hasSomeManuscriptDate } from '@/paradigms'
 
 export default {
   name: 'Lemma',
@@ -211,11 +212,11 @@ export default {
     },
 
     hasTimelineComposition() {
-      return _.some(this.distribution, d => (d.chronology.t !== undefined && d.chronology.t !== null));
+      return hasSomeCompositionDate(this.distribution)
     },
 
     hasTimelineManuscript() {
-      return _.some(this.distribution, d => (d.chronology.m !== undefined && d.chronology.m !== null));
+      return hasSomeManuscriptDate(this.distribution)
     },
 
     chartTimelineComposition() {
@@ -259,7 +260,7 @@ export default {
     //},
 
     frequency() {
-      return _.map(this.distribution).reduce((a, e) => a + e.n, 0)
+      return totalDistributionFrequency(this.distribution)
     },
 
     hasGlosses() { return this.glosses.eng !== undefined || this.glosses.rus !== undefined; },

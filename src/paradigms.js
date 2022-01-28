@@ -60,3 +60,16 @@ export function getMappedForms(mappedForms, pattern1, pattern2, pattern3) {
 
   return matches.sort((a, b) => b.n - a.n)
 }
+
+// Returns the total number of occurrences of a lemma from a lemma distribution.
+export function totalDistributionFrequency(lemmaDistribution) {
+  return _.map(lemmaDistribution).reduce((a, e) => a + e.n, 0)
+}
+
+export function hasSomeCompositionDate(lemmaDistribution) {
+  return _.some(lemmaDistribution, d => (d.chronology.t !== undefined && d.chronology.t !== null));
+}
+
+export function hasSomeManuscriptDate(lemmaDistribution) {
+  return _.some(lemmaDistribution, d => (d.chronology.m !== undefined && d.chronology.m !== null))
+}
