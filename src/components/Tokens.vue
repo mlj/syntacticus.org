@@ -48,7 +48,7 @@
 
             <div><br></div>
 
-            <b-table :data="tokens" :loading="loading" class="concordance">
+            <b-table :data="tokens" :loading="loading" class="concordance" :hoverable="true">
               <b-table-column field="citation" width="10%" v-slot="props">
                 <router-link :to="{ name: 'sentence', params: { gid: props.row.sentence }}">{{ props.row.citation }}</router-link>
               </b-table-column>
