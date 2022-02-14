@@ -12,17 +12,17 @@
                 <strong :lang="language">{{ lemma }}</strong>
 
                 <small>
-                  {{ language | language }}, {{ partOfSpeech | partOfSpeech }}
+                  {{ language | language }}, {{ partOfSpeech | partOfSpeech }},
                 </small>
 
                 <small v-if="frequency > 1">
-                  (occurs {{ frequency }} times in the corpus)
+                  occurs {{ frequency }} times in the corpus
                 </small>
                 <small v-else-if="frequency == 1">
-                  (occurs once in the corpus)
+                  occurs once in the corpus
                 </small>
                 <small v-else>
-                  (does not occur in the corpus)
+                  does not occur in the corpus
                 </small>
               </p>
 
@@ -36,7 +36,7 @@
               </p>
 
               <p v-if="hasHomographs">
-                <span class="icon"><i class="fa fa-plus-square"></i></span> See also
+                See also
                 <span v-for="(homograph, i) in parsedHomographs">
                   <router-link :to="{ name: 'lemma', params: { gid: [dictionaryGID, homograph.lemma, homograph.partOfSpeech].join(':') }}">
                     <span :lang="language">{{ homograph.lemma }}</span>
