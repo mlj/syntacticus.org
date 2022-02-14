@@ -9,8 +9,6 @@
     "build": "vue-cli-service build && cp dist/index.html dist/200.html",
     "lint": "vue-cli-service lint",
     "deploy": "surge dist",
-    "start": "npm run dev",
-    "stats": "du dist/static/css/*.css dist/static/js/*.js dist/index.html | cut -f1 | awk '{s+=$1} END {print s}'",
     "test": "vue-cli-service test:unit"
   },
   "dependencies": {

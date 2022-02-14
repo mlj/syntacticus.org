@@ -8,16 +8,13 @@ Syntacticus is a single-page application and relies on a backend to serve the ac
 
 ``` bash
 # install dependencies
-npm install
+yarn
 
 # serve with hot reload at localhost:8080
-npm run dev
+yarn serve
 
 # build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
+yarn build
 ```
 
 ## Attributions
@@ -29,10 +26,3 @@ The front-page miniatures are from the manuscript [Burney 272](http://www.bl.uk/
 The two large manuscript details are from the [Codex Argenteus](https://commons.wikimedia.org/wiki/File:Wulfila_bibel.jpg) (Wikimedia, Public Domain) and from [Codex Vaticanus Latinus 3868](https://commons.wikimedia.org/wiki/File:Terence_Andria_1.1_Vat3868f4v.jpg) (Wikimedia, Public Domain).
 
 The flat view of dependency graphs is derived from work by [http://www.sobhe.ir/dependency-parse-tree/](http://www.sobhe.ir/dependency-parse-tree/).
-
-## Updating VueJs
-
-```bash
-npm install -g @vue/cli
-vue upgrade
-```
