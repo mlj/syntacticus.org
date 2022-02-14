@@ -22,9 +22,9 @@
             {{ sentence.citation }}
             <br>
             <metadata-modal>
-              <p slot="header">
+              <template v-slot:header>
                 <strong>{{ sentence.source.title }}</strong> <small>({{ sentence.language | language }})</small>
-              </p>
+              </template>
 
               <p>
                 This sentence is from the <a :href="treebank.mainURL">{{ treebank.name }}</a> version <a :href="treebank.releaseURL">{{ treebank.version }}</a>.

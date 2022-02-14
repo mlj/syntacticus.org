@@ -18,9 +18,9 @@
           <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> license
           <br>
           <metadata-modal>
-            <p slot="header">
+            <template v-slot:header>
               <strong>{{ title }}</strong> <small>({{ language | language }}, {{ tokenCount }} tokens, {{ sentenceCount }} sentences)</small>
-            </p>
+            </template>
 
             <p>
               This text is from the <a :href="treebank.mainURL">{{ treebank.name }}</a> version <a :href="treebank.releaseURL">{{ treebank.version }}</a>.
