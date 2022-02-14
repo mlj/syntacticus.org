@@ -5,7 +5,7 @@ import * as Sentry from "@sentry/vue";
 
 Vue.prototype.$axios = axios
 
-export const SYNTACTICUS_API_BASE = 'http://tekstlab.uio.no/syntacticus-api/'
+export const SYNTACTICUS_API_BASE = 'https://tekstlab.uio.no/syntacticus-api/'
 export const STATIC_FILE_BASE = '/data/'
 
 const syntacticusBase = axios.create({ baseURL: `${SYNTACTICUS_API_BASE}/` })
