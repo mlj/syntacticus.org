@@ -43,6 +43,11 @@ export function splitLemmaGID(lemmaGID) {
   let [treebank, version, language, lemma, partOfSpeech, variant] = lemmaGID.split(':');
   let dictionaryGID = [treebank, version, language].join(':');
 
+  // TODO: figure out where malformed GIDs with # come from
+  if (lemma.includes('#')) {
+    [lemma, variant] = lemma.split('#')
+  }
+
   return { treebank, version, language, dictionaryGID, lemmaGID, lemma, partOfSpeech, variant };
 }
 
