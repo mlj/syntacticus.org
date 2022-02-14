@@ -36,7 +36,40 @@
             </small>
           </p>
 
-          <concordance :query="query"></concordance>
+          <div>
+            <div class="has-text-centered">
+              <strong>{{ total }} matches</strong>
+            </div>
+
+            <div><br></div>
+
+            <pagination :total-pages="totalPages" :current-page.sync="page" v-if="total > 0">
+            </pagination>
+
+            <div><br></div>
+
+            <b-table :data="tokens" :loading="loading" class="concordance">
+              <template slot-scope="props">
+                <b-table-column field="citation" width="10%">
+                  <router-link :to="{ name: 'sentence', params: { gid: props.row.sentence }}">{{ props.row.citation }}</router-link>
+                </b-table-column>
+                <b-table-column field="before" class="has-text-right" width="35%" :lang="props.row.language">
+                  {{ props.row.abbrev_text_before }}
+                </b-table-column>
+                <b-table-column field="form" class="is-primary has-text-centered" :lang="props.row.language">
+                  {{ props.row.form }}
+                </b-table-column>
+                <b-table-column field="after" class="has-text-left" width="45%" :lang="props.row.language">
+                  {{ props.row.abbrev_text_after }}
+                </b-table-column>
+              </template>
+            </b-table>
+
+            <div><br></div>
+
+            <pagination :total-pages="totalPages" :current-page.sync="page" v-if="total > 0">
+            </pagination>
+          </div>
         </div>
       </div>
     </div>
@@ -45,22 +78,32 @@
 
 <script>
 import Multiselect from 'vue-multiselect';
-import Concordance from './Concordance';
+import Pagination from './Pagination'
 import api from '../api';
 import { languages, partsOfSpeech } from '../shared';
 import _ from '../mylodash';
 
 export default {
   components: {
-    Concordance,
     Multiselect,
+    Pagination,
   },
 
   data() {
     return {
+      loading: false,
+      page: 1,
+      pageSize: 50,
       searchLanguage: null,
       searchPartOfSpeech: null,
+      tokens: [],
+      total: 0,
     }
+  },
+
+  created() {
+    this.page = +this.$route.query.page || 1;
+    this.fetchEntries();
   },
 
   mounted() {
@@ -84,10 +127,18 @@ export default {
 
     $route(to, from) {
       this.handleRouteChange();
-    }
+    },
+
+    page(to, from) {
+      api.pushNewQuery(this, { page: +to || 1 });
+    },
   },
 
   computed: {
+    totalPages() {
+      return Math.ceil(this.total / this.pageSize);
+    },
+
     query() {
       let to = this.$route;
 
@@ -120,6 +171,25 @@ export default {
   },
 
   methods: {
+    fetchEntries() {
+      this.loading = true;
+      let newQuery = {};
+      for (var i in this.query) {
+        newQuery[i] = this.query[i];
+      }
+      newQuery.offset = (this.page - 1) * this.pageSize;
+      newQuery.limit = this.pageSize;
+
+      return api.getTokens(newQuery).then((response) => {
+        this.tokens = response.data.data;
+        this.total = response.data.total;
+        this.loading = false;
+      }).catch((error) => {
+        this.loading = false;
+        api.handleError(error);
+      });
+    },
+
     handleRouteChange() {
       let l = this.$route.query.language;
 
@@ -134,7 +204,14 @@ export default {
         this.searchPartOfSpeech = { tag: l, label: partsOfSpeech[l] };
       else
         this.searchPartOfSpeech = null;
+
+      this.page = +this.$route.query.page || 1;
+      this.fetchEntries();
     },
   },
 }
 </script>
+
+<style>
+.concordance thead { display: none; }
+</style>
