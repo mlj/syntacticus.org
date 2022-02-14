@@ -70,27 +70,22 @@
           <pagination :total-pages="totalPages" :current-page.sync="page">
           </pagination>
 
-          <b-table
-            :data="dictionary"
-            :loading="loading"
-            >
-            <template slot-scope="props">
-              <b-table-column field="lemma" label="Lemma">
-                <router-link :to="{ name: 'lemma', params: { gid: buildLemmaGID(props.row) }}"><span :lang="language">{{ props.row.lemma }}</span><span v-if="props.row.variant">#{{ props.row.variant}}</span> ({{ props.row.part_of_speech | partOfSpeech }})</router-link>
+          <b-table :data="dictionary" :loading="loading">
+            <b-table-column field="lemma" label="Lemma" v-slot="props">
+              <router-link :to="{ name: 'lemma', params: { gid: buildLemmaGID(props.row) }}"><span :lang="language">{{ props.row.lemma }}</span><span v-if="props.row.variant">#{{ props.row.variant}}</span> ({{ props.row.part_of_speech | partOfSpeech }})</router-link>
 
-                <template v-if="language === 'orv'">
-                  <template v-if="rusGlossesEnabled">
-                    {{ props.row.glosses.rus | printGloss }}
-                  </template>
-                  <template v-else>
-                    {{ props.row.glosses.eng | printGloss }}
-                  </template>
+              <template v-if="language === 'orv'">
+                <template v-if="rusGlossesEnabled">
+                  {{ props.row.glosses.rus | printGloss }}
                 </template>
                 <template v-else>
                   {{ props.row.glosses.eng | printGloss }}
                 </template>
-              </b-table-column>
-            </template>
+              </template>
+              <template v-else>
+                {{ props.row.glosses.eng | printGloss }}
+              </template>
+            </b-table-column>
           </b-table>
 
           <pagination :total-pages="totalPages" :current-page.sync="page">

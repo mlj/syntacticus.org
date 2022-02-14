@@ -49,20 +49,18 @@
             <div><br></div>
 
             <b-table :data="tokens" :loading="loading" class="concordance">
-              <template slot-scope="props">
-                <b-table-column field="citation" width="10%">
-                  <router-link :to="{ name: 'sentence', params: { gid: props.row.sentence }}">{{ props.row.citation }}</router-link>
-                </b-table-column>
-                <b-table-column field="before" class="has-text-right" width="35%" :lang="props.row.language">
-                  {{ props.row.abbrev_text_before }}
-                </b-table-column>
-                <b-table-column field="form" class="is-primary has-text-centered" :lang="props.row.language">
-                  {{ props.row.form }}
-                </b-table-column>
-                <b-table-column field="after" class="has-text-left" width="45%" :lang="props.row.language">
-                  {{ props.row.abbrev_text_after }}
-                </b-table-column>
-              </template>
+              <b-table-column field="citation" width="10%" v-slot="props">
+                <router-link :to="{ name: 'sentence', params: { gid: props.row.sentence }}">{{ props.row.citation }}</router-link>
+              </b-table-column>
+              <b-table-column field="before" width="35%" cellClass="has-text-right" v-slot="props">
+                <span :lang="props.row.language">{{ props.row.abbrev_text_before }}</span>
+              </b-table-column>
+              <b-table-column field="form" centered cellClass="is-primary" v-slot="props">
+                <span :lang="props.row.language">{{ props.row.form }}</span>
+              </b-table-column>
+              <b-table-column field="after" class="has-text-left" width="45%" cellClass="has-text-left" v-slot="props">
+                <span :lang="props.row.language">{{ props.row.abbrev_text_after }}</span>
+              </b-table-column>
             </b-table>
 
             <div><br></div>

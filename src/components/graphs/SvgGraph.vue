@@ -4,10 +4,12 @@
       <div class="level-left">
         <div class="level-item">
           <b-dropdown v-model="direction">
-            <button class="button is-primary" type="button" slot="trigger">
-              <span>Direction</span>
-              <b-icon icon="menu-down"></b-icon>
-            </button>
+            <template #trigger="{ active }">
+              <b-button
+                    label="Direction"
+                    type="is-primary"
+                    :icon-right="active ? 'menu-up' : 'menu-down'" />
+            </template>
 
             <b-dropdown-item value="TD">Top-down</b-dropdown-item>
             <b-dropdown-item value="LR">Left-right</b-dropdown-item>
@@ -15,10 +17,12 @@
         </div>
         <div class="level-item">
           <b-dropdown v-model="layout" v-if="!alignment">
-            <button class="button is-primary" type="button" slot="trigger">
-              <span>Layouts</span>
-              <b-icon icon="menu-down"></b-icon>
-            </button>
+            <template #trigger="{ active }">
+              <b-button
+                    label="Layout"
+                    type="is-primary"
+                    :icon-right="active ? 'menu-up' : 'menu-down'" />
+            </template>
 
             <span>
               <b-dropdown-item value="modern">Modern</b-dropdown-item>
