@@ -31,79 +31,115 @@
         </div>
       </div>
 
-      <nav class="level">
-        <div class="level-left">
-          <span v-if="language === 'orv'">
+      <section>
+        <b-field grouped group-multiline>
+          <div class="control">
+            <input class="input" v-model="formPattern" placeholder="Form">
+          </div>
+
+          <b-select v-model="pos">
+            <option :value="null">Any part of speech</option>
+
+            <option value="V-">Verbs</option>
+
+            <optgroup label="Nouns">
+              <option value="Nb">Common nouns</option>
+              <option value="Ne">Proper nouns</option>
+            </optgroup>
+
+            <option value="A-">Adjectives</option>
+
+            <optgroup label="Adverbs">
+              <option value="Df">Adverbs</option>
+              <option value="Dq">Relative adverbs</option>
+              <option value="Du">Interrogative adverbs</option>
+            </optgroup>
+
+            <optgroup label="Pronouns">
+              <option value="Pc">Reciprocal pronouns</option>
+              <option value="Pd">Demonstrative pronouns</option>
+              <option value="Pi">Interrogative pronouns</option>
+              <option value="Pk">Personal reflexive pronouns</option>
+              <option value="Pp">Personal pronouns</option>
+              <option value="Pr">Relative pronouns</option>
+              <option value="Ps">Possessive pronouns</option>
+              <option value="Pt">Possessive reflexive pronouns</option>
+              <option value="Px">Indefinite pronouns</option>
+              <option value="Py">Quantifiers</option>
+            </optgroup>
+
+            <optgroup label="Numerals">
+              <option value="Ma">Cardinal numerals</option>
+              <option value="Mo">Ordinal numerals</option>
+            </optgroup>
+
+            <option value="S-">Articles</option>
+            <option value="R-">Prepositions</option>
+            <option value="N-">Infinitive markers</option>
+            <option value="C-">Conjunctions</option>
+            <option value="G-">Subjunctions</option>
+            <option value="I-">Interjections</option>
+
+            <option value="F-">Foreign words</option>
+
+            <option value="X-">Unassigned words</option>
+          </b-select>
+
+          <div class="control" v-if="language === 'orv'">
             English translations
             <b-switch v-model="rusGlossesEnabled" size="is-small"></b-switch>
             Russian translations
-          </span>
-        </div>
-        <div class="level-right">
-          <input class="input" v-model="formPattern" placeholder="Form">
-          <!-- multiselect
-            v-model="formPattern"
-            :multiple="false"
-            :options="formOptions"
-            placeholder="Form"
-            :value="initialFormPattern"
-            @search-change='onFormFilterFind'
-            :searchable="true"
-            >
-          </multiselect -->
+          </div>
+        </b-field>
 
-          <multiselect
-            v-model="pos"
-            :multiple="false"
-            :options="partOfSpeechOptions"
-            placeholder="Part of speech"
-            :custom-label="partOfSpeechLabel"
-            :show-labels="false"
-            :searchable="false"
-            >
-          </multiselect>
-        </div>
-      </nav>
+        <b-table
+          :data="dictionary"
+          :loading="loading"
 
-      <div class="columns">
-        <div class="column" v-if="total > 0">
-          <pagination :total-pages="totalPages" :current-page.sync="page">
-          </pagination>
+          :mobile-cards="false"
+          backend-pagination
+          hoverable
+          paginated
 
-          <b-table :data="dictionary" :loading="loading">
-            <b-table-column field="lemma" label="Lemma" v-slot="props">
-              <router-link :to="{ name: 'lemma', params: { gid: buildLemmaGID(props.row) }}"><span :lang="language">{{ props.row.lemma }}</span><span v-if="props.row.variant">#{{ props.row.variant}}</span> ({{ props.row.part_of_speech | partOfSpeech }})</router-link>
+          :current-page.sync="page"
+          :pagination-position="paginationPosition"
+          :per-page="pageSize"
+          :total="total">
+          <b-table-column field="lemma" label="Lemma" width="10em" v-slot="props">
+            <router-link :to="{ name: 'lemma', params: { gid: buildLemmaGID(props.row) }}">
+              <i>
+                <span :lang="language">{{ props.row.lemma }}</span><span v-if="props.row.variant">#{{ props.row.variant}}</span>
+              </i>
+            </router-link>
+          </b-table-column>
 
-              <template v-if="language === 'orv'">
-                <template v-if="rusGlossesEnabled">
-                  {{ props.row.glosses.rus | printGloss }}
-                </template>
-                <template v-else>
-                  {{ props.row.glosses.eng | printGloss }}
-                </template>
+          <b-table-column field="pos" label="Part of speech" v-slot="props">
+            {{ props.row.part_of_speech | partOfSpeech }}
+          </b-table-column>
+
+          <b-table-column field="glosses" label="Glosses" v-slot="props" v-if="language === 'orv'">
+            <template v-if="language === 'orv'">
+              <template v-if="rusGlossesEnabled">
+                {{ props.row.glosses.rus | printGloss }}
               </template>
               <template v-else>
                 {{ props.row.glosses.eng | printGloss }}
               </template>
-            </b-table-column>
-          </b-table>
+            </template>
+            <template v-else>
+              {{ props.row.glosses.eng | printGloss }}
+            </template>
+          </b-table-column>
+        </b-table>
+      </section>
 
-          <pagination :total-pages="totalPages" :current-page.sync="page">
-          </pagination>
-        </div>
-        <div class="column" v-else>
-          No matches
-        </div>
-      </div>
     </div>
   </section>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import Multiselect from 'vue-multiselect';
 import MetadataModal from './MetadataModal';
-import Pagination from './Pagination';
 import api from '../api';
 import schema from '../data/schema.json';
 import {
@@ -115,8 +151,6 @@ import {
 
 export default {
   components: {
-    Pagination,
-    Multiselect,
     MetadataModal,
   },
 
@@ -127,20 +161,18 @@ export default {
       loading: false,
 
       formPattern: this.$route.query.lemma,
-      pos: null,
-
-      page: 1,
+      pos: this.$route.query.pos,
+      page: +this.$route.query.page || 1,
       total: 0,
       dictionary: [],
-      pageSize: 50,
-
-      formOptions: [],
+      pageSize: 10,
+      paginationPosition: 'both',
     }
   },
 
   filters: {
     printGloss(v) {
-      return v === undefined ? '' : `‘${v}’`
+      return v === undefined ? '' : v
     }
   },
 
@@ -157,8 +189,6 @@ export default {
 
     language() { return this.splitGID.language; },
 
-    totalPages() { return Math.ceil(this.total / this.pageSize); },
-
     rusGlossesEnabled: {
       get() {
         return this.$store.getters.rusGlossesEnabled
@@ -168,22 +198,9 @@ export default {
         this.$store.commit('SET_RUS_GLOSSES_ENABLED', value)
       }
     },
-
-    initialFormPattern() {
-      return this.$route.query.form
-    },
-
-    partOfSpeechOptions() {
-      let k = []
-      for (let tag in schema.part_of_speech) {
-        k.push({ tag: tag, label: schema.part_of_speech[tag] })
-      }
-      return k
-    },
   },
 
   created() {
-    this.page = +this.$route.query.page || 1;
     this.fetchEntries()
   },
 
@@ -194,22 +211,22 @@ export default {
     },
 
     page(to, from) {
-      api.pushNewQuery(this, { page: +to || 1 });
-    },
-
-    pos(value) {
       api.pushNewQuery(this, {
-        pos: value ? value.tag : null,
-        lemma: this.formPattern,
-        page: null,
+        page: +to || 1
       })
     },
 
-    formPattern(value) {
+    pos(to, from) {
       api.pushNewQuery(this, {
-        pos: this.pos ? this.pos.tag : null,
-        lemma: value,
-        page: null,
+        pos: to,
+        page: 1,
+      })
+    },
+
+    formPattern(to, from) {
+      api.pushNewQuery(this, {
+        lemma: to,
+        page: 1,
       })
     },
   },
@@ -242,29 +259,8 @@ export default {
       });
     },
 
-    onFormFilterFind(n) {
-      // FIXME: make this async search for candidate forms
-      this.formOptions = [n]
-    },
-
     buildLemmaGID(lemma) {
       return makeLemmaGID(this.gid, lemma.lemma, lemma.part_of_speech, lemma.variant);
-    },
-
-    partOfSpeechLabel({ tag, label }) {
-      return label
-    },
-
-    onPartOfSpeechFilterChange(n) {
-      let newQuery = this.$route.query
-      newQuery.part_of_speech = n ? n.tag : null
-      newQuery.page = 1
-
-      this.$router.push({
-        name: 'dictionary',
-        params: this.$route.params,
-        query: newQuery
-      })
     },
   }
 }
