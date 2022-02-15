@@ -106,7 +106,7 @@
           :pagination-position="paginationPosition"
           :per-page="pageSize"
           :total="total">
-          <b-table-column field="lemma" label="Lemma" width="10em" v-slot="props">
+          <b-table-column field="lemma" label="Lemma" width="15em" v-slot="props">
             <router-link :to="{ name: 'lemma', params: { gid: buildLemmaGID(props.row) }}">
               <i>
                 <span :lang="language">{{ props.row.lemma }}</span><span v-if="props.row.variant">#{{ props.row.variant}}</span>
@@ -114,7 +114,7 @@
             </router-link>
           </b-table-column>
 
-          <b-table-column field="pos" label="Part of speech" v-slot="props">
+          <b-table-column field="pos" label="Part of speech" width="15em" v-slot="props">
             {{ props.row.part_of_speech | partOfSpeech }}
           </b-table-column>
 
