@@ -12,7 +12,7 @@
           <slot></slot>
         </section>
         <footer class="modal-card-foot">
-          <p>Press <span class="is-key">Escape</span> or click the close button to return to Syntacticus</p>
+          <p>Press <span class="is-family-monospace">Escape</span> or click the close button to return to Syntacticus</p>
         </footer>
       </div>
     </b-modal>

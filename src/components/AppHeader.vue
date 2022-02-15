@@ -65,15 +65,15 @@
               <tr><th>Keyboard shortcut</th><th>Description</th></tr>
             </thead>
             <tbody>
-              <tr><td class="is-key">/</td><td>Focus search box</td></tr>
-              <tr><td class="is-key">J</td><td>Previous page</td></tr>
-              <tr><td class="is-key">K</td><td>Next page</td></tr>
-              <tr><td class="is-key">?</td><td>This help table</td></tr>
+              <tr><td class="is-family-monospace">/</td><td>Focus search box</td></tr>
+              <tr><td class="is-family-monospace">J</td><td>Previous page</td></tr>
+              <tr><td class="is-family-monospace">K</td><td>Next page</td></tr>
+              <tr><td class="is-family-monospace">?</td><td>This help table</td></tr>
             </tbody>
           </table>
         </section>
         <footer class="modal-card-foot">
-          <p>Press <span class="is-key">Escape</span> or click the close button to return to Syntacticus</p>
+          <p>Press <span class="is-family-monospace">Escape</span> or click the close button to return to Syntacticus</p>
         </footer>
       </div>
     </b-modal>
