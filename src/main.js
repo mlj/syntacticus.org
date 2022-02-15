@@ -14,6 +14,8 @@ import _ from './mylodash';
 import { languages } from './shared';
 import schema from './data/schema.json';
 
+console.log("Syntacticus build " + document.documentElement.dataset.buildTimestampUtc)
+
 Vue.config.productionTip = false;
 Vue.config.performance = true;
 
