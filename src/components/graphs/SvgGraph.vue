@@ -3,31 +3,25 @@
     <nav class="level">
       <div class="level-left">
         <div class="level-item">
-          <b-dropdown v-model="direction">
-            <template #trigger="{ active }">
-              <b-button
-                    label="Direction"
-                    type="is-primary"
-                    :icon-right="active ? 'menu-up' : 'menu-down'" />
+          <b-dropdown v-model="direction" :triggers="['hover']" aria-role="list">
+            <template #trigger>
+              <b-button label="Direction" type="is-primary" icon-right="chevron-down"/>
             </template>
 
-            <b-dropdown-item value="TD">Top-down</b-dropdown-item>
-            <b-dropdown-item value="LR">Left-right</b-dropdown-item>
+            <b-dropdown-item aria-role="listitem" value="TD">Top-down</b-dropdown-item>
+            <b-dropdown-item aria-role="listitem" value="LR">Left-right</b-dropdown-item>
           </b-dropdown>
         </div>
         <div class="level-item">
-          <b-dropdown v-model="layout" v-if="!alignment">
-            <template #trigger="{ active }">
-              <b-button
-                    label="Layout"
-                    type="is-primary"
-                    :icon-right="active ? 'menu-up' : 'menu-down'" />
+          <b-dropdown v-model="layout" v-if="!alignment" :triggers="['hover']" aria-role="list">
+            <template #trigger>
+              <b-button label="Layout" type="is-primary" icon-right="chevron-down"/>
             </template>
 
             <span>
-              <b-dropdown-item value="modern">Modern</b-dropdown-item>
-              <b-dropdown-item value="classic">Classic</b-dropdown-item>
-              <b-dropdown-item value="packed">Packed</b-dropdown-item>
+              <b-dropdown-item aria-role="listitem" value="modern">Modern</b-dropdown-item>
+              <b-dropdown-item aria-role="listitem" value="classic">Classic</b-dropdown-item>
+              <b-dropdown-item aria-role="listitem" value="packed">Packed</b-dropdown-item>
             </span>
           </b-dropdown>
         </div>
