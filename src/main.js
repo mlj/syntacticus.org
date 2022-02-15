@@ -28,7 +28,7 @@ Sentry.init({
       tracingOrigins: ["localhost", /^\//],
     }),
   ],
-  tracesSampleRate: 0.5,
+  tracesSampleRate: 0.1,
 });
 
 Vue.filter('number', v => formatNumber(v));
