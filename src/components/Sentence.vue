@@ -14,13 +14,8 @@
           </div>
 
           <div class="column is-narrow has-text-right">
-            <a :href="treebank.mainURL">{{ treebank.name }}</a> version {{ treebank.version }}
-            <br>
-            <span class="icon"><i class="fa fa-creative-commons"></i></span>
-            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> license
-            <br>
+            <metadata-card :treebank="treebank" />
             {{ sentence.citation }}
-            <br>
             <metadata-modal>
               <template v-slot:header>
                 <strong>{{ sentence.source.title }}</strong> <small>({{ sentence.language | language }})</small>
@@ -163,6 +158,7 @@ text
 import CurvedGraph from './graphs/CurvedGraph'
 import SvgGraph from './graphs/SvgGraph'
 
+import MetadataCard from './MetadataCard'
 import MetadataModal from './MetadataModal'
 import api from '../api'
 import {
@@ -176,6 +172,7 @@ export default {
   components: {
     // CurvedGraph,
     SvgGraph,
+    MetadataCard,
     MetadataModal,
   },
 

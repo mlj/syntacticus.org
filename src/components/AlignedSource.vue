@@ -11,10 +11,7 @@
           </div>
 
           <div class="column is-narrow has-text-right">
-            <a :href="treebank.mainURL">{{ treebank.name }}</a> version {{ treebank.version }}
-            <br>
-            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> license
-            <br>
+            <metadata-card :treebank="treebank" />
             <metadata-modal>
               <template v-slot:header>
                 <strong>{{ title }}</strong> <small>({{ language | language }}, {{ tokenCount }} tokens, {{ sentenceCount }} sentences)</small>
@@ -79,12 +76,14 @@
 </template>
 
 <script>
+import MetadataCard from './MetadataCard'
 import MetadataModal from './MetadataModal'
 import api from '../api'
 import { permanentURLs, treebankFromGID } from '../shared'
 
 export default {
   components: {
+    MetadataCard,
     MetadataModal,
   },
 

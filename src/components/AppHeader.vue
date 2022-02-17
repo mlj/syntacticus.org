@@ -36,18 +36,6 @@
                   </p>
                 </div>
               </div>
-
-              <!--span class="navbar-item">
-                <a class="button">
-                  <span class="icon"><i class="fa fa-twitter"></i></span>
-                  <span>Tweet</span>
-                </a>
-
-                <a class="button is-primary" href="https://github.com/proiel/proiel-treebank/releases" target="_blank">
-                  <span class="icon"><i class="fa fa-download"></i></span>
-                  <span>Download</span>
-                </a>
-              </span -->
             </div>
           </div>
         </nav>

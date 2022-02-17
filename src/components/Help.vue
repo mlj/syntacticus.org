@@ -1,9 +1,7 @@
 <template>
   <span>
     <a @click="onClick">
-      <span class="icon">
-        <i class="fa fa-question-circle"></i>
-      </span>
+      <b-icon icon="help-circle" size="is-small"></b-icon>
     </a>
 
     <div class="modal" v-bind:class="{ 'is-active': help }">

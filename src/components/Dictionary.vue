@@ -7,11 +7,7 @@
         </div>
 
         <div class="column is-narrow has-text-right">
-          <a :href="treebank.mainURL">{{ treebank.name }}</a> version {{ treebank.version }}
-          <br>
-          <span class="icon"><i class="fa fa-creative-commons"></i></span>
-          <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> license
-          <br>
+          <metadata-card :treebank="treebank" />
           <metadata-modal>
             <template v-slot:header>
               <strong>{{ language | language }} dictionary</strong>
@@ -93,6 +89,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import MetadataCard from './MetadataCard'
 import MetadataModal from './MetadataModal'
 import PartOfSpeechSelect from './PartOfSpeechSelect'
 import api from '../api'
@@ -106,6 +103,7 @@ import {
 
 export default {
   components: {
+    MetadataCard,
     MetadataModal,
     PartOfSpeechSelect,
   },

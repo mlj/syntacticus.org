@@ -62,9 +62,7 @@ Vue.use(VueInfiniteScroll);
 // outermost section element, in input and textarea fields.
 Vue.use(VueShortkey, { prevent: ['input', 'textarea'] });
 
-Vue.use(Buefy, {
-  defaultIconPack: 'fa',
-})
+Vue.use(Buefy)
 
 if (!Vue.config.devtools) {
   // FIXME: How on earth does one reliably test if this is production or not?!?
