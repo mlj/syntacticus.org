@@ -210,6 +210,8 @@ export default {
         this.total = response.data.total
         this.loading = false
       }).catch((error) => {
+        this.dictionary = []
+        this.total = 0
         this.loading = false
         api.handleError(error)
       })

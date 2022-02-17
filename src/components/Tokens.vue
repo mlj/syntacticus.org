@@ -176,6 +176,7 @@ export default {
   methods: {
     fetchEntries() {
       this.loading = true
+
       let newQuery = {}
       for (var i in this.query) {
         newQuery[i] = this.query[i]
@@ -188,6 +189,8 @@ export default {
         this.total = response.data.total
         this.loading = false
       }).catch((error) => {
+        this.tokens = []
+        this.total = 0
         this.loading = false
         api.handleError(error)
       })
