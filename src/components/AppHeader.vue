@@ -95,13 +95,13 @@ export default {
       // Make sure that the nav toggle on mobile is set to false whenever the route
       // changes so we don't navigate to a new route while leaving the nav bar
       // expanded.
-      this.navToggled = false;
+      this.navToggled = false
     },
   },
 
   methods: {
     toggleNav() {
-      this.navToggled = !this.navToggled;
+      this.navToggled = !this.navToggled
     },
 
     search() {
@@ -110,10 +110,10 @@ export default {
         query: {
           form: this.query
         }
-      });
+      })
     },
 
-    openModal() { this.showModal = true; },
+    openModal() { this.showModal = true },
   }
 }
 </script>

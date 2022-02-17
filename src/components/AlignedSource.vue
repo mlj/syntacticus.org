@@ -63,7 +63,7 @@
     </section>
   </article>
 
-      <!-- 
+      <!--
       <h1 class="title">Table of contents</h2>
 
       <ul class="index">
@@ -79,9 +79,9 @@
 </template>
 
 <script>
-import MetadataModal from './MetadataModal';
-import api from '../api';
-import { permanentURLs, treebankFromGID } from '../shared';
+import MetadataModal from './MetadataModal'
+import api from '../api'
+import { permanentURLs, treebankFromGID } from '../shared'
 
 export default {
   components: {
@@ -107,21 +107,21 @@ export default {
   props: ['gid'],
 
   created() {
-    this.fetchEntries();
+    this.fetchEntries()
   },
 
   watch: {
     '$route' (to, from) {
-      this.fetchEntries();
+      this.fetchEntries()
     },
   },
 
   computed: {
-    permanentURL() { return permanentURLs.source(this.gid); },
+    permanentURL() { return permanentURLs.source(this.gid) },
 
-    treebank() { return treebankFromGID(this.gid); },
+    treebank() { return treebankFromGID(this.gid) },
 
-    chunks() { return this.alignment.chunk_ids; },
+    chunks() { return this.alignment.chunk_ids },
   },
 
   methods: {
@@ -130,33 +130,33 @@ export default {
 
       let params = { }
 
-      this.busy = true;
+      this.busy = true
 
       return api.getSource(this.gid, params).then((response) => {
-        this.author = response.data.author;
-        this.title = response.data.title;
-        this.language = response.data.language;
-        this.license = response.data.license;
-        this.tokenCount = response.data.token_count;
-        this.sentenceCount = response.data.sentence_count;
-        this.alignment = response.data.alignment || {};
+        this.author = response.data.author
+        this.title = response.data.title
+        this.language = response.data.language
+        this.license = response.data.license
+        this.tokenCount = response.data.token_count
+        this.sentenceCount = response.data.sentence_count
+        this.alignment = response.data.alignment || {}
 
-        return this.loadChunk();        
+        return this.loadChunk()
       }).catch((error) => api.handleError(error))
     },
 
     loadChunk() {
       if (this.chunks.length > this.loadedChunks.length) {
-        this.busy = true;
-        let chunkId = this.chunks[this.loadedChunks.length];
+        this.busy = true
+        let chunkId = this.chunks[this.loadedChunks.length]
 
         return api.getAlignedChunk(chunkId).then((response) => {
-          this.loadedChunks.push(response.data);
-          this.busy = false;
-        }).catch((error) => api.handleError(error));
+          this.loadedChunks.push(response.data)
+          this.busy = false
+        }).catch((error) => api.handleError(error))
       } else {
-        this.busy = false;
-        return null;
+        this.busy = false
+        return null
       }
     },
   }

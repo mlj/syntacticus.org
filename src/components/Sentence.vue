@@ -161,16 +161,16 @@ text
 
 <script>
 import CurvedGraph from './graphs/CurvedGraph'
-import SvgGraph from './graphs/SvgGraph';
+import SvgGraph from './graphs/SvgGraph'
 
-import MetadataModal from './MetadataModal';
-import api from '../api';
+import MetadataModal from './MetadataModal'
+import api from '../api'
 import {
   permanentURLs,
   treebankFromGID,
   makeLemmaGID,
   makeDictionaryGID
-} from '../shared';
+} from '../shared'
 
 export default {
   components: {
@@ -195,14 +195,14 @@ export default {
   computed: {
     alignment() {
       // FIXME
-      return this.sentence.language === 'got' || this.sentence.language === 'xcl' || this.gid.match(/(marianus|latin-nt)/);
+      return this.sentence.language === 'got' || this.sentence.language === 'xcl' || this.gid.match(/(marianus|latin-nt)/)
     },
 
-    permanentURL() { return permanentURLs.sentence(this.gid); },
+    permanentURL() { return permanentURLs.sentence(this.gid) },
 
-    treebank() { return treebankFromGID(this.gid); },
+    treebank() { return treebankFromGID(this.gid) },
 
-    dictionaryGID() { return makeDictionaryGID(this.sentence.language); },
+    dictionaryGID() { return makeDictionaryGID(this.sentence.language) },
 
     allTokens() {
       return this.sentence.tokens
@@ -216,11 +216,11 @@ export default {
       return this.sentence.tokens.filter(t => !t.empty_token_sort)
     },
 
-    sentenceID () { return this.gid.split(':')[3]; },
+    sentenceID () { return this.gid.split(':')[3] },
 
-    hasPrevious() { return !!this.sentence.previous_gid; },
+    hasPrevious() { return !!this.sentence.previous_gid },
 
-    hasNext() { return !!this.sentence.next_gid; },
+    hasNext() { return !!this.sentence.next_gid },
   },
 
   created() {
@@ -235,19 +235,19 @@ export default {
 
   methods: {
     buildLemmaGID(dictionaryGID, token) {
-      return makeLemmaGID(dictionaryGID, token.lemma, token.part_of_speech, token.variant);
+      return makeLemmaGID(dictionaryGID, token.lemma, token.part_of_speech, token.variant)
     },
 
     fetchEntries() {
-      this.busy = true;
+      this.busy = true
 
       return api.getSentence(this.gid).then((response) => {
-        this.sentence = response.data || {};
-        this.busy = false;
+        this.sentence = response.data || {}
+        this.busy = false
       }).catch(error => {
-        api.handleError(error);
-        this.busy = false;
-      });
+        api.handleError(error)
+        this.busy = false
+      })
     }
   }
 }

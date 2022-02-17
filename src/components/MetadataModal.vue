@@ -29,7 +29,7 @@ export default {
 
   methods: {
     openModal() {
-      this.showModal = true;
+      this.showModal = true
     },
   }
 }

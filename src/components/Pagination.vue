@@ -32,26 +32,26 @@ export default {
 
   computed: {
     isFirst() {
-      return this.currentPage === 1;
+      return this.currentPage === 1
     },
 
     isLast() {
-      return this.currentPage === this.totalPages;
+      return this.currentPage === this.totalPages
     },
   },
 
   methods: {
     onPrevious() {
       if (this.currentPage > 1) {
-        this.$emit('change', this.currentPage - 1);
-        this.$emit('update:currentPage', this.currentPage - 1);
+        this.$emit('change', this.currentPage - 1)
+        this.$emit('update:currentPage', this.currentPage - 1)
       }
     },
 
     onNext() {
       if (this.currentPage < this.totalPages) {
-        this.$emit('change', this.currentPage + 1);
-        this.$emit('update:currentPage', this.currentPage + 1);
+        this.$emit('change', this.currentPage + 1)
+        this.$emit('update:currentPage', this.currentPage + 1)
       }
     }
   }

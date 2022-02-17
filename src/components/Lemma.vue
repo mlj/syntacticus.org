@@ -152,14 +152,14 @@
 </template>
 
 <script>
-import MetadataModal from './MetadataModal';
-import api from '../api';
-//import VerticalTimeline from './timelines/VerticalTimeline';
-import ChartTimeline from './timelines/ChartTimeline';
-import Paradigm from './Paradigm';
-import Valency from './Valency';
-import _ from '../mylodash';
-import { permanentURLs, treebankFromGID, splitLemmaGID } from '../shared';
+import MetadataModal from './MetadataModal'
+import api from '../api'
+//import VerticalTimeline from './timelines/VerticalTimeline'
+import ChartTimeline from './timelines/ChartTimeline'
+import Paradigm from './Paradigm'
+import Valency from './Valency'
+import _ from '../mylodash'
+import { permanentURLs, treebankFromGID, splitLemmaGID } from '../shared'
 import { totalDistributionFrequency, hasSomeCompositionDate, hasSomeManuscriptDate } from '@/paradigms'
 
 export default {
@@ -186,23 +186,23 @@ export default {
   props: ['gid'],
 
   computed: {
-    permanentURL() { return permanentURLs.lemma(this.gid); },
+    permanentURL() { return permanentURLs.lemma(this.gid) },
 
-    splitGID() { return splitLemmaGID(this.gid); },
+    splitGID() { return splitLemmaGID(this.gid) },
 
-    dictionaryGID() { return this.splitGID.dictionaryGID; },
+    dictionaryGID() { return this.splitGID.dictionaryGID },
 
-    treebank() { return treebankFromGID(this.gid); },
+    treebank() { return treebankFromGID(this.gid) },
 
-    language() { return this.splitGID.language; },
+    language() { return this.splitGID.language },
 
-    lemma() { return this.splitGID.lemma; },
+    lemma() { return this.splitGID.lemma },
 
-    variant() { return this.splitGID.variant; },
+    variant() { return this.splitGID.variant },
 
-    partOfSpeech() { return this.splitGID.partOfSpeech; },
+    partOfSpeech() { return this.splitGID.partOfSpeech },
 
-    hasHomographs() { return this.homographs.length > 0; },
+    hasHomographs() { return this.homographs.length > 0 },
 
     // FIXME: do this server side?
     parsedHomographs() {
@@ -263,28 +263,28 @@ export default {
       return totalDistributionFrequency(this.distribution)
     },
 
-    hasGlosses() { return this.glosses.eng !== undefined || this.glosses.rus !== undefined; },
+    hasGlosses() { return this.glosses.eng !== undefined || this.glosses.rus !== undefined },
 
-    hasValency() { return !!(this.valency && this.valency.length > 0); },
+    hasValency() { return !!(this.valency && this.valency.length > 0) },
 
     hasParadigm() {
-      return this.paradigm && _.keys(this.paradigm).length > 0 && (this.language === 'lat' || this.language === 'orv' || this.language === 'chu' || this.language === 'got' || this.language == 'grc');
+      return this.paradigm && _.keys(this.paradigm).length > 0 && (this.language === 'lat' || this.language === 'orv' || this.language === 'chu' || this.language === 'got' || this.language == 'grc')
     },
   },
 
   created() {
-    this.fetchEntries();
+    this.fetchEntries()
   },
 
   watch: {
     '$route'(to, from) {
-      this.fetchEntries();
+      this.fetchEntries()
     },
   },
 
   methods: {
     yearToText(v) {
-      return v ? (v < 0 ? `${-v} BC` : v) : '';
+      return v ? (v < 0 ? `${-v} BC` : v) : ''
     },
 
     fetchEntries() {
@@ -296,7 +296,7 @@ export default {
         this.paradigm = response.data.paradigm || {}
         this.valency = response.data.valency || []
       }).catch((error) => {
-        api.handleError(error);
+        api.handleError(error)
       })
     },
   },

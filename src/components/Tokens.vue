@@ -80,11 +80,11 @@
 </template>
 
 <script>
-import Multiselect from 'vue-multiselect';
+import Multiselect from 'vue-multiselect'
 import Pagination from './Pagination'
-import api from '../api';
-import { languages, partsOfSpeech } from '../shared';
-import _ from '../mylodash';
+import api from '../api'
+import { languages, partsOfSpeech } from '../shared'
+import _ from '../mylodash'
 
 export default {
   components: {
@@ -105,12 +105,12 @@ export default {
   },
 
   created() {
-    this.page = +this.$route.query.page || 1;
-    this.fetchEntries();
+    this.page = +this.$route.query.page || 1
+    this.fetchEntries()
   },
 
   mounted() {
-    this.handleRouteChange();
+    this.handleRouteChange()
   },
 
   watch: {
@@ -129,21 +129,21 @@ export default {
     },
 
     $route(to, from) {
-      this.handleRouteChange();
+      this.handleRouteChange()
     },
 
     page(to, from) {
-      api.pushNewQuery(this, { page: +to || 1 });
+      api.pushNewQuery(this, { page: +to || 1 })
     },
   },
 
   computed: {
     totalPages() {
-      return Math.ceil(this.total / this.pageSize);
+      return Math.ceil(this.total / this.pageSize)
     },
 
     query() {
-      let to = this.$route;
+      let to = this.$route
 
       return {
         frame_id: to.query.frame_id,
@@ -168,48 +168,48 @@ export default {
       }
     },
 
-    languageOptions() { return _.map(languages, (v, k) => ({ tag: k, label: v })); },
+    languageOptions() { return _.map(languages, (v, k) => ({ tag: k, label: v })) },
 
-    partOfSpeechOptions() { return _.map(partsOfSpeech, (v, k) => ({ tag: k, label: v })); },
+    partOfSpeechOptions() { return _.map(partsOfSpeech, (v, k) => ({ tag: k, label: v })) },
   },
 
   methods: {
     fetchEntries() {
-      this.loading = true;
-      let newQuery = {};
+      this.loading = true
+      let newQuery = {}
       for (var i in this.query) {
-        newQuery[i] = this.query[i];
+        newQuery[i] = this.query[i]
       }
-      newQuery.offset = (this.page - 1) * this.pageSize;
-      newQuery.limit = this.pageSize;
+      newQuery.offset = (this.page - 1) * this.pageSize
+      newQuery.limit = this.pageSize
 
       return api.getTokens(newQuery).then((response) => {
-        this.tokens = response.data.data;
-        this.total = response.data.total;
-        this.loading = false;
+        this.tokens = response.data.data
+        this.total = response.data.total
+        this.loading = false
       }).catch((error) => {
-        this.loading = false;
-        api.handleError(error);
-      });
+        this.loading = false
+        api.handleError(error)
+      })
     },
 
     handleRouteChange() {
-      let l = this.$route.query.language;
+      let l = this.$route.query.language
 
       if (l)
-        this.searchLanguage = { tag: l, label: languages[l] };
+        this.searchLanguage = { tag: l, label: languages[l] }
       else
-        this.searchLanguage = null;
+        this.searchLanguage = null
 
-      l = this.$route.query.part_of_speech;
+      l = this.$route.query.part_of_speech
 
       if (l)
-        this.searchPartOfSpeech = { tag: l, label: partsOfSpeech[l] };
+        this.searchPartOfSpeech = { tag: l, label: partsOfSpeech[l] }
       else
-        this.searchPartOfSpeech = null;
+        this.searchPartOfSpeech = null
 
-      this.page = +this.$route.query.page || 1;
-      this.fetchEntries();
+      this.page = +this.$route.query.page || 1
+      this.fetchEntries()
     },
   },
 }

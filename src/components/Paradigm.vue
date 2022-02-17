@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import paradigms from '../data/paradigms.json';
+import paradigms from '../data/paradigms.json'
 import { flattenForms, makeRegex, getMappedForms } from '@/paradigms'
 
 export default {
@@ -43,24 +43,24 @@ export default {
     // Partitions the levels of the paradigm into attested and unattested
     partitionLevels() {
       let attested = []
-      let unattested = [];
+      let unattested = []
 
       for (let p of this.expandedParadigm) {
         if (this.hasForms(p))
-          attested.push(p);
+          attested.push(p)
         else
-          unattested.push(p);
+          unattested.push(p)
       }
 
-      return [attested, unattested];
+      return [attested, unattested]
     },
 
     attestedLevels() {
-      return this.partitionLevels[0];
+      return this.partitionLevels[0]
     },
 
     unattestedLevels() {
-      return this.partitionLevels[1];
+      return this.partitionLevels[1]
     },
 
     unattestedLevelsAsText() {
@@ -69,9 +69,9 @@ export default {
 
     doCaseFlattening() {
       //if (this.lemma.length > 0 && this.lemma[0] === this.lemma[0].toLowerCase())
-      //  return true;
+      //  return true
       //else
-      return false;
+      return false
     },
 
     paradigms() {
@@ -103,9 +103,9 @@ export default {
     mappedForms() {
       if (this.doCaseFlattening) {
         // Case flattening
-        return flattenForms(this.forms);
+        return flattenForms(this.forms)
       } else {
-        return this.forms;
+        return this.forms
       }
     },
   },
@@ -127,12 +127,12 @@ export default {
         for (let l12 of p.levels1) {
           for (let form of this.getForms(l12.pattern, l2.pattern, p.pattern)) {
             if (form.n > 0)
-              return true; // short-circuit
+              return true // short-circuit
           }
         }
       }
 
-      return false;
+      return false
     },
   }
 }

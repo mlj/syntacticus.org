@@ -50,19 +50,19 @@ export default {
   computed: {
     /* Languages sorted by total number of tokens in descending order */
     sortedLanguages() {
-      return _.sortBy(_.keys(this.sourcesByLanguage), l => -this.languagesSortedByTokenCount[l]);
+      return _.sortBy(_.keys(this.sourcesByLanguage), l => -this.languagesSortedByTokenCount[l])
     },
 
     languagesSortedByTokenCount() {
-      return _.mapValues(this.sourcesByLanguage, sources => _.sumBy(sources, source => source.token_count));
+      return _.mapValues(this.sourcesByLanguage, sources => _.sumBy(sources, source => source.token_count))
     },
 
     dictionariesByLanguage() {
-      return _.groupBy(this.dictionaries, i => i.language);
+      return _.groupBy(this.dictionaries, i => i.language)
     },
 
     sourcesByLanguage() {
-      return _.groupBy(this.sources, i => i.language);
+      return _.groupBy(this.sources, i => i.language)
     },
   },
 
@@ -72,9 +72,9 @@ export default {
       api.getDictionaries(),
     ]).then(([response1, response2]) => {
       // TODO: deal with pagination one day or precompute these stats
-      this.sources = response1.data.data;
-      this.dictionaries = response2.data.data;
-    }).catch((error) => api.handleError(error));
+      this.sources = response1.data.data
+      this.dictionaries = response2.data.data
+    }).catch((error) => api.handleError(error))
   },
 }
 </script>

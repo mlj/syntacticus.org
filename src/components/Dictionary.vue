@@ -87,23 +87,22 @@
           </b-table-column>
         </b-table>
       </section>
-
     </div>
   </section>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import MetadataModal from './MetadataModal';
+import { mapGetters } from 'vuex'
+import MetadataModal from './MetadataModal'
 import PartOfSpeechSelect from './PartOfSpeechSelect'
-import api from '../api';
-import schema from '../data/schema.json';
+import api from '../api'
+import schema from '../data/schema.json'
 import {
   makeLemmaGID,
   splitDictionaryGID,
   permanentURLs,
   treebankFromGID
-} from '../shared';
+} from '../shared'
 
 export default {
   components: {
@@ -138,13 +137,13 @@ export default {
       'currentDictionaries',
     ]),
 
-    permanentURL() { return permanentURLs.dictionary(this.gid); },
+    permanentURL() { return permanentURLs.dictionary(this.gid) },
 
-    splitGID() { return splitDictionaryGID(this.gid); },
+    splitGID() { return splitDictionaryGID(this.gid) },
 
-    treebank() { return treebankFromGID(this.gid); },
+    treebank() { return treebankFromGID(this.gid) },
 
-    language() { return this.splitGID.language; },
+    language() { return this.splitGID.language },
 
     rusGlossesEnabled: {
       get() {
@@ -163,7 +162,7 @@ export default {
 
   watch: {
     '$route' (to, from) {
-      this.page = +to.query.page || 1;
+      this.page = +to.query.page || 1
       this.fetchEntries()
     },
 
@@ -190,7 +189,7 @@ export default {
 
   methods: {
     fetchEntries() {
-      this.loading = true;
+      this.loading = true
 
       let dictionaryParams = {
         part_of_speech: this.$route.query.pos,
@@ -207,17 +206,17 @@ export default {
       }
 
       return api.getDictionary(this.gid, dictionaryParams).then((response) => {
-        this.dictionary = response.data.data;
-        this.total = response.data.total;
-        this.loading = false;
+        this.dictionary = response.data.data
+        this.total = response.data.total
+        this.loading = false
       }).catch((error) => {
-        this.loading = false;
-        api.handleError(error);
-      });
+        this.loading = false
+        api.handleError(error)
+      })
     },
 
     buildLemmaGID(lemma) {
-      return makeLemmaGID(this.gid, lemma.lemma, lemma.part_of_speech, lemma.variant);
+      return makeLemmaGID(this.gid, lemma.lemma, lemma.part_of_speech, lemma.variant)
     },
   }
 }

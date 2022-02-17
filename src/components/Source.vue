@@ -66,9 +66,9 @@
 </template>
 
 <script>
-import MetadataModal from './MetadataModal';
-import api from '../api';
-import { eText, permanentURLs, treebankFromGID } from '../shared';
+import MetadataModal from './MetadataModal'
+import api from '../api'
+import { eText, permanentURLs, treebankFromGID } from '../shared'
 
 export default {
   components: {
@@ -93,13 +93,13 @@ export default {
   props: ['gid'],
 
   computed: {
-    permanentURL() { return permanentURLs.source(this.gid); },
+    permanentURL() { return permanentURLs.source(this.gid) },
 
-    treebank() { return treebankFromGID(this.gid); },
+    treebank() { return treebankFromGID(this.gid) },
 
-    metadata() { return eText(this.gid); },
+    metadata() { return eText(this.gid) },
 
-    isAligned() { return this.alignment.gid != null; },
+    isAligned() { return this.alignment.gid != null },
   },
 
   created() {
@@ -114,43 +114,43 @@ export default {
 
   methods: {
     makeSentenceLink(id_part) {
-      return `${this.gid}:${id_part}`;
+      return `${this.gid}:${id_part}`
     },
 
     fetchEntries() {
-      this.busy = true;
+      this.busy = true
 
       return api.getSource(this.gid).then((response) => {
-        this.author = response.data.author;
-        this.title = response.data.title;
-        this.language = response.data.language;
-        this.license = response.data.license;
-        this.tokenCount = response.data.token_count;
-        this.sentenceCount = response.data.sentence_count;
-        this.chunks = response.data.chunks;
-        this.alignment = response.data.alignment || {};
+        this.author = response.data.author
+        this.title = response.data.title
+        this.language = response.data.language
+        this.license = response.data.license
+        this.tokenCount = response.data.token_count
+        this.sentenceCount = response.data.sentence_count
+        this.chunks = response.data.chunks
+        this.alignment = response.data.alignment || {}
 
-        this.loadChunk();
+        this.loadChunk()
       }).catch((error) => {
-        api.handleError(error);
-        this.busy = false;
-      });
+        api.handleError(error)
+        this.busy = false
+      })
     },
 
     loadChunk() {
       if (this.chunks.length > this.loadedChunks.length) {
-        this.busy = true;
-        let chunkId = this.chunks[this.loadedChunks.length];
+        this.busy = true
+        let chunkId = this.chunks[this.loadedChunks.length]
 
         return api.getChunk(chunkId).then((response) => {
-          this.loadedChunks.push(response.data);
-          this.busy = false;
+          this.loadedChunks.push(response.data)
+          this.busy = false
         }).catch((error) => {
           api.handleError(error)
-          this.busy = false;
-        });
+          this.busy = false
+        })
       } else {
-        this.busy = false;
+        this.busy = false
       }
     },
   }
