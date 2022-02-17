@@ -114,15 +114,16 @@ export default {
 
   data() {
     return {
-      loading: false,
+      dictionary: [],
 
       formPattern: this.$route.query.lemma,
       pos: this.$route.query.pos,
-      page: +this.$route.query.page || 1,
-      total: 0,
-      dictionary: [],
+
+      loading: false,
+      page: 1,
       pageSize: 10,
       paginationPosition: 'both',
+      total: 0,
     }
   },
 
@@ -162,40 +163,40 @@ export default {
 
   watch: {
     $route(to, from) {
-      this.page = +to.query.page || 1
+      this.formPattern = to.query.lemma
+      this.pos         = to.query.pos
+
       this.fetchEntries()
     },
 
     page(to, from) {
-      api.pushNewQuery(this, {
-        page: +to || 1
-      })
+      this.fetchEntries()
     },
 
     pos(to, from) {
-      api.pushNewQuery(this, {
-        pos: to,
-        page: 1,
-      })
+      this.updateQuery({ pos: to })
     },
 
     formPattern(to, from) {
-      api.pushNewQuery(this, {
-        lemma: to,
-        page: 1,
-      })
+      this.updateQuery({ lemma: to })
     },
   },
 
   methods: {
+    updateQuery(to) {
+      this.page = 1
+      api.pushNewQuery(this, to)
+    },
+
     fetchEntries() {
       this.loading = true
 
       let dictionaryParams = {
-        part_of_speech: this.$route.query.pos,
         lemma: this.$route.query.lemma,
-        offset: (this.page - 1) * this.pageSize,
+        part_of_speech: this.$route.query.pos,
+
         limit: this.pageSize,
+        offset: (this.page - 1) * this.pageSize,
       }
 
       if (dictionaryParams.lemma === '' || dictionaryParams.lemma === null || dictionaryParams.lemma === undefined)
