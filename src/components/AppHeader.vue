@@ -91,7 +91,7 @@ export default {
   },
 
   watch: {
-    '$route'(to, from) {
+    $route(to, from) {
       // Make sure that the nav toggle on mobile is set to false whenever the route
       // changes so we don't navigate to a new route while leaving the nav bar
       // expanded.

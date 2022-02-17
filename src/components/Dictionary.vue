@@ -161,7 +161,7 @@ export default {
   },
 
   watch: {
-    '$route' (to, from) {
+    $route(to, from) {
       this.page = +to.query.page || 1
       this.fetchEntries()
     },
