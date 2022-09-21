@@ -70,6 +70,7 @@ export default {
       formPattern: this.$route.query.form,
       language: this.$route.query.language,
       pos: this.$route.query.pos,
+      frame_id: this.$route.query.frame_id,
 
       loading: false,
       page: 1,
@@ -94,6 +95,7 @@ export default {
       this.formPattern = to.query.form
       this.language    = to.query.language
       this.pos         = to.query.pos
+      this.frame_id    = to.query.frame_id
 
       this.fetchEntries()
     },
@@ -128,6 +130,7 @@ export default {
         language: this.language,
         form: this.formPattern,
         part_of_speech: this.pos,
+        frame_id: this.frame_id,
 
         limit: this.pageSize,
         offset: (this.page - 1) * this.pageSize,
