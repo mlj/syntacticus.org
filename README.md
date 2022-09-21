@@ -1,6 +1,6 @@
 # Syntacticus
 
-This is the code for [Syntacticus](http://syntacticus.org), an end-user frontend for the [PROIEL Treebank](https://proiel.github.io/), [ISWOC Treebank](https://iswoc.github.io/) and [TOROT Treebank](https://torottreebank.github.io/), which are treebanks of ancient Indo-European languages.
+This is the code for [Syntacticus](http://syntacticus.org), an end-user frontend for the [PROIEL Treebank](http://dev.syntacticus.org/proiel.html), [ISWOC Treebank](http://dev.syntacticus.org/iswoc.html) and [TOROT Treebank](https://torottreebank.github.io/), which are treebanks of ancient Indo-European languages.
 
 Syntacticus is a single-page application and relies on a backend to serve the actual language data.
 
