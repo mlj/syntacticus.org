@@ -4,7 +4,6 @@ import { formatNumber } from 'accounting';
 import VueInfiniteScroll from 'vue-infinite-scroll';
 import VueShortkey from 'vue-shortkey';
 import Buefy from 'buefy';
-import * as Sentry from "@sentry/vue";
 
 import App from './App';
 import router from './router';
@@ -17,11 +16,6 @@ console.log("Syntacticus build " + document.documentElement.dataset.buildTimesta
 
 Vue.config.productionTip = false;
 Vue.config.performance = true;
-
-Sentry.init({
-  Vue,
-  dsn: 'https://6845b69e675f492783530c2fe04de556@o88873.ingest.sentry.io/193600',
-});
 
 Vue.filter('number', v => formatNumber(v));
 

@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import { ToastProgrammatic as Toast } from 'buefy'
 import axios from 'axios'
-import * as Sentry from "@sentry/vue";
 
 Vue.prototype.$axios = axios
 
@@ -38,8 +37,6 @@ const api = {
 
       default:
         openErrorMessage("Oops, we couldn't load the data you were looking for! We may have some problems with our server...");
-
-        Sentry.captureException(error);
         break;
     }
   },
