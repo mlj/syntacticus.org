@@ -22,7 +22,6 @@
     "d3-selection": "1.2.0",
     "d3-shape": "1.2.3",
     "d3-zoom": "1.7.4",
-    "lodash": "4.17.21",
     "vue": "2.6.14",
     "vue-infinite-scroll": "2.0.2",
     "vue-router": "3.0.1",
@@ -43,7 +42,6 @@
     "@vue/vue2-jest": "^27.0.0-alpha.3",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
-    "eslint-plugin-you-dont-need-lodash-underscore": "6.10.0",
     "jest": "^27.1.0",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
@@ -56,8 +54,7 @@
     },
     "extends": [
       "plugin:vue/essential",
-      "eslint:recommended",
-      "plugin:you-dont-need-lodash-underscore/compatible"
+      "eslint:recommended"
     ],
     "parserOptions": {
       "parser": "@babel/eslint-parser"
@@ -68,13 +65,7 @@
       "vue/multi-word-component-names": 0,
       "vue/no-use-v-if-with-v-for": 0,
       "vue/require-v-for-key": 0,
-      "vue/valid-v-for": 0,
-      "you-dont-need-lodash-underscore/keys": 0,
-      "you-dont-need-lodash-underscore/some": 0,
-      "you-dont-need-lodash-underscore/map": 0,
-      "you-dont-need-lodash-underscore/reduce": 0,
-      "you-dont-need-lodash-underscore/each": 0,
-      "you-dont-need-lodash-underscore/filter": 0
+      "vue/valid-v-for": 0
     },
     "overrides": [
       {

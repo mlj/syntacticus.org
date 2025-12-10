@@ -18,7 +18,6 @@
 <script>
 import { symbol, symbolTriangle } from 'd3-shape'
 import VisBase from './BaseGraph.vue';
-import _ from '../../mylodash';
 
 export default {
   components: {
@@ -44,11 +43,14 @@ export default {
 
     treeWidth: function() { return this.wordWidth * this.data.length - this.wordWidth / 3; },
 
-    treeHeight: function() { return this.levelHeight(_.max(_.map(this.data, function(edge) { return edge.level }))) + 2 * this.wordHeight; },
+    treeHeight: function() {
+      const maxLevel = Math.max(...this.data.map(edge => edge.level));
+      return this.levelHeight(maxLevel) + 2 * this.wordHeight;
+    },
 
     nodes: function() {
       var that = this;
-      return _.each(this.data, function(item) {
+      this.data.forEach(function(item) {
         item.bottom = that.treeHeight - 1.8 * that.wordHeight;
         item.top = item.bottom - that.levelHeight(item.level);
         item.left = item.id * that.wordWidth;
@@ -58,6 +60,7 @@ export default {
         item.diff = (item.right - item.left) / 4;
         item.arrow = item.top + (item.bottom - item.top) * 0.25;
       });
+      return this.data;
     }
   },
 
@@ -73,22 +76,29 @@ export default {
     levelHeight: function(level) { return 2 + (level ** 1.5) * 25; },
 
     computeEdgeLevels: function(data) {
-      let edges = _.filter(data, function(item) { return item.id });
+      let edges = data.filter(function(item) { return item.id });
       let len = edges.length;
       for (let i = 0; i < len; i++) {
         for (let j = 0; j < len; j++) {
           let edge1 = edges[j];
 
-          let edgesUnder = _.filter(edges, edge2 => {
+          let edgesUnder = edges.filter(edge2 => {
             let ma;
             let mi;
 
-            [mi, ma] = _.sortBy([edge1.id, edge1.parent || 0]); // FIXME: 0 due to ROOT having no parent
+            // Native replacement for _.sortBy([edge1.id, edge1.parent || 0])
+            // Just use Math.min/max directly
+            mi = Math.min(edge1.id, edge1.parent || 0);
+            ma = Math.max(edge1.id, edge1.parent || 0);
 
             return edge1.id !== edge2.id && edge2.id >= mi && edge2.parent >= mi && edge2.id <= ma && edge2.parent <= ma;
           });
 
-          edge1.level = 1 + (_.max(_.map(edgesUnder, f => f.level)) || 0);
+          // _.max returns -Infinity for empty list, or undefined? Lodash max returns undefined for empty array.
+          // Math.max returns -Infinity for empty args.
+          const levels = edgesUnder.map(f => f.level);
+          const maxLevel = levels.length > 0 ? Math.max(...levels) : 0;
+          edge1.level = 1 + maxLevel;
         }
       }
 

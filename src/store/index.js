@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import _ from '../mylodash';
 import api from '../api';
 import staticSchema from '../data/schema.json';
 
@@ -62,7 +61,10 @@ export const storeConfig = {
 
     sources: state => (state.sources || []),
 
-    sourceLanguages: state => (_.sortedUniq(_.map(state.sources, s => s.language).sort())),
+    sourceLanguages: state => {
+      const languages = state.sources.map(s => s.language).sort();
+      return [...new Set(languages)]; // sortedUniq equivalent
+    },
 
     rusGlossesEnabled: state => state.preferences.rusGlossesEnabled,
   },

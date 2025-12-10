@@ -37,7 +37,6 @@
 
 <script>
 import api from '../api';
-import _ from '../mylodash';
 
 export default {
   data() {
@@ -50,19 +49,46 @@ export default {
   computed: {
     /* Languages sorted by total number of tokens in descending order */
     sortedLanguages() {
-      return _.sortBy(_.keys(this.sourcesByLanguage), l => -this.languagesSortedByTokenCount[l])
+      // Sort keys of sourcesByLanguage based on token count
+      return Object.keys(this.sourcesByLanguage).sort((a, b) => {
+        return this.languagesSortedByTokenCount[b] - this.languagesSortedByTokenCount[a];
+      })
     },
 
     languagesSortedByTokenCount() {
-      return _.mapValues(this.sourcesByLanguage, sources => _.sumBy(sources, source => source.token_count))
+      const result = {};
+      for (const lang in this.sourcesByLanguage) {
+        if (Object.prototype.hasOwnProperty.call(this.sourcesByLanguage, lang)) {
+          const sources = this.sourcesByLanguage[lang];
+          // Sum by token_count
+          result[lang] = sources.reduce((sum, source) => sum + (source.token_count || 0), 0);
+        }
+      }
+      return result;
     },
 
     dictionariesByLanguage() {
-      return _.groupBy(this.dictionaries, i => i.language)
+      // Group by language
+      return this.dictionaries.reduce((acc, obj) => {
+        const key = obj.language;
+        if (!acc[key]) {
+          acc[key] = [];
+        }
+        acc[key].push(obj);
+        return acc;
+      }, {});
     },
 
     sourcesByLanguage() {
-      return _.groupBy(this.sources, i => i.language)
+      // Group by language
+      return this.sources.reduce((acc, obj) => {
+        const key = obj.language;
+        if (!acc[key]) {
+          acc[key] = [];
+        }
+        acc[key].push(obj);
+        return acc;
+      }, {});
     },
   },
 

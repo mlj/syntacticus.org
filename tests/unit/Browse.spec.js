@@ -1,22 +1,12 @@
 import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils'
 import Browse from '@/components/Browse.vue'
 import api from '@/api'
-import _ from 'lodash'
 
 // Mock the API
 jest.mock('@/api', () => ({
   getSources: jest.fn(),
   getDictionaries: jest.fn(),
   handleError: jest.fn()
-}))
-
-// Mock mylodash filter
-jest.mock('@/mylodash', () => ({
-  sortBy: jest.requireActual('lodash/sortBy'),
-  keys: jest.requireActual('lodash/keys'),
-  mapValues: jest.requireActual('lodash/mapValues'),
-  groupBy: jest.requireActual('lodash/groupBy'),
-  sumBy: jest.requireActual('lodash/sumBy'),
 }))
 
 

@@ -1,17 +1,18 @@
-import _ from './mylodash';
-
 // Flattens the case of forms in a paradigm.
 export function flattenForms(forms) {
-  return _.mapValues(forms, p => {
-    return _.reduce(p, (result, n, form) => {
-      let f = form.toLowerCase()
-      if (result[f])
-        result[f] += n
-      else
-        result[f] = n
-      return result
-    }, {})
-  })
+  const result = {};
+  for (const key in forms) {
+    if (Object.prototype.hasOwnProperty.call(forms, key)) {
+      const p = forms[key];
+      result[key] = Object.entries(p).reduce((acc, [form, n]) => {
+        let f = form.toLowerCase();
+        if (acc[f]) acc[f] += n;
+        else acc[f] = n;
+        return acc;
+      }, {});
+    }
+  }
+  return result;
 }
 
 const features = [
@@ -63,13 +64,16 @@ export function getMappedForms(mappedForms, pattern1, pattern2, pattern3) {
 
 // Returns the total number of occurrences of a lemma from a lemma distribution.
 export function totalDistributionFrequency(lemmaDistribution) {
-  return _.map(lemmaDistribution).reduce((a, e) => a + e.n, 0)
+  if (!lemmaDistribution) return 0;
+  return lemmaDistribution.reduce((a, e) => a + e.n, 0)
 }
 
 export function hasSomeCompositionDate(lemmaDistribution) {
-  return _.some(lemmaDistribution, d => (d.chronology.t !== undefined && d.chronology.t !== null));
+  if (!lemmaDistribution) return false;
+  return lemmaDistribution.some(d => (d.chronology.t !== undefined && d.chronology.t !== null));
 }
 
 export function hasSomeManuscriptDate(lemmaDistribution) {
-  return _.some(lemmaDistribution, d => (d.chronology.m !== undefined && d.chronology.m !== null))
+  if (!lemmaDistribution) return false;
+  return lemmaDistribution.some(d => (d.chronology.m !== undefined && d.chronology.m !== null))
 }

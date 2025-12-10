@@ -1,6 +1,5 @@
 import schema from './data/schema.json';
 import { formatNumber } from 'accounting';
-import _ from './mylodash';
 import { languages } from './shared';
 
 export function numberFilter(v) {
@@ -23,12 +22,12 @@ export function partOfSpeechFilter(v) {
 
 export function morphology1Filter(f) {
   let [p, n, /* t */, /* m */, /* v */, g, c, /* d */, /* s */, /* i */] = f.split('');
-  return _.compact([schema.person[p], schema.case[c], schema.number[n], schema.gender[g]]).join(' ');
+  return [schema.person[p], schema.case[c], schema.number[n], schema.gender[g]].filter(Boolean).join(' ');
 }
 
 export function morphology2Filter(f) {
   let [/* p */, /* n */, t, m, v, /* g /*, /* c */, d, s, /* i */] = f.split('');
-  return _.compact([schema.tense[t], schema.mood[m], schema.voice[v], schema.degree[d], schema.strength[s]]).join(' ');
+  return [schema.tense[t], schema.mood[m], schema.voice[v], schema.degree[d], schema.strength[s]].filter(Boolean).join(' ');
 }
 
 export default {

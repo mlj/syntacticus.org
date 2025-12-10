@@ -155,7 +155,6 @@ import api from '../api'
 import ChartTimeline from './timelines/ChartTimeline'
 import Paradigm from './Paradigm'
 import Valency from './Valency'
-import _ from '../mylodash'
 import { permanentURLs, treebankFromGID, splitLemmaGID } from '../shared'
 import { totalDistributionFrequency, hasSomeCompositionDate, hasSomeManuscriptDate } from '@/paradigms'
 
@@ -266,7 +265,7 @@ export default {
     hasValency() { return !!(this.valency && this.valency.length > 0) },
 
     hasParadigm() {
-      return this.paradigm && _.keys(this.paradigm).length > 0 && (this.language === 'lat' || this.language === 'orv' || this.language === 'chu' || this.language === 'got' || this.language == 'grc')
+      return this.paradigm && Object.keys(this.paradigm).length > 0 && (this.language === 'lat' || this.language === 'orv' || this.language === 'chu' || this.language === 'got' || this.language == 'grc')
     },
   },
 

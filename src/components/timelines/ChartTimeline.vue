@@ -11,8 +11,6 @@ import { max } from 'd3-array';
 import { select } from 'd3-selection';
 import { axisBottom, axisLeft } from 'd3-axis';
 
-import _ from '../../mylodash';
-
 export default {
   data() {
     return {
@@ -57,7 +55,11 @@ export default {
     },
 
     data() {
-      return _.sortBy(this.events.filter(d => (d.year !== undefined && d.year !== null)), d => d.year).map(d => {
+      // Sort by year
+      return this.events
+        .filter(d => (d.year !== undefined && d.year !== null))
+        .sort((a, b) => a.year - b.year)
+        .map(d => {
           return {
             year: (d.year < 0 ? `${-d.year} BC` : d.year),
             n: d.n,
