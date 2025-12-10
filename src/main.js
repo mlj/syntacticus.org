@@ -1,5 +1,4 @@
 import Vue from 'vue';
-import Analytics from 'vue-ua';
 import VueInfiniteScroll from 'vue-infinite-scroll';
 import VueShortkey from 'vue-shortkey';
 import Buefy from 'buefy';
@@ -23,19 +22,6 @@ Vue.use(VueInfiniteScroll);
 Vue.use(VueShortkey, { prevent: ['input', 'textarea'] });
 
 Vue.use(Buefy)
-
-if (!Vue.config.devtools) {
-  // FIXME: How on earth does one reliably test if this is production or not?!?
-  Vue.use(Analytics, {
-    appName: 'Syntacticus',
-    appVersion: '0.1.0',
-    trackingId: 'UA-41787940-7',
-    debug: false,
-    vueRouter: router,
-  });
-} else {
-  console.log("Not enabling GA");
-}
 
 /* eslint-disable no-new */
 new Vue({
