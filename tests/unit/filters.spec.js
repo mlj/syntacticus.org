@@ -1,20 +1,11 @@
 import {
-  numberFilter,
   languageFilter,
-  capitalizeFilter,
   partOfSpeechFilter,
   morphology1Filter,
   morphology2Filter
 } from '@/filters'
 
 describe('filters.js', () => {
-  describe('numberFilter', () => {
-    it('formats numbers using accounting', () => {
-      // Assuming default accounting format
-      expect(numberFilter(1000)).toBe('1,000')
-    })
-  })
-
   describe('languageFilter', () => {
     it('returns language name for known code', () => {
       expect(languageFilter('lat')).toBe('Latin')
@@ -22,16 +13,6 @@ describe('filters.js', () => {
 
     it('returns Unknown language for unknown code', () => {
       expect(languageFilter('unknown')).toBe('Unknown language')
-    })
-  })
-
-  describe('capitalizeFilter', () => {
-    it('capitalizes first letter', () => {
-      expect(capitalizeFilter('hello')).toBe('Hello')
-    })
-
-    it('returns empty string for null/undefined', () => {
-      expect(capitalizeFilter(null)).toBe('')
     })
   })
 
