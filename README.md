@@ -8,13 +8,17 @@ Syntacticus is a single-page application and relies on a backend to serve the ac
 
 ``` bash
 # install dependencies
-yarn
+# Use --legacy-peer-deps due to older project setup and potential npm version conflicts.
+npm install --legacy-peer-deps
 
 # serve with hot reload at localhost:8080
-yarn serve
+npm run serve
 
 # build for production with minification
-yarn build
+npm run build
+
+# run unit tests
+npm run test
 ```
 
 ## Attributions
