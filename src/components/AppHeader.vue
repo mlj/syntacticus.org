@@ -42,10 +42,12 @@
       </div>
     </div>
 
-    <b-modal :active.sync="showModal">
+    <div class="modal" :class="{ 'is-active': showModal }">
+      <div class="modal-background" @click="showModal = false"></div>
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title">Keyboard shortcuts</p>
+          <button class="delete" aria-label="close" @click="showModal = false"></button>
         </header>
         <section class="modal-card-body">
           <table class="table is-fullwidth">
@@ -56,7 +58,7 @@
               <tr><td class="is-family-monospace">/</td><td>Focus search box</td></tr>
               <tr><td class="is-family-monospace">J</td><td>Previous page</td></tr>
               <tr><td class="is-family-monospace">K</td><td>Next page</td></tr>
-              <tr><td class="is-family-monospace">?</td><td>This help table</td></tr>
+              <tr><td class="is-family-monospace">H</td><td>This help table</td></tr>
             </tbody>
           </table>
         </section>
@@ -64,7 +66,7 @@
           <p>Press <span class="is-family-monospace">Escape</span> or click the close button to return to Syntacticus</p>
         </footer>
       </div>
-    </b-modal>
+    </div>
   </section>
 </template>
 
@@ -102,6 +104,20 @@ export default {
     },
 
     openModal() { this.showModal = true },
+
+    onKeydown(e) {
+      if (this.showModal && e.keyCode === 27) {
+        this.showModal = false
+      }
+    }
+  },
+
+  mounted() {
+    document.addEventListener('keydown', this.onKeydown)
+  },
+
+  beforeDestroy() {
+    document.removeEventListener('keydown', this.onKeydown)
   }
 }
 </script>

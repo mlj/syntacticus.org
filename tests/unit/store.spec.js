@@ -47,6 +47,11 @@ describe('Vuex Store', () => {
       store.commit('SET_RUS_GLOSSES_ENABLED', false)
       expect(store.state.preferences.rusGlossesEnabled).toBe(false)
     })
+
+    it('SET_ERROR_MESSAGE sets error message', () => {
+      store.commit('SET_ERROR_MESSAGE', 'Something went wrong')
+      expect(store.state.errorMessage).toBe('Something went wrong')
+    })
   })
 
   describe('Getters', () => {
@@ -70,6 +75,11 @@ describe('Vuex Store', () => {
       ]
       store.commit('SET_SOURCES', { list: sources })
       expect(store.getters.sourceLanguages).toEqual(['grc', 'lat'])
+    })
+
+    it('errorMessage returns error message', () => {
+      store.commit('SET_ERROR_MESSAGE', 'Error!')
+      expect(store.getters.errorMessage).toBe('Error!')
     })
   })
 

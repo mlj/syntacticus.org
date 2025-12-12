@@ -1,18 +1,18 @@
 import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils'
 import Lemma from '@/components/Lemma.vue'
 import api from '@/api'
-import Buefy from 'buefy'
 
 const localVue = createLocalVue()
-localVue.use(Buefy)
-localVue.filter('language', v => v) // Mock filters
-localVue.filter('partOfSpeech', v => v)
 
 // Mock API
 jest.mock('@/api', () => ({
   getLemma: jest.fn(),
   handleError: jest.fn()
 }))
+
+// Mock filters
+localVue.filter('language', v => v) // Mock filters
+localVue.filter('partOfSpeech', v => v)
 
 describe('Lemma.vue', () => {
   const gid = 'proiel:20180408:lat:dico:V-'
@@ -98,5 +98,20 @@ describe('Lemma.vue', () => {
 
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.hasParadigm).toBe(false)
+  })
+
+  it('switches tabs', async () => {
+    const wrapper = shallowMount(Lemma, {
+      localVue,
+      propsData: { gid },
+      stubs: { MetadataCard: true, MetadataModal: true, Paradigm: true, Valency: true, ChartTimeline: true }
+    })
+
+    // Default active tab is paradigm
+    expect(wrapper.vm.activeTab).toBe('paradigm')
+
+    // Switch to valency
+    wrapper.setData({ activeTab: 'valency' })
+    expect(wrapper.vm.activeTab).toBe('valency')
   })
 })

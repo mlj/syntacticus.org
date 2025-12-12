@@ -3,27 +3,41 @@
     <nav class="level">
       <div class="level-left">
         <div class="level-item">
-          <b-dropdown v-model="direction" :triggers="['hover']" aria-role="list">
-            <template #trigger>
-              <b-button label="Direction" type="is-primary" icon-right="chevron-down"/>
-            </template>
-
-            <b-dropdown-item aria-role="listitem" value="TD">Top-down</b-dropdown-item>
-            <b-dropdown-item aria-role="listitem" value="LR">Left-right</b-dropdown-item>
-          </b-dropdown>
+          <div class="dropdown" :class="{ 'is-active': directionDropdownActive }">
+            <div class="dropdown-trigger">
+              <button class="button is-primary" aria-haspopup="true" aria-controls="dropdown-menu-direction" @click="directionDropdownActive = !directionDropdownActive">
+                <span>Direction</span>
+                <span class="icon is-small">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu-direction" role="menu">
+              <div class="dropdown-content">
+                <a href="#" class="dropdown-item" :class="{ 'is-active': direction === 'TD' }" @click.prevent="setDirection('TD')">Top-down</a>
+                <a href="#" class="dropdown-item" :class="{ 'is-active': direction === 'LR' }" @click.prevent="setDirection('LR')">Left-right</a>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="level-item">
-          <b-dropdown v-model="layout" v-if="!alignment" :triggers="['hover']" aria-role="list">
-            <template #trigger>
-              <b-button label="Layout" type="is-primary" icon-right="chevron-down"/>
-            </template>
-
-            <span>
-              <b-dropdown-item aria-role="listitem" value="modern">Modern</b-dropdown-item>
-              <b-dropdown-item aria-role="listitem" value="classic">Classic</b-dropdown-item>
-              <b-dropdown-item aria-role="listitem" value="packed">Packed</b-dropdown-item>
-            </span>
-          </b-dropdown>
+          <div class="dropdown" :class="{ 'is-active': layoutDropdownActive }" v-if="!alignment">
+            <div class="dropdown-trigger">
+              <button class="button is-primary" aria-haspopup="true" aria-controls="dropdown-menu-layout" @click="layoutDropdownActive = !layoutDropdownActive">
+                <span>Layout</span>
+                <span class="icon is-small">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu-layout" role="menu">
+              <div class="dropdown-content">
+                <a href="#" class="dropdown-item" :class="{ 'is-active': layout === 'modern' }" @click.prevent="setLayout('modern')">Modern</a>
+                <a href="#" class="dropdown-item" :class="{ 'is-active': layout === 'classic' }" @click.prevent="setLayout('classic')">Classic</a>
+                <a href="#" class="dropdown-item" :class="{ 'is-active': layout === 'packed' }" @click.prevent="setLayout('packed')">Packed</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="level-right">
@@ -57,6 +71,8 @@ export default {
       layout: 'modern',
       direction: 'LR',
       responseURL: null,
+      directionDropdownActive: false,
+      layoutDropdownActive: false,
     }
   },
 
@@ -88,19 +104,17 @@ export default {
 
     fetch() {
       if (this.gid) {
+        this.busy = true; // Set busy status
         return this.fetchAPI().then((response) => {
-          // Grab response URL for direct downloads
           this.responseURL = response.request.responseURL;
-
           let data = response.data || '';
           this.svg = data;
-          this.busy = false;
+          this.busy = false; // Reset busy status
         }).catch(error => {
           api.handleError(error);
-
           this.responseURL = null;
           this.svg = '';
-          this.busy = false;
+          this.busy = false; // Reset busy status
         });
       } else {
         this.responseURL = null;
@@ -112,6 +126,16 @@ export default {
       let win = window.open('', "Syntacticus", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes");
       win.document.body.innerHTML = `<body>${this.svg}</body>`;
     },
+
+    setDirection(newDirection) {
+      this.direction = newDirection;
+      this.directionDropdownActive = false;
+    },
+
+    setLayout(newLayout) {
+      this.layout = newLayout;
+      this.layoutDropdownActive = false;
+    }
   }
 }
 </script>

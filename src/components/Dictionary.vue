@@ -29,7 +29,7 @@
       </div>
 
       <section>
-        <b-field grouped group-multiline>
+        <div class="field is-grouped is-grouped-multiline">
           <div class="control">
             <input class="input" v-model="formPattern" placeholder="Form">
           </div>
@@ -37,51 +37,86 @@
           <part-of-speech-select v-model="pos" />
 
           <div class="control" v-if="language === 'orv'">
-            English translations
-            <b-switch v-model="rusGlossesEnabled" size="is-small"></b-switch>
-            Russian translations
+            <label class="checkbox">
+              English translations
+              <input type="checkbox" v-model="rusGlossesEnabled">
+              Russian translations
+            </label>
           </div>
-        </b-field>
+        </div>
 
-        <b-table
-          :data="dictionary"
-          :loading="loading"
+        <div class="level">
+          <div class="level-left"></div>
+          <div class="level-right">
+            <div class="level-item">
+              <pagination
+                v-model="page"
+                :total="total"
+                :per-page="pageSize"
+              />
+            </div>
+          </div>
+        </div>
 
-          :mobile-cards="false"
-          backend-pagination
-          hoverable
-          paginated
-
-          :current-page.sync="page"
-          :pagination-position="paginationPosition"
-          :per-page="pageSize"
-          :total="total">
-          <b-table-column field="lemma" label="Lemma" width="15em" v-slot="props">
-            <router-link :to="{ name: 'lemma', params: { gid: buildLemmaGID(props.row) }}">
-              <i>
-                <span :lang="language">{{ props.row.lemma }}</span><span v-if="props.row.variant">#{{ props.row.variant}}</span>
-              </i>
-            </router-link>
-          </b-table-column>
-
-          <b-table-column field="pos" label="Part of speech" width="15em" v-slot="props">
-            {{ props.row.part_of_speech | partOfSpeech }}
-          </b-table-column>
-
-          <b-table-column field="glosses" label="Glosses" v-slot="props" v-if="language === 'orv'">
-            <template v-if="language === 'orv'">
-              <template v-if="rusGlossesEnabled">
-                {{ props.row.glosses.rus | printGloss }}
+        <div class="table-container">
+          <table class="table is-striped is-fullwidth">
+            <thead>
+              <tr>
+                <th>Lemma</th>
+                <th>Part of speech</th>
+                <th v-if="language === 'orv'">Glosses</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-if="loading">
+                <td colspan="3" class="has-text-centered">Loading...</td>
+              </tr>
+              <template v-else-if="dictionary.length > 0">
+                <tr v-for="props in dictionary" :key="props.id">
+                  <td>
+                    <router-link :to="{ name: 'lemma', params: { gid: buildLemmaGID(props) }}">
+                      <i>
+                        <span :lang="language">{{ props.lemma }}</span><span v-if="props.variant">#{{ props.variant}}</span>
+                      </i>
+                    </router-link>
+                  </td>
+                  <td>
+                    {{ props.part_of_speech | partOfSpeech }}
+                  </td>
+                  <td v-if="language === 'orv'">
+                    <template v-if="language === 'orv'">
+                      <template v-if="rusGlossesEnabled">
+                        {{ props.glosses.rus | printGloss }}
+                      </template>
+                      <template v-else>
+                        {{ props.glosses.eng | printGloss }}
+                      </template>
+                    </template>
+                    <template v-else>
+                      {{ props.glosses.eng | printGloss }}
+                    </template>
+                  </td>
+                </tr>
               </template>
-              <template v-else>
-                {{ props.row.glosses.eng | printGloss }}
-              </template>
-            </template>
-            <template v-else>
-              {{ props.row.glosses.eng | printGloss }}
-            </template>
-          </b-table-column>
-        </b-table>
+              <tr v-else>
+                <td colspan="3" class="has-text-centered">No data found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="level">
+          <div class="level-left"></div>
+          <div class="level-right">
+            <div class="level-item">
+              <pagination
+                v-model="page"
+                :total="total"
+                :per-page="pageSize"
+              />
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   </section>
@@ -92,6 +127,7 @@ import { mapGetters } from 'vuex'
 import MetadataCard from './MetadataCard'
 import MetadataModal from './MetadataModal'
 import PartOfSpeechSelect from './PartOfSpeechSelect'
+import Pagination from './Pagination'
 import api from '../api'
 import schema from '../data/schema.json'
 import {
@@ -106,6 +142,7 @@ export default {
     MetadataCard,
     MetadataModal,
     PartOfSpeechSelect,
+    Pagination,
   },
 
   props: ['gid'],
@@ -153,6 +190,9 @@ export default {
         this.$store.commit('SET_RUS_GLOSSES_ENABLED', value)
       }
     },
+    totalPages() {
+      return Math.ceil(this.total / this.pageSize);
+    }
   },
 
   created() {

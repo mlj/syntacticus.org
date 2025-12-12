@@ -70,24 +70,38 @@
       </div>
     </div>
 
-    <b-tabs position="is-centered">
-      <b-tab-item label="Paradigm" v-if="hasParadigm">
+    <div class="tabs is-centered is-boxed">
+      <ul>
+        <li :class="{ 'is-active': activeTab === 'paradigm' }" v-if="hasParadigm">
+          <a @click.prevent="activeTab = 'paradigm'">Paradigm</a>
+        </li>
+        <li :class="{ 'is-active': activeTab === 'valency' }" v-if="hasValency">
+          <a @click.prevent="activeTab = 'valency'">Valency</a>
+        </li>
+        <li :class="{ 'is-active': activeTab === 'chronology' }">
+          <a @click.prevent="activeTab = 'chronology'">Chronology</a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <div v-if="activeTab === 'paradigm' && hasParadigm">
         <div class="notification">
           <small>The tables show the distribution of this lemma by inflectional form. Note that the same form may be found in multiple cells if the exact form cannot be determined or the annotator flagged the analysis as uncertain.</small>
         </div>
 
         <paradigm :lemma="lemma" :partOfSpeech="partOfSpeech" :language="language" :forms="paradigm"></paradigm>
-      </b-tab-item>
+      </div>
 
-      <b-tab-item label="Valency" v-if="hasValency">
+      <div v-if="activeTab === 'valency' && hasValency">
         <div class="notification">
           <small>The valency table shows the frequency the lemma grouped by argument structure. The table has been generated from the annotation in the treebank and therefore uses the same classification system for arguments. Click on the frequency numbers to see those occurrences in context.</small>
         </div>
 
         <valency :valency="valency"></valency>
-      </b-tab-item>
+      </div>
 
-      <b-tab-item label="Chronology">
+      <div v-if="activeTab === 'chronology'">
         <div class="notification">
           <small>This shows the chronological distribution of attestations of the lemma in the treebank.</small>
         </div>
@@ -142,8 +156,8 @@
             </div>
           </div>
         </div>
-      </b-tab-item>
-    </b-tabs>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -172,6 +186,7 @@ export default {
 
   data() {
     return {
+      activeTab: 'paradigm',
       distribution: [],
       glosses: {},
       homographs: [],

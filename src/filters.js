@@ -10,11 +10,13 @@ export function partOfSpeechFilter(v) {
 }
 
 export function morphology1Filter(f) {
+  if (!f) return '';
   let [p, n, /* t */, /* m */, /* v */, g, c, /* d */, /* s */, /* i */] = f.split('');
   return [schema.person[p], schema.case[c], schema.number[n], schema.gender[g]].filter(Boolean).join(' ');
 }
 
 export function morphology2Filter(f) {
+  if (!f) return '';
   let [/* p */, /* n */, t, m, v, /* g /*, /* c */, d, s, /* i */] = f.split('');
   return [schema.tense[t], schema.mood[m], schema.voice[v], schema.degree[d], schema.strength[s]].filter(Boolean).join(' ');
 }

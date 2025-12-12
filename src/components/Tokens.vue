@@ -8,46 +8,85 @@
       </div>
 
       <section>
-        <b-field grouped group-multiline>
+        <div class="field is-grouped is-grouped-multiline">
           <div class="control">
             <input class="input" v-model="formPattern" placeholder="Form">
           </div>
 
           <part-of-speech-select v-model="pos" />
 
-          <b-select v-model="language">
-            <option :value="null">Any language</option>
+          <div class="control">
+            <div class="select">
+              <select v-model="language">
+                <option :value="null">Any language</option>
+                <option v-for="(value, key) of filteredLanguages" :value="key" :key="key">{{value}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
 
-            <option v-for="(value, key) of filteredLanguages" :value="key" aria-role="listitem">{{value}}</option>
-          </b-select>
-        </b-field>
+        <div class="level">
+          <div class="level-left"></div>
+          <div class="level-right">
+            <div class="level-item">
+              <pagination
+                v-model="page"
+                :total="total"
+                :per-page="pageSize"
+              />
+            </div>
+          </div>
+        </div>
 
-        <b-table
-          :data="tokens"
-          :loading="loading"
+        <div class="table-container">
+          <table class="table is-striped is-fullwidth">
+            <thead>
+              <tr>
+                <th>Location</th>
+                <th class="has-text-right">Match in text</th>
+                <th class="has-text-centered">Form</th>
+                <th class="has-text-left"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-if="loading">
+                <td colspan="4" class="has-text-centered">Loading...</td>
+              </tr>
+              <template v-else-if="tokens.length > 0">
+                <tr v-for="props in tokens" :key="props.id">
+                  <td>
+                    <router-link :to="{ name: 'sentence', params: { gid: props.sentence }}">{{ props.citation }}</router-link>
+                  </td>
+                  <td class="has-text-right">
+                    <span :lang="props.language">{{ props.abbrev_text_before }}</span>
+                  </td>
+                  <td class="is-primary has-text-centered">
+                    <span :lang="props.language">{{ props.form }}</span>
+                  </td>
+                  <td class="has-text-left">
+                    <span :lang="props.language">{{ props.abbrev_text_after }}</span>
+                  </td>
+                </tr>
+              </template>
+              <tr v-else>
+                <td colspan="4" class="has-text-centered">No data found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-          :mobile-cards="false"
-          backend-pagination
-          paginated
-          hoverable
-
-          :current-page.sync="page"
-          :pagination-position="paginationPosition"
-          :per-page="pageSize"
-          :total="total">
-          <b-table-column field="citation" label="Location" width="15em" v-slot="props">
-            <router-link :to="{ name: 'sentence', params: { gid: props.row.sentence }}">{{ props.row.citation }}</router-link>
-          </b-table-column>
-          <b-table-column field="before" label="Match in text" width="25em" cellClass="has-text-right" v-slot="props">
-            <span :lang="props.row.language">{{ props.row.abbrev_text_before }}</span>
-          </b-table-column>
-          <b-table-column field="form" centered cellClass="is-primary" v-slot="props">
-            <span :lang="props.row.language">{{ props.row.form }}</span>
-          </b-table-column>
-          <b-table-column field="after" width="25em" class="has-text-left" cellClass="has-text-left" v-slot="props">
-            <span :lang="props.row.language">{{ props.row.abbrev_text_after }}</span>
-          </b-table-column>
-        </b-table>
+        <div class="level">
+          <div class="level-left"></div>
+          <div class="level-right">
+            <div class="level-item">
+              <pagination
+                v-model="page"
+                :total="total"
+                :per-page="pageSize"
+              />
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   </section>
@@ -57,10 +96,12 @@
 import api from '../api'
 import { languages } from '../shared'
 import PartOfSpeechSelect from './PartOfSpeechSelect'
+import Pagination from './Pagination'
 
 export default {
   components: {
     PartOfSpeechSelect,
+    Pagination,
   },
 
   data() {
@@ -87,6 +128,9 @@ export default {
   computed: {
     filteredLanguages() {
       return languages
+    },
+    totalPages() {
+      return Math.ceil(this.total / this.pageSize);
     }
   },
 

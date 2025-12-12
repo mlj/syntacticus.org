@@ -36,8 +36,25 @@
           </div>
         </div>
 
-        <b-tabs position="is-centered">
-          <b-tab-item label="Lemmas &amp; parts of speech">
+        <div class="tabs is-centered is-boxed">
+          <ul>
+            <li :class="{ 'is-active': activeTab === 'lemmas' }">
+              <a @click.prevent="activeTab = 'lemmas'">Lemmas &amp; parts of speech</a>
+            </li>
+            <li :class="{ 'is-active': activeTab === 'morphology' }">
+              <a @click.prevent="activeTab = 'morphology'">Morphology &amp; punctuation</a>
+            </li>
+            <li :class="{ 'is-active': activeTab === 'syntax' }">
+              <a @click.prevent="activeTab = 'syntax'">Syntax</a>
+            </li>
+            <li :class="{ 'is-active': activeTab === 'alignment' }" v-if="alignment">
+              <a @click.prevent="activeTab = 'alignment'">Alignment</a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <div v-if="activeTab === 'lemmas'">
             <div class="interlinear">
               <template v-for="token in selectedTokens">
                 <div class="intlin">
@@ -59,9 +76,9 @@
                 </div>
               </template>
             </div>
-          </b-tab-item>
+          </div>
 
-          <b-tab-item label="Morphology &amp; punctuation">
+          <div v-if="activeTab === 'morphology'">
             <div class="interlinear">
               <template v-for="token in selectedTokens">
                 <div class="intlin">
@@ -93,20 +110,16 @@
                 </div>
               </template>
             </div>
-          </b-tab-item>
+          </div>
 
-          <!-- b-tab-item label="Syntax">
-            <curved-graph :tokens="sentence.tokens"></curved-graph>
-          </b-tab-item -->
-
-          <b-tab-item label="Syntax">
+          <div v-if="activeTab === 'syntax'">
             <svg-graph :gid="gid"></svg-graph>
-          </b-tab-item>
+          </div>
 
-          <b-tab-item label="Alignment" v-if="alignment">
+          <div v-if="activeTab === 'alignment' && alignment">
             <svg-graph :gid="gid" :alignment="true"></svg-graph>
-          </b-tab-item>
-        </b-tabs>
+          </div>
+        </div>
       </div>
     </section>
   </article>
@@ -179,7 +192,7 @@ export default {
   data () {
     return {
       busy: false,
-
+      activeTab: 'lemmas',
       sentence: {
         tokens: [],
         source: {},

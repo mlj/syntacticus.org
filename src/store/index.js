@@ -12,6 +12,7 @@ export const storeConfig = {
     preferences: {
       rusGlossesEnabled: false,
     },
+    errorMessage: null,
   },
 
   actions: {
@@ -51,6 +52,10 @@ export const storeConfig = {
     SET_RUS_GLOSSES_ENABLED: (state, value) => {
       state.preferences.rusGlossesEnabled = value
     },
+
+    SET_ERROR_MESSAGE: (state, message) => {
+      state.errorMessage = message
+    },
     /* eslint-enable no-param-reassign */
   },
 
@@ -67,6 +72,8 @@ export const storeConfig = {
     },
 
     rusGlossesEnabled: state => state.preferences.rusGlossesEnabled,
+
+    errorMessage: state => state.errorMessage,
   },
 }
 

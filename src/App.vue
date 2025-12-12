@@ -1,22 +1,24 @@
 <template>
   <div id="app">
-    <app-header></app-header>
-    <router-view></router-view>
-    <app-footer></app-footer>
+    <app-header />
+    <toast />
+    <router-view/>
+    <app-footer />
   </div>
 </template>
 
 <script>
-import AppHeader from '@/components/AppHeader'
-import AppFooter from '@/components/AppFooter'
+import AppHeader from './components/AppHeader'
+import AppFooter from './components/AppFooter'
+import Toast from './components/Toast'
 
 export default {
-  name: 'app',
-
+  name: 'App',
   components: {
     AppHeader,
-    AppFooter
-  },
+    AppFooter,
+    Toast,
+  }
 }
 </script>
 

@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import { ToastProgrammatic as Toast } from 'buefy'
 import axios from 'axios'
+import store from '../store'
 
 Vue.prototype.$axios = axios
 
@@ -12,12 +12,7 @@ const syntacticusBase = axios.create({ baseURL: `${SYNTACTICUS_API_BASE}/` })
 const staticBase = axios.create({ baseURL: `${STATIC_FILE_BASE}/` })
 
 const openErrorMessage = (msg) => {
-  Toast.open({
-    duration: 5000,
-    message: msg,
-    position: 'is-top',
-    type: 'is-danger'
-  })
+  store.commit('SET_ERROR_MESSAGE', msg)
 }
 
 const api = {
