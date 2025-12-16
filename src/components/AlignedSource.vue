@@ -33,7 +33,7 @@
         </div>
 
         <div class="contents">
-          <div v-infinite-scroll="loadChunk" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+          <div>
             <span v-for="chunk in loadedChunks">
               <span v-for="sentencePair in chunk">
                 <div class="columns">
@@ -56,6 +56,13 @@
             </span>
           </div>
         </div>
+
+        <div v-if="busy" class="notification">
+          <i class="fa fa-spinner fa-spin"></i>
+          Loading more...
+        </div>
+
+        <div ref="sentinel" style="height: 20px;"></div>
       </div>
     </section>
   </article>
@@ -100,6 +107,7 @@ export default {
         chunks: [],
       },
       busy: false,
+      observer: null,
     }
   },
 
@@ -107,6 +115,16 @@ export default {
 
   created() {
     this.fetchEntries()
+  },
+
+  mounted() {
+    this.setupIntersectionObserver();
+  },
+
+  beforeDestroy() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
   },
 
   watch: {
@@ -124,6 +142,26 @@ export default {
   },
 
   methods: {
+    setupIntersectionObserver() {
+      const options = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+      };
+
+      this.observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !this.busy && this.chunks && this.chunks.length > this.loadedChunks.length) {
+            this.loadChunk();
+          }
+        });
+      }, options);
+
+      if (this.$refs.sentinel) {
+        this.observer.observe(this.$refs.sentinel);
+      }
+    },
+
     fetchEntries() {
       let page = +this.$route.query.page || 1
 

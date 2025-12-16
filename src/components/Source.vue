@@ -42,7 +42,7 @@
       </div>
 
       <div class="contents">
-        <div v-infinite-scroll="loadChunk" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+        <div>
           <span v-for="chunk in loadedChunks">
             <span v-for="sentence in chunk">
               <router-link :to="{ name: 'sentence', params: { gid: makeSentenceLink(sentence[0]) } }">
@@ -57,6 +57,8 @@
         <i class="fa fa-spinner fa-spin"></i>
         Loading more...
       </div>
+
+      <div ref="sentinel" style="height: 20px;"></div>
     </div>
   </section>
 </template>
@@ -85,6 +87,7 @@ export default {
       loadedChunks: [],
       alignment: {},
       busy: false,
+      observer: null,
     }
   },
 
@@ -104,6 +107,16 @@ export default {
     this.fetchEntries()
   },
 
+  mounted() {
+    this.setupIntersectionObserver();
+  },
+
+  beforeDestroy() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+  },
+
   watch: {
     $route(to, from) {
       this.fetchEntries()
@@ -111,6 +124,26 @@ export default {
   },
 
   methods: {
+    setupIntersectionObserver() {
+      const options = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+      };
+
+      this.observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !this.busy && this.chunks.length > this.loadedChunks.length) {
+            this.loadChunk();
+          }
+        });
+      }, options);
+
+      if (this.$refs.sentinel) {
+        this.observer.observe(this.$refs.sentinel);
+      }
+    },
+
     makeSentenceLink(id_part) {
       return `${this.gid}:${id_part}`
     },
