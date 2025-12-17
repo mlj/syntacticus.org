@@ -5,8 +5,10 @@
   "description": "The syntacticus.org web site",
   "author": "Marius L. Jøhndal <mariuslj@ifi.uio.no>",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build && cp dist/index.html dist/200.html",
+    "dev": "vite",
+    "serve": "vite",
+    "build": "vite build && cp dist/index.html dist/200.html",
+    "preview": "vite preview",
     "lint": "vue-cli-service lint",
     "deploy": "surge dist",
     "test": "vue-cli-service test:unit"
@@ -29,6 +31,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@vitejs/plugin-vue2": "2.3.4",
     "@vue/cli-plugin-babel": "~5.0.4",
     "@vue/cli-plugin-eslint": "~5.0.4",
     "@vue/cli-plugin-router": "~5.0.4",
@@ -42,6 +45,7 @@
     "jest": "^27.1.0",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
+    "vite": "7.3.0",
     "vue-template-compiler": "2.7.16"
   },
   "eslintConfig": {
