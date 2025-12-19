@@ -6,7 +6,7 @@ import staticSchema from '../data/schema.json';
 
 Vue.use(Vuex)
 
-const store = new Vuex.Store({
+export const storeConfig = {
   state: {
     sources: [],
     dictionaries: [],
@@ -66,6 +66,8 @@ const store = new Vuex.Store({
 
     rusGlossesEnabled: state => state.preferences.rusGlossesEnabled,
   },
-})
+}
+
+const store = new Vuex.Store(storeConfig)
 
 export default store

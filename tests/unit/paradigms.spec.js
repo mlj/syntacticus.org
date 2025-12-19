@@ -8,7 +8,7 @@ describe('flattenForms', () => {
       "-s---md--i": { "senatui": 2 },
       "-s---mg--i": { "senatus": 47 },
       "-s---mn--i": { "senatus": 23 }
-    })).toMatchObject({
+    })).toEqual({
       "-s---ma--i": { "senatum": 24 },
       "-s---mb--i": { "senatu": 48 },
       "-s---md--i": { "senatui": 2 },
@@ -23,7 +23,7 @@ describe('makeRegex', () => {
     expect(makeRegex({
       number: 's',
       case: 'n'
-    })).toMatchObject(/^.s....n..$/)
+    })).toEqual(/^.s....n...$/)
   })
 })
 
@@ -47,7 +47,7 @@ describe('getMappedForms', () => {
       { gender: 'n', number: 's' },
       { case: 'n' },
       { mood: 'g' }
-    )).toMatchObject([
+    )).toEqual([
       { form: "dicendum", morphology: "-s-g-nn--i", n: 1 }
     ])
   })
