@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Analytics from 'vue-ua';
-import { formatNumber } from 'accounting';
 import VueInfiniteScroll from 'vue-infinite-scroll';
 import VueShortkey from 'vue-shortkey';
 import Buefy from 'buefy';
@@ -8,39 +7,14 @@ import Buefy from 'buefy';
 import App from './App';
 import router from './router';
 import store from './store';
-import _ from './mylodash';
-import { languages } from './shared';
-import schema from './data/schema.json';
+import filters from './filters';
 
 console.log("Syntacticus build " + document.documentElement.dataset.buildTimestampUtc)
 
 Vue.config.productionTip = false;
 Vue.config.performance = true;
 
-Vue.filter('number', v => formatNumber(v));
-
-Vue.filter('language', v => (languages[v] || 'Unknown language'))
-
-Vue.filter('capitalize', v => {
-  if (!v)
-    return ''
-  v = v.toString()
-  return v.charAt(0).toUpperCase() + v.slice(1)
-})
-
-Vue.filter('partOfSpeech', v => schema.part_of_speech[v] || '')
-
-Vue.filter('morphology1', f => {
-  let [p, n, /* t */, /* m */, /* v */, g, c, /* d */, /* s */, /* i */] = f.split('')
-
-  return _.compact([schema.person[p], schema.case[c], schema.number[n], schema.gender[g]]).join(' ')
-})
-
-Vue.filter('morphology2', f => {
-  let [/* p */, /* n */, t, m, v, /* g /*, /* c */, d, s, /* i */] = f.split('')
-
-  return _.compact([schema.tense[t], schema.mood[m], schema.voice[v], schema.degree[d], schema.strength[s]]).join(' ')
-})
+Vue.use(filters);
 
 Vue.use(VueInfiniteScroll);
 
