@@ -162,7 +162,7 @@ describe('Sentence.vue', () => {
 
     expect(tokenForms.at(1).text()).toBe('Sum')
     expect(tokenLemmas.at(0).text()).toBe('sum')
-    expect(tokenPos.at(0).text()).toBe('Verb')
+    expect(tokenPos.at(0).text()).toBe('verb')
   })
 
   it('displays morphology information in "Morphology & punctuation" tab', async () => {
