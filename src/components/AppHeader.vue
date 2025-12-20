@@ -1,5 +1,5 @@
 <template>
-  <section class="hero is-medium" v-shortkey.once="['h']" @shortkey="openModal()">
+  <section class="hero is-medium">
     <div class="hero-head">
       <div class="container">
         <nav class="navbar" role="navigation" aria-label="main navigation">
@@ -29,7 +29,7 @@
               <div class="navbar-item">
                 <div class="field has-addons">
                   <p class="control">
-                    <input @keyup.enter="search" v-model="query" class="input" type="text" placeholder="Press / to focus" v-shortkey.focus="['/']">
+                    <input ref="searchInput" @keyup.enter="search" v-model="query" class="input" type="text" placeholder="Press / to focus">
                   </p>
                   <p class="control">
                     <button @click.prevent="search" class="button">Search</button>
@@ -106,8 +106,20 @@ export default {
     openModal() { this.showModal = true },
 
     onKeydown(e) {
-      if (this.showModal && e.keyCode === 27) {
+      // Don't trigger if user is typing in an input
+      const targetTag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+      const isInput = targetTag === 'input' || targetTag === 'textarea';
+
+      if (e.key === 'Escape') {
         this.showModal = false
+      } else if (!isInput) {
+        if (e.key === '/') {
+          e.preventDefault()
+          this.$refs.searchInput.focus()
+        } else if (e.key === '?' || e.key === 'h') {
+          e.preventDefault()
+          this.openModal()
+        }
       }
     }
   },

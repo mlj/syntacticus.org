@@ -2,8 +2,6 @@ import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils'
 import AppHeader from '@/components/AppHeader.vue'
 
 const localVue = createLocalVue()
-// Mock v-shortkey directive
-localVue.directive('shortkey', {})
 
 describe('AppHeader.vue', () => {
   let router
@@ -62,18 +60,77 @@ describe('AppHeader.vue', () => {
         $router: router,
         $route: route
       },
-      stubs: { RouterLink: RouterLinkStub, 'b-modal': true }
+      stubs: { RouterLink: RouterLinkStub }
     })
 
     const input = wrapper.find('input[type="text"]')
     await input.setValue('searchterm_btn')
 
-    const button = wrapper.find('button.button') // assumes only one button with class button inside field
+    const button = wrapper.find('button.button')
     await button.trigger('click')
 
     expect(router.push).toHaveBeenCalledWith({
       name: 'tokens',
       query: { form: 'searchterm_btn' }
+    })
+  })
+
+  describe('Keyboard shortcuts', () => {
+    it('opens modal on ? key', async () => {
+      const wrapper = shallowMount(AppHeader, {
+        localVue,
+        stubs: { RouterLink: RouterLinkStub }
+      })
+      expect(wrapper.vm.showModal).toBe(false)
+
+      const event = new KeyboardEvent('keydown', { key: '?' })
+      document.dispatchEvent(event)
+
+      expect(wrapper.vm.showModal).toBe(true)
+    })
+
+    it('opens modal on h key', async () => {
+      const wrapper = shallowMount(AppHeader, {
+        localVue,
+        stubs: { RouterLink: RouterLinkStub }
+      })
+      expect(wrapper.vm.showModal).toBe(false)
+
+      const event = new KeyboardEvent('keydown', { key: 'h' })
+      document.dispatchEvent(event)
+
+      expect(wrapper.vm.showModal).toBe(true)
+    })
+
+    it('closes modal on Escape key', async () => {
+      const wrapper = shallowMount(AppHeader, {
+        localVue,
+        stubs: { RouterLink: RouterLinkStub }
+      })
+      wrapper.setData({ showModal: true })
+
+      const event = new KeyboardEvent('keydown', { key: 'Escape' })
+      document.dispatchEvent(event)
+
+      expect(wrapper.vm.showModal).toBe(false)
+    })
+
+    it('focuses search input on / key', async () => {
+      // We need attachTo: document.body so focus works?
+      // Or just check if focus was called on the ref.
+      const wrapper = shallowMount(AppHeader, {
+        localVue,
+        stubs: { RouterLink: RouterLinkStub }
+      })
+
+      // Mock the input element's focus method
+      const input = wrapper.find('input').element
+      input.focus = jest.fn()
+
+      const event = new KeyboardEvent('keydown', { key: '/' })
+      document.dispatchEvent(event)
+
+      expect(input.focus).toHaveBeenCalled()
     })
   })
 })
