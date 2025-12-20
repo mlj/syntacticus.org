@@ -1,25 +1,46 @@
 import Vue from 'vue'
-import axios from 'axios'
 import store from '../store'
-
-Vue.prototype.$axios = axios
 
 export const SYNTACTICUS_API_BASE = 'https://tekstlab.uio.no/syntacticus-api/'
 export const STATIC_FILE_BASE = '/data/'
-
-const syntacticusBase = axios.create({ baseURL: `${SYNTACTICUS_API_BASE}/` })
-
-const staticBase = axios.create({ baseURL: `${STATIC_FILE_BASE}/` })
 
 const openErrorMessage = (msg) => {
   store.commit('SET_ERROR_MESSAGE', msg)
 }
 
+const request = async (url, params = {}) => {
+  const urlObj = new URL(url, window.location.origin); // Handle relative and absolute URLs
+  Object.keys(params).forEach(key => {
+    if (params[key] !== null && params[key] !== undefined) {
+      urlObj.searchParams.append(key, params[key]);
+    }
+  });
+
+  const response = await fetch(urlObj.toString());
+  if (!response.ok) {
+    const error = new Error(response.statusText);
+    error.response = response;
+    error.status = response.status;
+    throw error;
+  }
+
+  const contentType = response.headers.get('content-type');
+  let data;
+  if (contentType && contentType.includes('application/json')) {
+    data = await response.json();
+  } else {
+    data = await response.text();
+  }
+
+  // Simulate Axios structure: response.data
+  return { data, request: { responseURL: response.url } }; // Some components might check responseURL
+};
+
 const api = {
   handleError(error) {
     console.error('Handling API error: ' + error.message);
 
-    let status = error.response ? error.response.status : null;
+    let status = error.status || (error.response ? error.response.status : null);
 
     switch (status) {
       case 404:
@@ -37,50 +58,50 @@ const api = {
   },
 
   getDictionaries() {
-    return staticBase.get('dictionaries.json');
+    return request(`${STATIC_FILE_BASE}dictionaries.json`);
   },
 
   getSources() {
-    return staticBase.get('sources.json');
+    return request(`${STATIC_FILE_BASE}sources.json`);
   },
 
   getSource(gid) {
-    return staticBase.get(`sources/${gid}.json`);
+    return request(`${STATIC_FILE_BASE}sources/${gid}.json`);
   },
 
   getChunk(id) {
-    return staticBase.get(`chunks/${id}.json`);
+    return request(`${STATIC_FILE_BASE}chunks/${id}.json`);
   },
 
   getAlignedChunk(id) {
-    return syntacticusBase.get(`aligned_chunks/${id}`);
+    return request(`${SYNTACTICUS_API_BASE}aligned_chunks/${id}`);
   },
 
   getDictionary(gid, params) {
-    return syntacticusBase.get(`dictionaries/${gid}/lemmas`, { params: params });
+    return request(`${SYNTACTICUS_API_BASE}dictionaries/${gid}/lemmas`, params);
   },
 
   getLemma(dictionaryGID, lemma, partOfSpeech, variant) {
     if (variant === undefined || variant === null || variant === '')
-      return syntacticusBase.get(`dictionaries/${dictionaryGID}/lemmas/${lemma}:${partOfSpeech}`);
+      return request(`${SYNTACTICUS_API_BASE}dictionaries/${dictionaryGID}/lemmas/${lemma}:${partOfSpeech}`);
     else
-      return syntacticusBase.get(`dictionaries/${dictionaryGID}/lemmas/${lemma}:${partOfSpeech}:${variant}`);
+      return request(`${SYNTACTICUS_API_BASE}dictionaries/${dictionaryGID}/lemmas/${lemma}:${partOfSpeech}:${variant}`);
   },
 
   getSentence(sentence) {
-    return syntacticusBase.get(`sentences/${sentence}`);
+    return request(`${SYNTACTICUS_API_BASE}sentences/${sentence}`);
   },
 
   getTokens(params) {
-    return syntacticusBase.get('tokens', { params: params });
+    return request(`${SYNTACTICUS_API_BASE}tokens`, params);
   },
 
   getGraph(gid, params) {
-    return syntacticusBase.get(`graphs/${gid}`, { params: params });
+    return request(`${SYNTACTICUS_API_BASE}graphs/${gid}`, params);
   },
 
   getAlignedGraph(gid, params) {
-    return syntacticusBase.get(`aligned_graphs/${gid}`, { params: params });
+    return request(`${SYNTACTICUS_API_BASE}aligned_graphs/${gid}`, params);
   },
 
   pushNewQuery(context, query) {
