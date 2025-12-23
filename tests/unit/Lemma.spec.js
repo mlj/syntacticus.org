@@ -114,4 +114,49 @@ describe('Lemma.vue', () => {
     wrapper.setData({ activeTab: 'valency' })
     expect(wrapper.vm.activeTab).toBe('valency')
   })
+
+  it('filters charts and timelines correctly', async () => {
+    api.getLemma.mockResolvedValue({
+      data: {
+        distribution: [
+          { id: 'text1', n: 10, chronology: { t: 2000, m: 2001 } },
+          { id: 'text2', n: 5, chronology: { t: null, m: 2002 } }, // No comp date
+          { id: 'text3', n: 3, chronology: { t: 2003, m: undefined } }, // No ms date
+          { id: 'text4', n: 1, chronology: { } } // No dates
+        ],
+        glosses: {},
+        homographs: [],
+        paradigm: {},
+        valency: []
+      }
+    })
+
+    const wrapper = shallowMount(Lemma, {
+      localVue,
+      propsData: { gid },
+      stubs: { MetadataCard: true, MetadataModal: true, Paradigm: true, Valency: true, ChartTimeline: true, VerticalTimeline: true, RouterLink: RouterLinkStub }
+    })
+    
+    // Wait for promise
+    await wrapper.vm.$nextTick()
+    await wrapper.vm.$nextTick()
+
+    // check chartTimelineComposition
+    // Should have text1 (2000) and text3 (2003)
+    expect(wrapper.vm.chartTimelineComposition).toHaveLength(2)
+    expect(wrapper.vm.chartTimelineComposition.map(d => d.id)).toEqual(['text1', 'text3'])
+
+    // check chartTimelineManuscript
+    // Should have text1 (2001) and text2 (2002)
+    expect(wrapper.vm.chartTimelineManuscript).toHaveLength(2)
+    expect(wrapper.vm.chartTimelineManuscript.map(d => d.id)).toEqual(['text1', 'text2'])
+
+    // check timelineText (composition)
+    expect(wrapper.vm.timelineText).toHaveLength(2)
+    expect(wrapper.vm.timelineText.map(d => d.date)).toEqual([2000, 2003])
+
+    // check timelineMs (manuscript)
+    expect(wrapper.vm.timelineMs).toHaveLength(2)
+    expect(wrapper.vm.timelineMs.map(d => d.date)).toEqual([2001, 2002])
+  })
 })

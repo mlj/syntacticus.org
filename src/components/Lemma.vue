@@ -129,10 +129,10 @@
               </table>
             </div>
 
-            <!-- div class="tile is-parent">
+            <div class="tile is-parent">
               <article class="tile is-child">
                 <h3 class="subtitle">By composition</h3>
-                <vertical-timeline :events="timelineText"></chart-timeline>
+                <vertical-timeline :events="timelineText"></vertical-timeline>
               </article>
             </div>
 
@@ -141,7 +141,7 @@
                 <h3 class="subtitle">By manuscript</h3>
                 <vertical-timeline :events="timelineMs"></vertical-timeline>
               </article>
-            </div -->
+            </div>
 
             <div class="tile is-parent is-vertical">
               <article class="tile is-child" v-if="hasTimelineComposition">
@@ -165,7 +165,7 @@
 import MetadataCard from './MetadataCard'
 import MetadataModal from './MetadataModal'
 import api from '../api'
-//import VerticalTimeline from './timelines/VerticalTimeline'
+import VerticalTimeline from './timelines/VerticalTimeline'
 import ChartTimeline from './timelines/ChartTimeline'
 import Paradigm from './Paradigm'
 import Valency from './Valency'
@@ -178,7 +178,7 @@ export default {
   components: {
     Paradigm,
     Valency,
-    //VerticalTimeline,
+    VerticalTimeline,
     ChartTimeline,
     MetadataCard,
     MetadataModal,
@@ -238,7 +238,7 @@ export default {
           n: d.n,
           year: d.chronology.t,
         }
-      })
+      }).filter(d => d.year !== undefined && d.year !== null)
     },
 
     chartTimelineManuscript() {
@@ -248,28 +248,28 @@ export default {
           n: d.n,
           year: d.chronology.m,
         }
-      })
+      }).filter(d => d.year !== undefined && d.year !== null)
     },
 
-    //timelineText() {
-    //  return this.distribution.map(d => {
-    //    let year = d.chronology.t
-    //    return {
-    //      label: year + ': ' + d.id + ' (' + d.n + ')',
-    //      date: year
-    //    }
-    //  })
-    //},
+    timelineText() {
+      return this.distribution.map(d => {
+        let year = d.chronology.t
+        return {
+          label: year + ': ' + d.id + ' (' + d.n + ')',
+          date: year
+        }
+      }).filter(d => d.date !== undefined && d.date !== null)
+    },
 
-    //timelineMs() {
-    //  return this.distribution.map(d => {
-    //    let year = d.chronology.m
-    //    return {
-    //      label: year + ': ' + d.id + ' (' + d.n + ')',
-    //      date: year
-    //    }
-    //  })
-    //},
+    timelineMs() {
+      return this.distribution.map(d => {
+        let year = d.chronology.m
+        return {
+          label: year + ': ' + d.id + ' (' + d.n + ')',
+          date: year
+        }
+      }).filter(d => d.date !== undefined && d.date !== null)
+    },
 
     frequency() {
       return totalDistributionFrequency(this.distribution)
