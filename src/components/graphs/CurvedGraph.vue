@@ -1,15 +1,15 @@
 <template>
   <vis-base class="curved-graph">
     <g v-for="n in nodes" :class="{ selected1: n.parent == selected, selected2: n.id == selected }">
-      <g @mouseover="selected = n.id" @mouseout="selected = -1" class="token">
+      <g v-if="!n.isSecondary" @mouseover="selected = n.id" @mouseout="selected = -1" class="token">
         <text class="word" :x="wordWidth * n.id" :y="treeHeight - wordHeight" :class="{ root: n.id == 0 }">{{ n.word }}</text>
         <text class="tag" :x="wordWidth * n.id" :y="treeHeight">{{ n.tag | partOfSpeech }}</text>
         <text class="lemma" :x="wordWidth * n.id" :y="treeHeight + 16">{{ n.lemmaForm }}</text>
       </g>
       <g v-if="n.id" class="edge">
         <text class="edge-dependency" :x="n.mid" :y="n.arrow - 7">{{ n.dependency }}</text>
-        <path class="edge-line" :d="edgePath(n)" />
-        <path class="edge-arrow" :d="arrowPath" :transform="arrowTransform(n)" />
+        <path class="edge-line" :class="{ secondary: n.isSecondary }" :d="edgePath(n)" />
+        <path class="edge-arrow" :class="{ secondary: n.isSecondary }" :d="arrowPath" :transform="arrowTransform(n)" />
       </g>
     </g>
   </vis-base>
@@ -37,11 +37,15 @@ export default {
 
     data: function() { return this.computeEdgeLevels(this.parse(this.tokens)); },
 
-    wordWidth: function() { return 110; },
+    wordWidth: function() { return 120; },
 
-    wordHeight: function() { return 20; },
+    wordHeight: function() { return 25; },
 
-    treeWidth: function() { return this.wordWidth * this.data.length - this.wordWidth / 3; },
+    treeWidth: function() { 
+      // Count unique nodes for width calculation, excluding secondary edges
+      const uniqueNodes = new Set(this.data.map(d => d.id)).size;
+      return this.wordWidth * uniqueNodes - this.wordWidth / 3; 
+    },
 
     treeHeight: function() {
       const maxLevel = Math.max(...this.data.map(edge => edge.level));
@@ -70,7 +74,13 @@ export default {
     },
 
     arrowTransform: function(n) {
-      return 'translate(' + n.mid + ',' + n.arrow + ') rotate(' + (n.id < n.parent ? '' : '-') + '90)';
+      let angle = (n.id < n.parent) ? 90 : -90;
+
+      if (n.isSecondary) {
+        angle = -angle;
+      }
+
+      return 'translate(' + n.mid + ',' + n.arrow + ') rotate(' + angle + ')';
     },
 
     levelHeight: function(level) { return 2 + (level ** 1.5) * 25; },
@@ -91,7 +101,22 @@ export default {
             mi = Math.min(edge1.id, edge1.parent || 0);
             ma = Math.max(edge1.id, edge1.parent || 0);
 
-            return edge1.id !== edge2.id && edge2.id >= mi && edge2.parent >= mi && edge2.id <= ma && edge2.parent <= ma;
+            let mi2 = Math.min(edge2.id, edge2.parent || 0);
+            let ma2 = Math.max(edge2.id, edge2.parent || 0);
+
+            // Use _uid to differentiate distinct edges that might share the same source (id)
+            if (edge1._uid === edge2._uid) return false;
+
+            const contained = edge2.id >= mi && edge2.parent >= mi && edge2.id <= ma && edge2.parent <= ma;
+
+            if (contained) {
+              // If ranges are identical, use uid as tie-breaker to stack them
+              if (mi === mi2 && ma === ma2) {
+                return edge2._uid < edge1._uid;
+              }
+              return true;
+            }
+            return false;
           });
 
           // _.max returns -Infinity for empty list, or undefined? Lodash max returns undefined for empty array.
@@ -107,11 +132,14 @@ export default {
 
     parse: function(tokens) {
       let data = [];
+      let uidCounter = 0;
 
       data.push({
         id: 0,
         word: 'ROOT',
-        level: 0
+        level: 0,
+        isSecondary: false,
+        _uid: uidCounter++
       });
 
       let indexes = {};
@@ -125,7 +153,8 @@ export default {
       });
 
       tokens.forEach(t => {
-        if (t.empty_token_sort !== 'P')
+        if (t.empty_token_sort !== 'P') {
+          // Primary edge
           data.push({
             id: indexes[t.id],
             word: t.form || 'EMPTY',
@@ -133,8 +162,33 @@ export default {
             tag: t.part_of_speech || t.empty_token_sort + '-',
             parent: indexes[t.head_id],
             dependency: t.relation,
-            level: 1
-          })
+            level: 1,
+            isSecondary: false,
+            _uid: uidCounter++
+          });
+
+          // Secondary edges
+          if (t.slashes) {
+            t.slashes.forEach(slash => {
+              const targetId = slash[1]; // API: [relation, target_id]
+              const relation = slash[0];
+              
+              if (indexes[targetId] !== undefined) {
+                 data.push({
+                  id: indexes[t.id],
+                  word: '', // Not used
+                  lemmaForm: '', // Not used
+                  tag: '', // Not used
+                  parent: indexes[targetId],
+                  dependency: relation,
+                  level: 1,
+                  isSecondary: true,
+                  _uid: uidCounter++
+                 });
+              }
+            });
+          }
+        }
       });
 
       return data;
@@ -152,12 +206,10 @@ export default {
 .tag
   fill: #777
   text-anchor: middle
-  font-size: 90%
 
 .lemma
   fill: #777
   text-anchor: middle
-  font-size: 90%
   font-style: italic
 
 .edge-line
@@ -165,9 +217,15 @@ export default {
   stroke-width: 1.5
   fill: none
 
+.edge-line.secondary
+  stroke-dasharray: 5, 5
+
 .edge-arrow
   stroke: #ccc
   stroke-width: 1.5
+  fill: none
+
+.edge-arrow.secondary
   fill: none
 
 .edge-dependency

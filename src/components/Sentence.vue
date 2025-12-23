@@ -113,7 +113,81 @@
           </div>
 
           <div v-if="activeTab === 'syntax'">
-            <svg-graph :gid="gid"></svg-graph>
+            <nav class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <button class="button" :class="{ 'is-primary': graphType === 'interactive' }" @click="graphType = 'interactive'">
+                        <span class="icon is-small">
+                          <i class="fas fa-hand-pointer"></i>
+                        </span>
+                        <span>Interactive</span>
+                      </button>
+                    </p>
+                    <p class="control">
+                      <button class="button" :class="{ 'is-primary': graphType === 'static' }" @click="graphType = 'static'">
+                        <span class="icon is-small">
+                          <i class="fas fa-image"></i>
+                        </span>
+                        <span>Static</span>
+                      </button>
+                    </p>
+                  </div>
+                </div>
+
+                <div class="level-item" v-if="graphType === 'static'">
+                  <div class="dropdown" :class="{ 'is-active': directionDropdownActive }">
+                    <div class="dropdown-trigger">
+                      <button class="button is-primary" aria-haspopup="true" aria-controls="dropdown-menu-direction" @click="directionDropdownActive = !directionDropdownActive">
+                        <span>Direction</span>
+                        <span class="icon is-small">
+                          <i class="fas fa-angle-down" aria-hidden="true"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="dropdown-menu" id="dropdown-menu-direction" role="menu">
+                      <div class="dropdown-content">
+                        <a href="#" class="dropdown-item" :class="{ 'is-active': graphDirection === 'TD' }" @click.prevent="setGraphDirection('TD')">Top-down</a>
+                        <a href="#" class="dropdown-item" :class="{ 'is-active': graphDirection === 'LR' }" @click.prevent="setGraphDirection('LR')">Left-right</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="level-item" v-if="graphType === 'static' && !alignment">
+                  <div class="dropdown" :class="{ 'is-active': layoutDropdownActive }">
+                    <div class="dropdown-trigger">
+                      <button class="button is-primary" aria-haspopup="true" aria-controls="dropdown-menu-layout" @click="layoutDropdownActive = !layoutDropdownActive">
+                        <span>Layout</span>
+                        <span class="icon is-small">
+                          <i class="fas fa-angle-down" aria-hidden="true"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="dropdown-menu" id="dropdown-menu-layout" role="menu">
+                      <div class="dropdown-content">
+                        <a href="#" class="dropdown-item" :class="{ 'is-active': graphLayout === 'modern' }" @click.prevent="setGraphLayout('modern')">Modern</a>
+                        <a href="#" class="dropdown-item" :class="{ 'is-active': graphLayout === 'classic' }" @click.prevent="setGraphLayout('classic')">Classic</a>
+                        <a href="#" class="dropdown-item" :class="{ 'is-active': graphLayout === 'packed' }" @click.prevent="setGraphLayout('packed')">Packed</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="level-right" v-if="graphType === 'static' && graphResponseURL">
+                <div class="level-item">
+                  <a class="button" @click="fullscreenGraph">Fullscreen view</a>
+                </div>
+                <div class="level-item">
+                  <a class="button" :href="graphResponseURL">Download graph</a>
+                </div>
+              </div>
+            </nav>
+
+            <curved-graph :tokens="sentence.tokens" v-if="graphType === 'interactive' && sentence.tokens && sentence.tokens.length"></curved-graph>
+            <svg-graph :gid="gid" :layout="graphLayout" :direction="graphDirection" @graph-loaded="handleGraphLoaded" v-if="graphType === 'static'"></svg-graph>
           </div>
 
           <div v-if="activeTab === 'alignment' && alignment">
@@ -183,7 +257,7 @@ import {
 
 export default {
   components: {
-    // CurvedGraph,
+    CurvedGraph,
     SvgGraph,
     MetadataCard,
     MetadataModal,
@@ -193,6 +267,13 @@ export default {
     return {
       busy: false,
       activeTab: 'lemmas',
+      graphType: 'static',
+      graphLayout: 'modern',
+      graphDirection: 'LR',
+      graphResponseURL: null,
+      graphSvgContent: '',
+      layoutDropdownActive: false,
+      directionDropdownActive: false,
       sentence: {
         tokens: [],
         source: {},
@@ -246,6 +327,26 @@ export default {
   methods: {
     buildLemmaGID(dictionaryGID, token) {
       return makeLemmaGID(dictionaryGID, token.lemma, token.part_of_speech, token.variant)
+    },
+
+    setGraphDirection(newDirection) {
+      this.graphDirection = newDirection;
+      this.directionDropdownActive = false;
+    },
+
+    setGraphLayout(newLayout) {
+      this.graphLayout = newLayout;
+      this.layoutDropdownActive = false;
+    },
+
+    handleGraphLoaded(payload) {
+      this.graphResponseURL = payload.url;
+      this.graphSvgContent = payload.svg;
+    },
+
+    fullscreenGraph() {
+      let win = window.open('', "Syntacticus", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes");
+      win.document.body.innerHTML = `<body>${this.graphSvgContent}</body>`;
     },
 
     fetchEntries() {

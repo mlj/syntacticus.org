@@ -138,6 +138,7 @@ describe('Sentence.vue', () => {
     await wrapper.findAll('li a').at(2).trigger('click')
     expect(wrapper.vm.activeTab).toBe('syntax')
     await wrapper.vm.$nextTick()
+    // Default is now Static (SvgGraph)
     expect(wrapper.findComponent(SvgGraphStub).exists()).toBe(true)
   })
 
@@ -150,6 +151,7 @@ describe('Sentence.vue', () => {
         MetadataCard: MetadataCardStub,
         MetadataModal: MetadataModalStub,
         SvgGraph: SvgGraphStub,
+        CurvedGraph: true,
         'router-link': true,
       },
     })
@@ -174,6 +176,7 @@ describe('Sentence.vue', () => {
         MetadataCard: MetadataCardStub,
         MetadataModal: MetadataModalStub,
         SvgGraph: SvgGraphStub,
+        CurvedGraph: true,
         'router-link': true,
       },
     })
@@ -188,7 +191,7 @@ describe('Sentence.vue', () => {
     expect(morphologySpans.at(0).text().trim()).toBe('third person singular')
   })
 
-  it('renders SvgGraph in "Syntax" tab', async () => {
+  it('renders CurvedGraph in "Syntax" tab when toggled to Interactive mode', async () => {
     const wrapper = shallowMount(Sentence, {
       localVue,
       router,
@@ -197,14 +200,43 @@ describe('Sentence.vue', () => {
         MetadataCard: MetadataCardStub,
         MetadataModal: MetadataModalStub,
         SvgGraph: SvgGraphStub,
+        CurvedGraph: true,
+        'router-link': true,
+      },
+    })
+    await wrapper.vm.$nextTick()
+
+    await wrapper.findAll('li a').at(2).trigger('click') // Syntax tab
+    
+    // Default is Static
+    expect(wrapper.vm.graphType).toBe('static')
+    
+    // Click 'Interactive' button
+    const buttons = wrapper.findAll('.field.has-addons button')
+    await buttons.at(0).trigger('click') // Assuming 1st button is Interactive
+    
+    expect(wrapper.vm.graphType).toBe('interactive')
+    expect(wrapper.findComponent({ name: 'CurvedGraph' }).exists()).toBe(true)
+  })
+
+  it('renders SvgGraph in "Syntax" tab by default', async () => {
+    const wrapper = shallowMount(Sentence, {
+      localVue,
+      router,
+      propsData: { gid: mockSentenceGid },
+      stubs: {
+        MetadataCard: MetadataCardStub,
+        MetadataModal: MetadataModalStub,
+        SvgGraph: SvgGraphStub,
+        CurvedGraph: true,
         'router-link': true,
       },
     })
     await wrapper.vm.$nextTick()
 
     await wrapper.findAll('li a').at(2).trigger('click')
-    expect(wrapper.findComponent(SvgGraphStub).props().gid).toBe(mockSentenceGid)
-    expect(wrapper.findComponent(SvgGraphStub).props().alignment).toBeUndefined()
+    
+    expect(wrapper.findComponent(SvgGraphStub).exists()).toBe(true)
   })
 
   it('renders SvgGraph with alignment prop in "Alignment" tab if alignment exists', async () => {
