@@ -7,8 +7,7 @@ import { scaleTime, scaleOrdinal } from 'd3-scale'
 import { schemeCategory10 } from 'd3-scale-chromatic'
 import { extent } from 'd3-array'
 import { select } from 'd3-selection'
-
-import labella from 'labella'
+import { linkHorizontal } from 'd3-shape'
 
 export default {
   props: {
@@ -49,10 +48,6 @@ export default {
 
     transform() {
       return 'translate(' + this.margin.left + ',' + this.margin.top + ')'
-    },
-
-    nodeHeight() {
-      return this.layoutNodes[0] ? this.layoutNodes[0].width : 0
     }
   },
 
@@ -75,7 +70,7 @@ export default {
       // 1. Calculate dimensions of labels
       // We need to render text to get BBox. We use a dummy text element in the SVG.
       const dummyGroup = select(this.$el).select('g')
-      if (dummyGroup.empty()) return // Should not happen if mounted
+      if (dummyGroup.empty()) return
 
       const dummyText = dummyGroup.append('text')
 
@@ -87,46 +82,77 @@ export default {
           h: bbox.height
         }
       })
-      
+
       dummyText.remove()
 
-      // 2. Compute Layout (Labella Force)
+      // 2. Compute Layout (Simple Greedy Stacking)
       const timeScale = scaleTime()
         .domain(extent(this.events, d => d.date))
         .range([0, this.height - this.margin.top - this.margin.bottom]) // Use prop height for scale
         .nice()
-      
-      const nodes = eventsWithDimensions.map(d => new labella.Node(timeScale(d.date), d.h + 2, d))
-      
-      // Force simulation to prevent overlap
-      this.layoutNodes = new labella.Force({ minPos: -10 }).nodes(nodes).compute().nodes()
-      
+
+      // Sort by date (idealPos)
+      eventsWithDimensions.sort((a, b) => timeScale(a.date) - timeScale(b.date))
+
+      const nodes = []
+      let lastBottom = -Infinity
+      const nodeHeight = 20 // Fixed rect height
+      const spacing = 2 // Gap between nodes
+
+      eventsWithDimensions.forEach(d => {
+        const idealPos = timeScale(d.date)
+        // Ensure we don't overlap with previous node.
+        // If idealPos is far enough down, use it. Otherwise stack.
+        // We centre the node at currentPos. The top is currentPos - nodeHeight/2.
+        // But let's simplify: position = center y.
+        // Node extends from y - 10 to y + 10.
+        // lastBottom is the bottom edge of previous node.
+
+        // Actually, let's treat currentPos as the vertical center of the node/rect,
+        // consistent with previous 'd.y' usage where rect was at y-10.
+
+        let y = idealPos
+        const topEdge = y - nodeHeight / 2
+
+        if (topEdge < lastBottom + spacing) {
+          y = lastBottom + spacing + nodeHeight / 2
+        }
+
+        // Push slightly if it's too close?
+        // The greedy approach ensures non-overlap.
+
+        lastBottom = y + nodeHeight / 2
+
+        nodes.push({
+          data: d,
+          idealPos: idealPos,
+          currentPos: y,
+          x: 60 // Fixed horizontal offset for labels
+        })
+      })
+
+      this.layoutNodes = nodes
+
       // 3. Calculate new SVG dimensions
-      // currentPos is center of rect (height 20). Bottom is +10.
-      const maxPos = this.layoutNodes.length > 0 
-        ? Math.max(...this.layoutNodes.map(n => n.currentPos)) + 10 
-        : 0
-      
+      // Bottom of last node
+      const maxPos = lastBottom + 10 // Add some padding at bottom
+
       this.svgHeight = Math.max(this.height, maxPos + this.margin.top + this.margin.bottom)
-      
+
       // 20 (margin-left) + 60 (layerGap) + 175 (rect width) + 20 (margin-right) = 275
       const requiredWidth = this.margin.left + 60 + 175 + this.margin.right
       this.svgWidth = Math.max(this.width, requiredWidth)
-      
+
       this.draw()
     },
 
     draw() {
       if (!this.layoutNodes) return
 
-      const renderer = new labella.Renderer({
-        layerGap: 60,
-        nodeHeight: this.nodeHeight,
-        direction: 'right'
-      })
-      renderer.layout(this.layoutNodes)
-
       const colorScale = scaleOrdinal(schemeCategory10)
+      const pathGenerator = linkHorizontal()
+        .x(d => d.x)
+        .y(d => d.y)
 
       const dotLayer = select(this.$refs.dotLayer)
       const labelLayer = select(this.$refs.labelLayer)
@@ -144,19 +170,18 @@ export default {
         .attr('class', 'dot')
         .attr('fill', '#c2a53c')
         .attr('r', 3)
-        .attr('cy', d => d.getRoot().idealPos)
+        .attr('cy', d => d.idealPos)
 
       const e = labelLayer.selectAll('rect.flag')
         .data(this.layoutNodes)
         .enter()
         .append('g')
-        .attr('transform', d => 'translate(' + d.x + ',' + (d.y - 10) + ')') // FIXME: 'translate(' + d.x + ',' + (d.y - d.dy / 2) + ')')
+        .attr('transform', d => 'translate(' + d.x + ',' + (d.currentPos - 10) + ')')
 
-      // FIXME: For some reason the rect w/h change after transitions, as does the relative positioning. Why?
       e.append('rect')
         .attr('class', 'flag')
-        .attr('width', 175) // FIXME: d => d.data.w + 9)
-        .attr('height', 20) // FIXME: d => d.dy)
+        .attr('width', 175)
+        .attr('height', 20)
         .attr('rx', 2)
         .attr('ry', 2)
         .style('fill', (d, i) => colorScale(i))
@@ -172,7 +197,13 @@ export default {
         .enter()
         .append('path')
         .attr('class', 'link')
-        .attr('d', d => renderer.generatePath(d))
+        .attr('d', d => {
+          // Source: (0, idealPos), Target: (x, currentPos)
+          return pathGenerator({
+            source: { x: 0, y: d.idealPos },
+            target: { x: d.x, y: d.currentPos }
+          })
+        })
         .attr('stroke-width', 2)
         .attr('opacity', 0.6)
         .attr('fill', 'none')

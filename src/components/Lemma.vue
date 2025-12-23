@@ -109,50 +109,59 @@
         <div class="container">
           <div class="tile is-ancestor">
             <div class="tile is-parent">
-              <table class="table is-child">
-                <thead>
-                  <tr>
-                    <th>Text</th>
-                    <th>Composition year</th>
-                    <th>Manuscript year</th>
-                    <th>Absolute frequency</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="d in distribution">
-                    <td><tt>{{ d.id }}</tt></td>
-                    <td>{{ yearToText(d.chronology.t) }}</td>
-                    <td>{{ yearToText(d.chronology.m) }}</td>
-                    <td>{{ d.n }}</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="tile is-child">
+                <div class="table-container">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Text</th>
+                        <th>Composition year</th>
+                        <th>Manuscript year</th>
+                        <th>Absolute frequency</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="d in distribution">
+                        <td><tt>{{ d.id }}</tt></td>
+                        <td>{{ yearToText(d.chronology.t) }}</td>
+                        <td>{{ yearToText(d.chronology.m) }}</td>
+                        <td>{{ d.n }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
 
-            <div class="tile is-parent">
-              <article class="tile is-child">
-                <h3 class="subtitle">By composition</h3>
-                <vertical-timeline :events="timelineText"></vertical-timeline>
-              </article>
-            </div>
+            <div class="tile is-vertical">
+              <div class="tile">
+                <div class="tile is-parent">
+                  <article class="tile is-child" style="overflow-x: auto">
+                    <h3 class="subtitle">By composition</h3>
+                    <vertical-timeline :events="timelineText"></vertical-timeline>
+                  </article>
+                </div>
+                <div class="tile is-parent">
+                  <article class="tile is-child" style="overflow-x: auto">
+                    <h3 class="subtitle">By manuscript</h3>
+                    <vertical-timeline :events="timelineMs"></vertical-timeline>
+                  </article>
+                </div>
+              </div>
 
-            <div class="tile is-parent">
-              <article class="tile is-child">
-                <h3 class="subtitle">By manuscript</h3>
-                <vertical-timeline :events="timelineMs"></vertical-timeline>
-              </article>
-            </div>
+              <div class="tile is-parent" v-if="hasTimelineComposition">
+                <article class="tile is-child" style="overflow-x: auto">
+                  <h3 class="subtitle">Absolute frequency by composition</h3>
+                  <chart-timeline :events="chartTimelineComposition"></chart-timeline>
+                </article>
+              </div>
 
-            <div class="tile is-parent is-vertical">
-              <article class="tile is-child" v-if="hasTimelineComposition">
-                <h3 class="subtitle">Absolute frequency by composition</h3>
-                <chart-timeline :events="chartTimelineComposition"></chart-timeline>
-              </article>
-
-              <article class="tile is-child" v-if="hasTimelineManuscript">
-                <h3 class="subtitle">Absolute frequency by manuscript</h3>
-                <chart-timeline :events="chartTimelineManuscript"></chart-timeline>
-              </article>
+              <div class="tile is-parent" v-if="hasTimelineManuscript">
+                <article class="tile is-child" style="overflow-x: auto">
+                  <h3 class="subtitle">Absolute frequency by manuscript</h3>
+                  <chart-timeline :events="chartTimelineManuscript"></chart-timeline>
+                </article>
+              </div>
             </div>
           </div>
         </div>
