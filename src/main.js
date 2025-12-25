@@ -6,8 +6,6 @@ import router from './router';
 import store from './store';
 import filters from './filters';
 
-console.log("Syntacticus build " + document.documentElement.dataset.buildTimestampUtc)
-
 Vue.config.productionTip = false;
 Vue.config.performance = true;
 
