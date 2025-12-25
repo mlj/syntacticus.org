@@ -9,7 +9,7 @@
     "serve": "vite",
     "build": "vite build && cp dist/index.html dist/200.html",
     "preview": "vite preview",
-    "lint": "vue-cli-service lint",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "deploy": "surge dist",
     "test": "vue-cli-service test:unit"
   },
@@ -30,10 +30,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
-    "@babel/eslint-parser": "^7.12.16",
     "@vitejs/plugin-vue2": "2.3.4",
     "@vue/cli-plugin-babel": "~5.0.4",
-    "@vue/cli-plugin-eslint": "~5.0.4",
     "@vue/cli-plugin-router": "~5.0.4",
     "@vue/cli-plugin-unit-jest": "~5.0.4",
     "@vue/cli-plugin-vuex": "~5.0.4",
@@ -47,38 +45,6 @@
     "sass-loader": "^8.0.2",
     "vite": "7.3.0",
     "vue-template-compiler": "2.7.16"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "@babel/eslint-parser"
-    },
-    "rules": {
-      "no-unused-vars": 0,
-      "no-prototype-builtins": 0,
-      "vue/multi-word-component-names": 0,
-      "vue/no-use-v-if-with-v-for": 0,
-      "vue/require-v-for-key": 0,
-      "vue/valid-v-for": 0
-    },
-    "overrides": [
-      {
-        "files": [
-          "**/__tests__/*.{j,t}s?(x)",
-          "**/tests/unit/**/*.spec.{j,t}s?(x)"
-        ],
-        "env": {
-          "jest": true
-        }
-      }
-    ]
   },
   "browserslist": [
     "> 1%",
