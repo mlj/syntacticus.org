@@ -5,9 +5,11 @@ import api from '@/api'
 const localVue = createLocalVue()
 
 // Mock API
-jest.mock('@/api', () => ({
-  getLemma: jest.fn(),
-  handleError: jest.fn()
+vi.mock('@/api', () => ({
+  default: {
+    getLemma: vi.fn(),
+    handleError: vi.fn()
+  }
 }))
 
 // Mock filters
@@ -18,7 +20,7 @@ describe('Lemma.vue', () => {
   const gid = 'proiel:20180408:lat:dico:V-'
 
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     api.getLemma.mockResolvedValue({
       data: {
         distribution: [],

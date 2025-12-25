@@ -3,10 +3,12 @@ import Browse from '@/components/Browse.vue'
 import api from '@/api'
 
 // Mock the API
-jest.mock('@/api', () => ({
-  getSources: jest.fn(),
-  getDictionaries: jest.fn(),
-  handleError: jest.fn()
+vi.mock('@/api', () => ({
+  default: {
+    getSources: vi.fn(),
+    getDictionaries: vi.fn(),
+    handleError: vi.fn()
+  }
 }))
 
 

@@ -2,13 +2,14 @@ import { storeConfig } from '@/store/index'
 import api from '@/api'
 import Vuex from 'vuex'
 import { createLocalVue } from '@vue/test-utils'
-import _ from 'lodash'
 
 // Mock the API
-jest.mock('@/api', () => ({
-  getSources: jest.fn(),
-  getDictionaries: jest.fn(),
-  handleError: jest.fn()
+vi.mock('@/api', () => ({
+  default: {
+    getSources: vi.fn(),
+    getDictionaries: vi.fn(),
+    handleError: vi.fn()
+  }
 }))
 
 const localVue = createLocalVue()
@@ -20,12 +21,12 @@ describe('Vuex Store', () => {
 
   beforeEach(() => {
     // Clone the state to ensure isolation
-    state = _.cloneDeep(storeConfig.state)
+    state = JSON.parse(JSON.stringify(storeConfig.state))
     store = new Vuex.Store({
       ...storeConfig,
       state
     })
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   describe('Mutations', () => {

@@ -9,7 +9,7 @@ describe('AppHeader.vue', () => {
 
   beforeEach(() => {
     router = {
-      push: jest.fn()
+      push: vi.fn()
     }
     // minimal route mock
     route = { path: '/' }
@@ -125,7 +125,7 @@ describe('AppHeader.vue', () => {
 
       // Mock the input element's focus method
       const input = wrapper.find('input').element
-      input.focus = jest.fn()
+      input.focus = vi.fn()
 
       const event = new KeyboardEvent('keydown', { key: '/' })
       document.dispatchEvent(event)

@@ -3,12 +3,22 @@ module.exports = {
   env: {
     node: true,
   },
+  globals: {
+    vi: 'readonly',
+    describe: 'readonly',
+    it: 'readonly',
+    expect: 'readonly',
+    beforeEach: 'readonly',
+    afterEach: 'readonly',
+  },
   extends: [
     'plugin:vue/essential',
     'eslint:recommended',
   ],
   parserOptions: {
     ecmaVersion: 2020,
+    parser: '@babel/eslint-parser',
+    'requireConfigFile': false,
   },
   rules: {
     'no-unused-vars': 0,

@@ -9,10 +9,12 @@ const localVue = createLocalVue()
 localVue.use(Vuex)
 
 // Mock API calls
-jest.mock('@/api', () => ({
-  getDictionary: jest.fn(),
-  handleError: jest.fn(),
-  pushNewQuery: jest.fn(),
+vi.mock('@/api', () => ({
+  default: {
+    getDictionary: vi.fn(),
+    handleError: vi.fn(),
+    pushNewQuery: vi.fn(),
+  }
 }))
 
 // Mock Vuex store
@@ -36,7 +38,7 @@ describe('Dictionary.vue Pagination', () => {
   const gid = 'test:gid'
 
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     api.getDictionary.mockResolvedValue({
       data: {
         data: Array(10).fill({}),

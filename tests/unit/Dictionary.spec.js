@@ -9,10 +9,12 @@ const localVue = createLocalVue()
 localVue.use(Vuex)
 
 // Mock API calls
-jest.mock('@/api', () => ({
-  getDictionary: jest.fn(),
-  handleError: jest.fn(),
-  pushNewQuery: jest.fn(),
+vi.mock('@/api', () => ({
+  default: {
+    getDictionary: vi.fn(),
+    handleError: vi.fn(),
+    pushNewQuery: vi.fn(),
+  }
 }))
 
 // Mock Vuex store for rusGlossesEnabled
@@ -36,7 +38,7 @@ describe('Dictionary.vue', () => {
   const gid = 'syntacticus:20180920:lat'
 
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     api.getDictionary.mockResolvedValue({
       data: {
         data: [],

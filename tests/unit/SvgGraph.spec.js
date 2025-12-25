@@ -3,17 +3,19 @@ import SvgGraph from '@/components/graphs/SvgGraph.vue'
 import api from '@/api'
 
 // Mock API calls
-jest.mock('@/api', () => ({
-  getGraph: jest.fn(),
-  getAlignedGraph: jest.fn(),
-  handleError: jest.fn(),
+vi.mock('@/api', () => ({
+  default: {
+    getGraph: vi.fn(),
+    getAlignedGraph: vi.fn(),
+    handleError: vi.fn(),
+  }
 }))
 
 describe('SvgGraph.vue', () => {
   const gid = 'test:gid'
 
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     api.getGraph.mockResolvedValue({
       data: '<svg>mock graph</svg>',
       request: { responseURL: 'mock-url-graph' }

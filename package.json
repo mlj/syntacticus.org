@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "deploy": "surge dist",
-    "test": "vue-cli-service test:unit"
+    "test": "vitest"
   },
   "dependencies": {
     "bulma": "0.9.4",
@@ -30,20 +30,16 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "7.28.5",
     "@vitejs/plugin-vue2": "2.3.4",
-    "@vue/cli-plugin-babel": "~5.0.4",
-    "@vue/cli-plugin-router": "~5.0.4",
-    "@vue/cli-plugin-unit-jest": "~5.0.4",
-    "@vue/cli-plugin-vuex": "~5.0.4",
-    "@vue/cli-service": "~5.0.4",
     "@vue/test-utils": "^1.0.3",
-    "@vue/vue2-jest": "^27.0.0-alpha.3",
-    "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^8.0.3",
-    "jest": "^27.1.0",
+    "eslint": "7.32.0",
+    "eslint-plugin-vue": "8.7.1",
+    "jsdom": "27.3.0",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
     "vite": "7.3.0",
+    "vitest": "4.0.16",
     "vue-template-compiler": "2.7.16"
   },
   "browserslist": [
@@ -52,12 +48,6 @@
     "not ie <= 8",
     "not dead"
   ],
-  "jest": {
-    "preset": "@vue/cli-plugin-unit-jest",
-    "transformIgnorePatterns": [
-      "/node_modules/(?!d3|d3-array|d3-axis|d3-scale|d3-selection|d3-shape|d3-zoom)"
-    ]
-  },
   "engines": {
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"

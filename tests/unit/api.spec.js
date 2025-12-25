@@ -1,6 +1,6 @@
 import api, { SYNTACTICUS_API_BASE, STATIC_FILE_BASE } from '@/api/index.js'
 
-global.fetch = jest.fn()
+global.fetch = vi.fn()
 
 describe('API Service', () => {
   beforeEach(() => {
@@ -13,10 +13,10 @@ describe('API Service', () => {
       ok: true,
       url: 'http://test.url',
       headers: {
-        get: jest.fn().mockReturnValue('application/json; charset=utf-8')
+        get: vi.fn().mockReturnValue('application/json; charset=utf-8')
       },
-      json: jest.fn().mockResolvedValueOnce(mockJson),
-      text: jest.fn()
+      json: vi.fn().mockResolvedValueOnce(mockJson),
+      text: vi.fn()
     })
 
     const response = await api.getDictionaries()
@@ -30,10 +30,10 @@ describe('API Service', () => {
       ok: true,
       url: 'http://test.url',
       headers: {
-        get: jest.fn().mockReturnValue('image/svg+xml')
+        get: vi.fn().mockReturnValue('image/svg+xml')
       },
-      json: jest.fn(),
-      text: jest.fn().mockResolvedValueOnce(mockText)
+      json: vi.fn(),
+      text: vi.fn().mockResolvedValueOnce(mockText)
     })
 
     const response = await api.getGraph('test:gid')
@@ -46,7 +46,7 @@ describe('API Service', () => {
       ok: false,
       status: 404,
       statusText: 'Not Found',
-      headers: { get: jest.fn() }
+      headers: { get: vi.fn() }
     })
 
     await expect(api.getDictionaries()).rejects.toThrow('Not Found')
@@ -61,9 +61,9 @@ describe('API Service', () => {
       ok: true,
       url: 'http://test.url',
       headers: {
-        get: jest.fn().mockReturnValue(null)
+        get: vi.fn().mockReturnValue(null)
       },
-      text: jest.fn().mockResolvedValueOnce(mockText)
+      text: vi.fn().mockResolvedValueOnce(mockText)
     })
 
     const response = await api.getDictionaries()

@@ -27,7 +27,7 @@ describe('Search.vue', () => {
     })
 
     router = {
-      push: jest.fn()
+      push: vi.fn()
     }
   })
 

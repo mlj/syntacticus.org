@@ -4,10 +4,13 @@ import VueRouter from 'vue-router'
 import filters from '@/filters'
 
 // Mock the API module
-jest.mock('@/api', () => ({
-  getSentence: jest.fn(),
-  handleError: jest.fn(),
-}))
+vi.mock('@/api', () => {
+  const apiMock = {
+    getSentence: vi.fn(),
+    handleError: vi.fn(),
+  };
+  return { default: apiMock };
+});
 
 // Import the mocked API
 import api from '@/api'
@@ -27,7 +30,7 @@ describe('Sentence.vue', () => {
   const mockMorphology = '3spia-----' // 3rd person, singular, present, indicative, active
 
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     api.getSentence.mockResolvedValue({
       data: {
         source: {

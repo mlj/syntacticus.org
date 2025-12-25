@@ -8,10 +8,12 @@ import schema from '@/data/schema.json' // For filters
 const localVue = createLocalVue()
 
 // Mock API calls
-jest.mock('@/api', () => ({
-  getTokens: jest.fn(),
-  handleError: jest.fn(),
-  pushNewQuery: jest.fn(),
+vi.mock('@/api', () => ({
+  default: {
+    getTokens: vi.fn(),
+    handleError: vi.fn(),
+    pushNewQuery: vi.fn(),
+  }
 }))
 
 // Mock filters
@@ -24,7 +26,7 @@ describe('Tokens.vue', () => {
   ]
 
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     api.getTokens.mockResolvedValue({
       data: {
         data: [],
