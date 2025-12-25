@@ -95,8 +95,8 @@
 <script>
 import api from '../api'
 import { languages } from '../shared'
-import PartOfSpeechSelect from './PartOfSpeechSelect'
-import Pagination from './Pagination'
+import PartOfSpeechSelect from './PartOfSpeechSelect.vue'
+import Pagination from './Pagination.vue'
 
 export default {
   components: {

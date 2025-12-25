@@ -124,10 +124,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import MetadataCard from './MetadataCard'
-import MetadataModal from './MetadataModal'
-import PartOfSpeechSelect from './PartOfSpeechSelect'
-import Pagination from './Pagination'
+import MetadataCard from './MetadataCard.vue'
+import MetadataModal from './MetadataModal.vue'
+import PartOfSpeechSelect from './PartOfSpeechSelect.vue'
+import Pagination from './Pagination.vue'
 import api from '../api'
 import schema from '../data/schema.json'
 import {

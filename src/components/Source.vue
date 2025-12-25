@@ -62,8 +62,8 @@
 </template>
 
 <script>
-import MetadataCard from './MetadataCard'
-import MetadataModal from './MetadataModal'
+import MetadataCard from './MetadataCard.vue'
+import MetadataModal from './MetadataModal.vue'
 import api from '../api'
 import { eText, permanentURLs, treebankFromGID } from '../shared'
 

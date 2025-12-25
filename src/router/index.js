@@ -1,17 +1,17 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import Welcome from '@/components/Welcome';
-import Browse from '@/components/Browse';
-import NotFound from '@/components/NotFound';
+import Welcome from '@/components/Welcome.vue';
+import Browse from '@/components/Browse.vue';
+import NotFound from '@/components/NotFound.vue';
 
-const Source = () => import('@/components/Source');
+const Source = () => import('@/components/Source.vue');
 const Dictionary = () => import('@/components/Dictionary.vue');
 const Lemma = () => import('@/components/Lemma.vue');
 const Sentence = () => import('@/components/Sentence.vue');
 const AlignedSource = () => import('@/components/AlignedSource.vue');
 const Tokens = () => import('@/components/Tokens.vue');
-const Search = () => import('@/components/Search');
+const Search = () => import('@/components/Search.vue');
 
 Vue.use(Router)
 

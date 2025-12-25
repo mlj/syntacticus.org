@@ -242,11 +242,10 @@ text
 </style>
 
 <script>
-import CurvedGraph from './graphs/CurvedGraph'
-import SvgGraph from './graphs/SvgGraph'
-
-import MetadataCard from './MetadataCard'
-import MetadataModal from './MetadataModal'
+import CurvedGraph from './graphs/CurvedGraph.vue'
+import SvgGraph from './graphs/SvgGraph.vue'
+import MetadataCard from './MetadataCard.vue'
+import MetadataModal from './MetadataModal.vue'
 import api from '../api'
 import {
   permanentURLs,

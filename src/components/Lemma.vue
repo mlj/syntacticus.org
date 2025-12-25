@@ -171,13 +171,13 @@
 </template>
 
 <script>
-import MetadataCard from './MetadataCard'
-import MetadataModal from './MetadataModal'
+import MetadataCard from './MetadataCard.vue'
+import MetadataModal from './MetadataModal.vue'
 import api from '../api'
-import VerticalTimeline from './timelines/VerticalTimeline'
-import ChartTimeline from './timelines/ChartTimeline'
-import Paradigm from './Paradigm'
-import Valency from './Valency'
+import VerticalTimeline from './timelines/VerticalTimeline.vue'
+import ChartTimeline from './timelines/ChartTimeline.vue'
+import Paradigm from './Paradigm.vue'
+import Valency from './Valency.vue'
 import { permanentURLs, treebankFromGID, splitLemmaGID } from '../shared'
 import { totalDistributionFrequency, hasSomeCompositionDate, hasSomeManuscriptDate } from '@/paradigms'
 

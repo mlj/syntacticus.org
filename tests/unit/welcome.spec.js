@@ -1,6 +1,6 @@
 import { RouterLinkStub } from '@vue/test-utils'
 import { shallowMount } from '@vue/test-utils'
-import Welcome from '@/components/Welcome'
+import Welcome from '@/components/Welcome.vue'
 
 describe('Welcome.vue', () => {
   it('renders the introductory text', () => {
